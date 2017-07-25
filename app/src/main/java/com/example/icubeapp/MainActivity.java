@@ -1,6 +1,7 @@
 package com.example.icubeapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -10,8 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 
 import com.example.icubeapp.adapters.SliderAdapter;
+import com.example.icubeapp.common.GlobalClass;
+import com.example.icubeapp.model.POS;
 import com.example.icubeapp.utils.WSUtils;
 
 import org.json.JSONArray;
@@ -25,9 +29,11 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> data;
+    ArrayList<Integer> data;
     private ViewPager viewpager;
     int page = 0;
+    GlobalClass global;
+    Button submit;
 
 
     @Override
@@ -35,7 +41,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewpager = (ViewPager) findViewById(R.id.pager_introduction);
-
+        submit=(Button)findViewById(R.id.submit);
+        global=(GlobalClass)getApplicationContext();
+        data = new ArrayList<>();
+        data.add(R.drawable.banner1);
+        data.add(R.drawable.banner2);
+        data.add(R.drawable.banner3);
+        data.add(R.drawable.banner4);
+        SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
+        viewpager.setAdapter(adapter);
+        loadimageswithsec();
         responseFromServer();
 
         viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
@@ -59,6 +74,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i=new Intent(MainActivity.this,FeedBack.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 
 
@@ -78,8 +103,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... strings) {
 
-                String response = new WSUtils().getResultFromHttpRequest("http://bbaministries.org/webservice/sliders", "POST", new HashMap<String, String>());
+                String response = new WSUtils().getResultFromHttpRequest("http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1=1234&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
 
+                Log.i("RESPONSE","RESPOSE"+response);
                 return response;
             }
 
@@ -89,7 +115,22 @@ public class MainActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 dialog.dismiss();
 
-                data = new ArrayList<>();
+                try {
+                    JSONArray array=new JSONArray(s);
+                    for(int i=0;i<array.length();i++)
+                    {
+                        JSONObject object=array.getJSONObject(i);
+                        String ID=object.getString("ID");
+                        String POSID=object.getString("POSID");
+
+                        global.pos=new POS(ID,POSID);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+               /* data = new ArrayList<>();
 
                 JSONObject object = null;
                 try {
@@ -102,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject ob = array.getJSONObject(i);
                         String img = ob.getString("slider_img");
 
-                        data.add("http://bbaministries.org/uploads/sliders/" + img);
+                        //data.add("http://bbaministries.org/uploads/sliders/" + img);
 
 
                     }
@@ -115,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+*/
 
             }
         }

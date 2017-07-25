@@ -3,10 +3,15 @@ package com.example.icubeapp.common;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.icubeapp.model.FEEDBACK;
+import com.example.icubeapp.model.FeedBackSelection;
+import com.example.icubeapp.model.POS;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
+import java.util.ArrayList;
 
 /**
  * Created by Prakash on 7/22/2017.
@@ -15,6 +20,10 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 public class GlobalClass extends Application {
 
     private static GlobalClass mInstance;
+
+    public static POS pos;
+    public static ArrayList<FEEDBACK> feedback=new ArrayList<>();
+    public static ArrayList<FeedBackSelection> feedbackdata=new ArrayList<>();
 
     public void onCreate() {
 

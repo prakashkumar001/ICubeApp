@@ -22,10 +22,10 @@ import java.util.ArrayList;
 public class SliderAdapter extends PagerAdapter {
 
     private Context mContext;
-    ArrayList<String> data;
+    ArrayList<Integer> data;
     DisplayImageOptions options;
     ImageLoader loader;
-    public SliderAdapter(Context mContext, ArrayList<String> data) {
+    public SliderAdapter(Context mContext, ArrayList<Integer> data) {
         this.mContext = mContext;
         this.data = data;
         loader=ImageLoader.getInstance();
@@ -46,7 +46,7 @@ public class SliderAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.pager_item, container, false);
 
-        options = new DisplayImageOptions.Builder()
+      /*  options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.loadimage) // resource or drawable
                 .showImageForEmptyUri(R.drawable.loadimage) // resource or drawable
                 .showImageOnFail(R.drawable.loadimage) // resource or drawable
@@ -54,11 +54,12 @@ public class SliderAdapter extends PagerAdapter {
                 .delayBeforeLoading(10)
                 .cacheInMemory(true) // default
                 .cacheOnDisk(true) // default
-                .build();
+                .build();*/
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
 
 
-        loader.displayImage(data.get(position),imageView,options);
+        imageView.setImageResource(data.get(position));
+        //loader.displayImage(data.get(position),imageView,options);
 
         container.addView(itemView);
 

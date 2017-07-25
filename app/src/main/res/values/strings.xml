@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">iCubeApp</string>
+    <string name="copyright">\u00A9 2017 ICube Inc. \n All rights reserved.</string>
+
 </resources>
