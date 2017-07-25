@@ -4,18 +4,24 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.icubeapp.adapters.SliderAdapter;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.POS;
+import com.example.icubeapp.utils.CodeSnippet;
 import com.example.icubeapp.utils.WSUtils;
 
 import org.json.JSONArray;
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     int page = 0;
     GlobalClass global;
     Button submit;
+    CodeSnippet codeSnippet;
 
 
     @Override
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewpager = (ViewPager) findViewById(R.id.pager_introduction);
         submit=(Button)findViewById(R.id.submit);
+        codeSnippet=new CodeSnippet(getApplicationContext());
         global=(GlobalClass)getApplicationContext();
         data = new ArrayList<>();
         data.add(R.drawable.banner1);
@@ -51,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
         viewpager.setAdapter(adapter);
         loadimageswithsec();
-        responseFromServer();
+
 
         viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
@@ -78,8 +86,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i=new Intent(MainActivity.this,FeedBack.class);
-                startActivity(i);
+               if(codeSnippet.hasNetworkConnection())
+               {
+                   Intent i=new Intent(MainActivity.this,FeedBack.class);
+                   startActivity(i);
+
+               }else
+               {
+                   Snackbar();
+               }
 
             }
         });
@@ -193,4 +208,38 @@ public class MainActivity extends AppCompatActivity {
         }, 1000, 5000);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(codeSnippet.hasNetworkConnection())
+        {
+            responseFromServer();
+        }else
+        {
+           Snackbar();
+        }
+
+
+    }
+
+    public void Snackbar()
+    {
+        Snackbar snack= Snackbar.make(findViewById(android.R.id.content), "No Internet Connection",Snackbar.LENGTH_LONG);
+        View vv=snack.getView();
+        TextView textView=(TextView)vv.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setGravity(Gravity.CENTER);
+        snack.show();
+        snack.setAction("Enable", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(codeSnippet.hasNetworkConnection())
+                {
+                    responseFromServer();
+                }else
+                {
+                    startActivityForResult(new Intent(Settings.ACTION_SETTINGS),1);
+                }
+            }
+        });
+    }
 }

@@ -2,22 +2,28 @@ package com.example.icubeapp;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.icubeapp.adapters.FeedBackAdapter;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.FEEDBACK;
 import com.example.icubeapp.model.POS;
+import com.example.icubeapp.utils.CodeSnippet;
 import com.example.icubeapp.utils.WSUtils;
 
 import org.json.JSONArray;
@@ -35,24 +41,13 @@ public class FeedBack extends AppCompatActivity {
     GlobalClass global;
     RecyclerView list;
     Button submit;
+    CodeSnippet codeSnippet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedback);
-        global = (GlobalClass) getApplicationContext();
-        list = (RecyclerView) findViewById(R.id.recyclerlist);
-        submit = (Button) findViewById(R.id.submit);
-        responseFromServer();
 
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                uploadToServer();
-            }
-        });
     }
 
     public void responseFromServer() {
@@ -82,7 +77,7 @@ public class FeedBack extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 dialog.dismiss();
-
+                global.feedback=new ArrayList<>();
                 try {
                     JSONArray array = new JSONArray(s);
                     for (int i = 0; i < array.length(); i++) {
@@ -186,7 +181,9 @@ public class FeedBack extends AppCompatActivity {
                     }
 
                     if (result.equalsIgnoreCase("Saved")) {
-                        dialogShow();
+
+                        Intent i=new Intent(FeedBack.this,ThankyouPage.class);
+                        startActivity(i);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -196,28 +193,61 @@ public class FeedBack extends AppCompatActivity {
         new UploadtoServer().execute();
     }
 
-    public void dialogShow() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                FeedBack.this);
 
 
-        // set dialog message
-        alertDialogBuilder
-                .setMessage("Your Feedback Submitted Sucessfully ")
-                .setCancelable(false)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, close
-                        // current activity
-                        FeedBack.this.finish();
-                    }
-                });
+    public void Snackbar()
+    {
+        Snackbar snack= Snackbar.make(findViewById(android.R.id.content), "No Internet Connection",Snackbar.LENGTH_LONG);
+        View vv=snack.getView();
+        TextView textView=(TextView)vv.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setGravity(Gravity.CENTER);
+        snack.show();
+        snack.setAction("Enable", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(codeSnippet.hasNetworkConnection())
+                {
+                    responseFromServer();
+                }else
+                {
+                    startActivityForResult(new Intent(Settings.ACTION_SETTINGS),1);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        codeSnippet=new CodeSnippet(getApplicationContext());
+        global = (GlobalClass) getApplicationContext();
+        list = (RecyclerView) findViewById(R.id.recyclerlist);
+        submit = (Button) findViewById(R.id.submit);
 
 
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        if(codeSnippet.hasNetworkConnection())
+        {
+            responseFromServer();
+        }else
+        {
+            Snackbar();
+        }
 
-        // show it
-        alertDialog.show();
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(codeSnippet.hasNetworkConnection())
+                {
+                    uploadToServer();
+
+                }else {
+                    Snackbar();
+                }
+
+            }
+        });
+
     }
 }

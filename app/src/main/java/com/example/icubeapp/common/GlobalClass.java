@@ -2,6 +2,7 @@ package com.example.icubeapp.common;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.ConnectivityManager;
 
 import com.example.icubeapp.model.FEEDBACK;
 import com.example.icubeapp.model.FeedBackSelection;
@@ -32,6 +33,9 @@ public class GlobalClass extends Application {
         mInstance = this;
         initImageLoader(getApplicationContext());
 
+    }
+    public ConnectivityManager getConnectivityManager() {
+        return (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
 
