@@ -52,35 +52,10 @@ public class MainActivity extends AppCompatActivity {
         codeSnippet=new CodeSnippet(getApplicationContext());
         global=(GlobalClass)getApplicationContext();
         data = new ArrayList<>();
-        data.add(R.drawable.banner1);
-        data.add(R.drawable.banner2);
-        data.add(R.drawable.banner3);
-        data.add(R.drawable.banner4);
-        SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
-        viewpager.setAdapter(adapter);
-        loadimageswithsec();
+        data.add(R.drawable.pos1);
+        data.add(R.drawable.pos2);
+        data.add(R.drawable.pos3);
 
-
-        viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
-            @Override
-            public void transformPage(View view, float position) {
-                // do transformation here
-                //page.animate()==null;
-                final Animation animationFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
-                view.startAnimation(animationFadeIn);
-
-                view.setTranslationX(view.getWidth() * -position);
-
-                if(position <= -1.0F || position >= 1.0F) {
-                    view.setAlpha(0.0F);
-                } else if( position == 0.0F ) {
-                    view.setAlpha(1.0F);
-                } else {
-                    // position is between -1.0F & 0.0F OR 0.0F & 1.0F
-                    view.setAlpha(1.0F - Math.abs(position));
-                }
-            }
-        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,6 +193,33 @@ public class MainActivity extends AppCompatActivity {
         {
            Snackbar();
         }
+
+        SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
+        viewpager.setAdapter(adapter);
+        loadimageswithsec();
+
+
+        viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View view, float position) {
+                // do transformation here
+                //page.animate()==null;
+                final Animation animationFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
+                view.startAnimation(animationFadeIn);
+
+                view.setTranslationX(view.getWidth() * -position);
+
+                if(position <= -1.0F || position >= 1.0F) {
+                    view.setAlpha(0.0F);
+                } else if( position == 0.0F ) {
+                    view.setAlpha(1.0F);
+                } else {
+                    // position is between -1.0F & 0.0F OR 0.0F & 1.0F
+                    view.setAlpha(1.0F - Math.abs(position));
+                }
+            }
+        });
+
 
 
     }
