@@ -1,12 +1,16 @@
 package com.example.icubeapp.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 
 import com.example.icubeapp.R;
@@ -39,7 +43,7 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((LinearLayout) object);
+        return view == ((RelativeLayout) object);
     }
 
     @Override
@@ -58,8 +62,8 @@ public class SliderAdapter extends PagerAdapter {
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
 
 
-        imageView.setImageResource(data.get(position));
-        //loader.displayImage(data.get(position),imageView,options);
+
+        loader.displayImage("drawable://" +data.get(position),imageView,options);
 
         container.addView(itemView);
 
@@ -68,7 +72,28 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((LinearLayout) object);
+        container.removeView((RelativeLayout) object);
+    }
+
+    /************************ Resize Bitmap *********************************/
+    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+// create a matrix for the manipulation
+        Matrix matrix = new Matrix();
+
+// resize the bit map
+        matrix.postScale(scaleWidth, scaleHeight);
+
+// recreate the new Bitmap
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+
+        return resizedBitmap;
     }
 }
 
