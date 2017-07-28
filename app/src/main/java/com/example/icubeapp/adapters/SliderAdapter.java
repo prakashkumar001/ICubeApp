@@ -65,6 +65,7 @@ public class SliderAdapter extends PagerAdapter {
 
         loader.displayImage("drawable://" +data.get(position),imageView,options);
 
+
         container.addView(itemView);
 
         return itemView;

@@ -11,14 +11,14 @@
                     android:id="@+id/pager_introduction"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="4.3"
+                    android:layout_weight="4"
                     listitem="@layout/pager_item" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
-        android:layout_weight=".7"
+        android:layout_weight=".5"
 
         >
 
@@ -33,6 +33,14 @@
                 />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight=".5"
 
+        >
+    <include layout="@layout/footer"/>
 
+</LinearLayout>
 </LinearLayout>

@@ -130,30 +130,42 @@ public class FeedBack extends AppCompatActivity {
                 data.put("POSID", global.pos.pos_id);
 
 
-                StringBuffer detid = new StringBuffer();
-                StringBuffer fbmid = new StringBuffer();
-                ;
-                StringBuffer fbvalue = new StringBuffer();
-                ;
+                String detid="";
+                String fbmid="";
 
-                StringBuffer fbcomment = new StringBuffer();
-                ;
+                String fbvalue="";
+
+
+                String fbcomment="";
 
 
                 for (int i = 0; i < global.feedbackdata.size(); i++) {
-                    detid.append(global.feedbackdata.get(i).id).append("^");
+                    detid=detid+(global.feedbackdata.get(i).id)+"^";
                     // detid=detid+"^";
-                    fbmid.append(global.feedbackdata.get(i).id).append("^");
-                    fbvalue.append(global.feedbackdata.get(i).rating).append("^");
-                    fbcomment.append(global.feedbackdata.get(i).comment).append("^");
+                    fbmid=fbmid+(global.feedbackdata.get(i).id)+"^";
+                    fbvalue=fbvalue+(global.feedbackdata.get(i).rating)+"^";
+                    fbcomment=fbcomment+(global.feedbackdata.get(i).comment)+"^";
 
 
                 }
 
-                Log.i("DDDDDDDDd", "DDDDDDDdd" + detid.toString());
+                ArrayList<String> datas=new ArrayList<>();
+                ArrayList<String> values=new ArrayList<>();
+                datas.add(detid);
+                datas.add(fbmid);
+                datas.add(fbvalue);
+
+                for(int i=0;i<datas.size();i++)
+                {
+                    String value=removeLastChar(datas.get(i));
+                    values.add(value);
+                }
 
 
-                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID=1&POSID=1&DetID=0^0&FBMID=" + fbmid.toString() + "&FBValue=" + fbvalue.toString() + "&FBComment=test^test" + "&User=emp0001";
+                Log.i("DDDDDDDDd", "DDDDDDDdd" + values);
+
+
+                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID=1&POSID=1&DetID=0^0&FBMID=" + values.get(1) + "&FBValue=" + values.get(2) + "&FBComment=test^test" + "&User=emp0001";
 
                 Log.i("URL", "URL" + url);
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
@@ -249,5 +261,11 @@ public class FeedBack extends AppCompatActivity {
             }
         });
 
+    }
+    public String removeLastChar(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        return s.substring(0, s.length()-1);
     }
 }
