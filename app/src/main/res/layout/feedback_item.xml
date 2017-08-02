@@ -104,9 +104,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:numStars="4"
-                                android:scaleX=".8"
                                 android:visibility="gone"
-                                android:scaleY=".8"
+                                android:scaleX=".6"
+                                android:scaleY=".6"
                                 android:stepSize="1"
                                 style="@android:style/Widget.RatingBar"
                                 android:gravity="center"
@@ -115,9 +115,7 @@
                             <com.hsalf.smilerating.SmileRating
                                 android:id="@+id/smile_rating"
                                 android:layout_width="match_parent"
-                                android:visibility="gone"
-
-                                android:layout_height="wrap_content" />
+                                android:layout_height="30dp" />
 
                         </LinearLayout>
 
