@@ -11,6 +11,7 @@
                     android:id="@+id/pager_introduction"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:scrollbars="none"
                     android:layout_weight="4"
                     listitem="@layout/pager_item" />
 
