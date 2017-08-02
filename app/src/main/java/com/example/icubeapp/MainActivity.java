@@ -305,9 +305,9 @@ public class MainActivity extends AppCompatActivity {
                 data.add(decodeSampledBitmapFromResource(getResources(),R.drawable.supermarket3,500,1000));
 */
 
-               data.add(R.drawable.supermarket);
-                data.add(R.drawable.supermarket2);
-                data.add(R.drawable.supermarket3);
+               data.add(R.drawable.car);
+                data.add(R.drawable.cat);
+                data.add(R.drawable.stone);
 
                 return null;
             }
