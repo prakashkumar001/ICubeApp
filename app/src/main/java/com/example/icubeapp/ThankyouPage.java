@@ -1,5 +1,6 @@
 package com.example.icubeapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,9 +26,7 @@ public class ThankyouPage extends AppCompatActivity {
             public void onClick(View v) {
                 ThankyouPage.this.finish();
 
-                Intent i=new Intent(ThankyouPage.this,MainActivity.class);
-                startActivity(i);
-                ActivityCompat.finishAffinity(ThankyouPage.this);
+
             }
         });
     }

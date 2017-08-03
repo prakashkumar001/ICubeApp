@@ -1,5 +1,6 @@
 package com.example.icubeapp;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.icubeapp.adapters.FeedAdapter;
 import com.example.icubeapp.adapters.FeedBackAdapter;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.FEEDBACK;
@@ -89,11 +91,11 @@ public class FeedBack extends AppCompatActivity {
                         String RatingType = object.getString("RatingType");
                         String OutOf = object.getString("OutOf");
 
-                        FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf);
+                        FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,false);
                         global.feedback.add(feedback);
                     }
 
-                    FeedBackAdapter adapter = new FeedBackAdapter(FeedBack.this, global.feedback);
+                    FeedAdapter adapter = new FeedAdapter(FeedBack.this, global.feedback);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FeedBack.this);
                     list.setLayoutManager(mLayoutManager);
                     list.setItemAnimator(new DefaultItemAnimator());
@@ -165,7 +167,7 @@ public class FeedBack extends AppCompatActivity {
                 Log.i("DDDDDDDDd", "DDDDDDDdd" + values);
 
 
-                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID=1&POSID=1&DetID=0^0&FBMID=" + values.get(1) + "&FBValue=" + values.get(2) + "&FBComment=test^test" + "&User=emp0001";
+                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.id+"&DetID=0^0&FBMID=" + values.get(1) + "&FBValue=" + values.get(2) + "&FBComment=test^test" + "&User=emp0001";
 
                 Log.i("URL", "URL" + url);
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
@@ -185,18 +187,27 @@ public class FeedBack extends AppCompatActivity {
 
                 try {
                     JSONArray array = new JSONArray(s);
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject object = array.getJSONObject(i);
-                        result = object.getString("RESULT");
-
-
-                    }
-
-                    if (result.equalsIgnoreCase("Saved")) {
-
+                    if(array.length()==0)
+                    {
                         Intent i=new Intent(FeedBack.this,ThankyouPage.class);
                         startActivity(i);
+                        finish();
+                    }else {
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            result = object.getString("RESULT");
+
+
+                        }
+
+                        if (result.equalsIgnoreCase("Saved")) {
+
+                            Intent i=new Intent(FeedBack.this,ThankyouPage.class);
+                            startActivity(i);
+                            finish();
+                        }
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -226,6 +237,7 @@ public class FeedBack extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     @Override
@@ -268,4 +280,7 @@ public class FeedBack extends AppCompatActivity {
         }
         return s.substring(0, s.length()-1);
     }
+
+
+
 }

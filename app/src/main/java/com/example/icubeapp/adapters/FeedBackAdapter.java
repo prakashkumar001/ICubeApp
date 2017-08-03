@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -48,7 +49,6 @@ public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.MyView
             question = (TextView) view.findViewById(R.id.question);
             smileRating = (SmileRating) view.findViewById(R.id.smile_rating);
             ratingstar= (RatingBar) view.findViewById(R.id.ratingstar);
-
 
 
         }
@@ -117,6 +117,9 @@ public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.MyView
                     case SmileRating.TERRIBLE:
                         Log.i(TAG, "Terrible");
                         break;
+                    case SmileRating.NONE:
+                        Log.i(TAG, "None");
+                        break;
                 }
             }
         });
@@ -128,6 +131,15 @@ public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.MyView
                 // reselected is false when user selects different smiley that previously selected one
                 // true when the same smiley is selected.
                 // Except if it first time, then the value will be false.
+
+                if(level==1)
+                {
+                    if(reselected)
+                    {
+                        holder.smileRating.setSelectedSmile(BaseRating.NONE);
+                        level=0;
+                    }
+                }
                 Log.i("RATINGSMILE","RATINGSMILE"+level);
                 global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(level),""));
 
@@ -135,12 +147,12 @@ public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.MyView
             }
         });
 
+
         holder.ratingstar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
 
 
             public void onRatingChanged(RatingBar ratingBar, float rating,  boolean fromUser) {
-
 
                 Log.i("RATINGSTAR","RATINGSTAR"+rating);
                 //ratingValue.setText(String.valueOf(rating));
@@ -152,7 +164,6 @@ public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.MyView
             }
 
         });
-
 
 
     }
