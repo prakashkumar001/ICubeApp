@@ -80,6 +80,8 @@ public class FeedBack extends AppCompatActivity {
                 super.onPostExecute(s);
                 dialog.dismiss();
                 global.feedback=new ArrayList<>();
+
+
                 try {
                     JSONArray array = new JSONArray(s);
                     for (int i = 0; i < array.length(); i++) {
@@ -91,7 +93,7 @@ public class FeedBack extends AppCompatActivity {
                         String RatingType = object.getString("RatingType");
                         String OutOf = object.getString("OutOf");
 
-                        FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,false);
+                        FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,0);
                         global.feedback.add(feedback);
                     }
 
@@ -147,6 +149,7 @@ public class FeedBack extends AppCompatActivity {
                     fbmid=fbmid+(global.feedbackdata.get(i).id)+"^";
                     fbvalue=fbvalue+(global.feedbackdata.get(i).rating)+"^";
                     fbcomment=fbcomment+(global.feedbackdata.get(i).comment)+"^";
+                    Log.i("DDDDDDDDd", "DDDDDDDdd" + global.feedbackdata.get(i).rating);
 
 
                 }
@@ -164,7 +167,6 @@ public class FeedBack extends AppCompatActivity {
                 }
 
 
-                Log.i("DDDDDDDDd", "DDDDDDDdd" + values);
 
 
                 String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.id+"&DetID=0^0&FBMID=" + values.get(1) + "&FBValue=" + values.get(2) + "&FBComment=test^test" + "&User=emp0001";

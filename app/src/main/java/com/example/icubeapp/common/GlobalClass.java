@@ -25,6 +25,8 @@ public class GlobalClass extends Application {
     public static POS pos;
     public static ArrayList<FEEDBACK> feedback=new ArrayList<>();
     public static ArrayList<FeedBackSelection> feedbackdata=new ArrayList<>();
+    public static ArrayList<FeedBackSelection> feedbackdata2=new ArrayList<>();
+
 
     public void onCreate() {
 

@@ -1,5 +1,7 @@
 package com.example.icubeapp.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by Prakash on 7/23/2017.
  */
@@ -12,6 +14,7 @@ public class FEEDBACK {
     public String rating_type;
     public String outof;
     public boolean focus;
+    public int status;
 
     public FEEDBACK( String id, String group_id, String language_id, String question, String rating_type,String outof) {
 
@@ -22,7 +25,7 @@ public class FEEDBACK {
         this.rating_type = rating_type;
         this.outof = outof;
     }
-    public FEEDBACK( String id, String group_id, String language_id, String question, String rating_type,String outof,boolean focus) {
+    public FEEDBACK( String id, String group_id, String language_id, String question, String rating_type,String outof,int status) {
 
         this.id = id;
         this.group_id = group_id;
@@ -30,6 +33,6 @@ public class FEEDBACK {
         this.question = question;
         this.rating_type = rating_type;
         this.outof = outof;
-        this.focus=focus;
+        this.status=status;
     }
 }

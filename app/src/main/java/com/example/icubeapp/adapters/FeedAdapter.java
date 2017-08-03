@@ -37,6 +37,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         Context context;
         GlobalClass global;
     boolean status;
+    int index=-1;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -125,31 +126,66 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
 
-
-                if(isSelect(data.get(position).focus))
+                if(data.get(position).status==0)
                 {
-                    data.get(position).focus=false;
-                    holder.smileone.setImageResource(R.drawable.terrible_unselect);
-                }else {
-                    data.get(position).focus=true;
+                    data.get(position).status=1;
                     holder.smileone.setImageResource(R.drawable.terrible_select);
 
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(1),""));
+                    }else
+                    {
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(1),""));
+
+                    }
+
+
+
+                }else
+                {
+                    data.get(position).status=0;
+                    holder.smileone.setImageResource(R.drawable.terrible_unselect);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.remove(index);
+                    }
                 }
-                notifyDataSetChanged();
 
 
                 holder.smiletwo.setImageResource(R.drawable.bad_unselect);
                 holder.smilethree.setImageResource(R.drawable.okay_unselect);
                 holder.smilefour.setImageResource(R.drawable.good_unselect);
                 holder.smilefive.setImageResource(R.drawable.great_unselect);
+
+
             }
         });
         holder.smiletwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                status=true;
+                if(data.get(position).status==0)
+                {
+                    data.get(position).status=1;
+                    holder.smiletwo.setImageResource(R.drawable.bad_select);
+
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(2),""));
+                    }else {
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), ""));
+
+                    }
+                }else
+                {
+                    data.get(position).status=0;
+                    holder.smiletwo.setImageResource(R.drawable.bad_unselect);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.remove(index);
+                    }
+                }
                 holder.smileone.setImageResource(R.drawable.terrible_unselect);
-                holder.smiletwo.setImageResource(R.drawable.bad_select);
                 holder.smilethree.setImageResource(R.drawable.okay_unselect);
                 holder.smilefour.setImageResource(R.drawable.good_unselect);
                 holder.smilefive.setImageResource(R.drawable.great_unselect);
@@ -159,10 +195,28 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.smilethree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                status=true;
+                if(data.get(position).status==0)
+                {
+                    data.get(position).status=1;
+                    holder.smilethree.setImageResource(R.drawable.okay_select);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(3),""));
+                    }else {
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), ""));
+                    }
+
+                }else
+                {
+                    data.get(position).status=0;
+                    holder.smilethree.setImageResource(R.drawable.okay_unselect);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.remove(index);
+                    }
+                }
                 holder.smileone.setImageResource(R.drawable.terrible_unselect);
                 holder.smiletwo.setImageResource(R.drawable.bad_unselect);
-                holder.smilethree.setImageResource(R.drawable.okay_select);
                 holder.smilefour.setImageResource(R.drawable.good_unselect);
                 holder.smilefive.setImageResource(R.drawable.great_unselect);
             }
@@ -171,12 +225,30 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.smilefour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                status=true;
+                if(data.get(position).status==0)
+                {
 
+                    data.get(position).status=1;
+                    holder.smilefour.setImageResource(R.drawable.good_select);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(4),""));
+                    }else {
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), ""));
+                    }
+
+                }else
+                {
+                    data.get(position).status=0;
+                    holder.smilefour.setImageResource(R.drawable.good_unselect);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.remove(index);
+                    }
+                }
                 holder.smileone.setImageResource(R.drawable.terrible_unselect);
                 holder.smiletwo.setImageResource(R.drawable.bad_unselect);
                 holder.smilethree.setImageResource(R.drawable.okay_unselect);
-                holder.smilefour.setImageResource(R.drawable.good_select);
                 holder.smilefive.setImageResource(R.drawable.great_unselect);
             }
         });
@@ -184,12 +256,28 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.smilefive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                status=true;
-                holder.smileone.setImageResource(R.drawable.terrible_unselect);
+                if(data.get(position).status==0)
+                {
+                    data.get(position).status=1;
+                    holder.smilefive.setImageResource(R.drawable.great_select);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(5),""));
+                    }else {
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), ""));
+                    }
+                }else
+                {
+                    data.get(position).status=0;
+                    holder.smilefive.setImageResource(R.drawable.great_unselect);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.remove(index);
+                    }
+                }                holder.smileone.setImageResource(R.drawable.terrible_unselect);
                 holder.smiletwo.setImageResource(R.drawable.bad_unselect);
                 holder.smilethree.setImageResource(R.drawable.okay_unselect);
                 holder.smilefour.setImageResource(R.drawable.good_unselect);
-                holder.smilefive.setImageResource(R.drawable.great_select);
             }
         });
 
@@ -197,7 +285,30 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
 
-                holder.starone.setImageResource(R.drawable.start_select);
+                if(data.get(position).status==0)
+                {
+                    data.get(position).status=1;
+                    holder.starone.setImageResource(R.drawable.start_select);
+
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(1),""));
+                    }else
+                    {
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(1),""));
+                    }
+
+
+                }else
+                {
+                    data.get(position).status=0;
+                    holder.starone.setImageResource(R.drawable.star_unselect);
+                    if(containsData(global.feedbackdata,data.get(position).id))
+                    {
+                        global.feedbackdata.remove(index);
+                    }
+                }
+               // holder.starone.setImageResource(R.drawable.start_select);
                 holder.startwo.setImageResource(R.drawable.star_unselect);
                 holder.starthree.setImageResource(R.drawable.star_unselect);
                 holder.starfour.setImageResource(R.drawable.star_unselect);
@@ -206,6 +317,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.startwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                if(containsData(global.feedbackdata,data.get(position).id))
+                {
+                    global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(2),""));
+                }else
+                {
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(2),""));
+
+                }
 
                 holder.starone.setImageResource(R.drawable.start_select);
                 holder.startwo.setImageResource(R.drawable.start_select);
@@ -217,6 +338,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
 
+                if(containsData(global.feedbackdata,data.get(position).id))
+                {
+                    global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(3),""));
+                }else {
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), ""));
+                }
                 holder.starone.setImageResource(R.drawable.start_select);
                 holder.startwo.setImageResource(R.drawable.start_select);
                 holder.starthree.setImageResource(R.drawable.start_select);
@@ -227,6 +354,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
 
+                if(containsData(global.feedbackdata,data.get(position).id))
+                {
+                    global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(4),""));
+                }else {
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), ""));
+
+                }
                 holder.starone.setImageResource(R.drawable.start_select);
                 holder.startwo.setImageResource(R.drawable.start_select);
                 holder.starthree.setImageResource(R.drawable.start_select);
@@ -250,15 +384,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     }
 
 
-    public boolean isSelect(boolean status)
+    public boolean containsData(ArrayList<FeedBackSelection> list,String id)
     {
-        if(status==true)
+        for(FeedBackSelection feedback:list)
         {
-            return false;
-        }else {
-            return true;
-        }
+            if(feedback.id.equals(id))
+            {
+                 index=list.indexOf(feedback);
+                return  true;
+            }
 
+
+        }
+        return false;
     }
+
 
 }
