@@ -8,5 +8,5 @@
         android:drawable="@drawable/star_unselect"/>
     <item
         android:id="@android:id/progress"
-        android:drawable="@drawable/start_select"/>
+        android:drawable="@drawable/star_select"/>
 </layer-list>

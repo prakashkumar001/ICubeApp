@@ -106,19 +106,26 @@ public class MainActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 dialog.dismiss();
 
-                try {
-                    JSONArray array=new JSONArray(s);
-                    for(int i=0;i<array.length();i++)
-                    {
-                        JSONObject object=array.getJSONObject(i);
-                        String ID=object.getString("ID");
-                        String POSID=object.getString("POSID");
+                if(s.equals("null"))
+                {
 
-                        global.pos=new POS(ID,POSID);
+                }else {
+                    try {
+                        JSONArray array=new JSONArray(s);
+                        for(int i=0;i<array.length();i++)
+                        {
+                            JSONObject object=array.getJSONObject(i);
+                            String ID=object.getString("ID");
+                            String POSID=object.getString("POSID");
+
+                            global.pos=new POS(ID,POSID);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+
+
 
 
                /* data = new ArrayList<>();

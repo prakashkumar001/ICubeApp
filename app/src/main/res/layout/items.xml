@@ -19,39 +19,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="130dp"
             android:background="#bddd"
+            android:gravity="center"
             android:orientation="vertical"
 
             >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-
-                android:orientation="horizontal"
-                android:layout_height="0dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-
-                    >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textSize="20dp"
-                        android:text="Question :"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     >
                     <TextView
                         android:id="@+id/question"
@@ -63,7 +40,6 @@
                         android:text=""
                         />
 
-                </LinearLayout>
 
 
             </LinearLayout>
@@ -72,34 +48,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-
                 android:orientation="horizontal"
-                android:layout_height="0dp">
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
 
-                    >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textSize="20dp"
-                        android:text="Rate Us :"
-                        />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     >
 
                     <LinearLayout
@@ -114,14 +74,15 @@
                         <ImageView
                             android:id="@+id/starone"
                             android:layout_width="35dp"
+                            android:layout_margin="5dp"
                             android:layout_height="35dp"
                             android:tag="1"
-
                             android:src="@drawable/star_unselect"
                             />
                         <ImageView
                             android:id="@+id/startwo"
                             android:tag="2"
+                            android:layout_margin="5dp"
 
                             android:layout_width="35dp"
                             android:layout_height="35dp"
@@ -130,6 +91,7 @@
                         <ImageView
                             android:id="@+id/starthree"
                             android:tag="3"
+                            android:layout_margin="5dp"
 
                             android:layout_width="35dp"
                             android:layout_height="35dp"
@@ -138,6 +100,7 @@
                         <ImageView
                             android:id="@+id/starfour"
                             android:tag="4"
+                            android:layout_margin="5dp"
 
                             android:layout_width="35dp"
                             android:layout_height="35dp"
@@ -154,51 +117,140 @@
                         android:orientation="horizontal"
                         >
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            >
                         <ImageView
                             android:id="@+id/smileone"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginLeft="5dp"
                             android:tag="1"
-
                             android:src="@drawable/terrible_unselect"
                             />
+
+                            <TextView
+                                android:id="@+id/terrible"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="8dp"
+                                android:textColor="#D5D8DA"
+
+                                android:text="Terrible"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+
+                            android:orientation="vertical"
+                            >
                         <ImageView
                             android:id="@+id/smiletwo"
                             android:tag="2"
-                            android:layout_marginLeft="5dp"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/bad_unselect"
 
                             />
+                            <TextView
+                                android:id="@+id/bad"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="8dp"
+                                android:textColor="#D5D8DA"
+
+                                android:text="Bad"
+                                />
+                            </LinearLayout>
+
+                        <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                            android:gravity="center"
+
+                            android:orientation="vertical"
+                        >
                         <ImageView
                             android:id="@+id/smilethree"
                             android:tag="3"
-                            android:layout_marginLeft="5dp"
-
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/okay_unselect"
+                            android:src="@drawable/ok_unselect"
                             />
+                            <TextView
+                                android:id="@+id/okay"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="8dp"
+                                android:textColor="#D5D8DA"
+
+                                android:text="Okay"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+
+                            android:orientation="vertical"
+                            >
                         <ImageView
                             android:id="@+id/smilefour"
                             android:tag="4"
-                            android:layout_marginLeft="5dp"
 
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/good_unselect"
                             />
+                            <TextView
+                                android:id="@+id/good"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="8dp"
+                                android:textColor="#D5D8DA"
+
+                                android:text="Good"
+                                />
+                            </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+
+                            android:orientation="vertical"
+                            >
                         <ImageView
                             android:id="@+id/smilefive"
                             android:tag="4"
-                            android:layout_marginLeft="5dp"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/great_unselect"
                             />
+                            <TextView
+                                android:id="@+id/great"
 
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="8dp"
+                                android:textColor="#D5D8DA"
+                                android:text="Great"
+                                />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
