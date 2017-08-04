@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewpager;
     int page = 0;
     GlobalClass global;
-    Button submit;
+   // Button submit;
     CodeSnippet codeSnippet;
     JSONArray array;
     ProgressDialog dialog;
@@ -53,23 +53,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewpager = (ViewPager) findViewById(R.id.pager_introduction);
-        submit=(Button)findViewById(R.id.submit);
+       // submit=(Button)findViewById(R.id.submit);
         codeSnippet=new CodeSnippet(getApplicationContext());
         global=(GlobalClass)getApplicationContext();
 
 
 
-        submit.setOnClickListener(new View.OnClickListener() {
+        /*submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                if(codeSnippet.hasNetworkConnection())
                {
-                  /* if(array.length()==0)
+                  *//* if(array.length()==0)
                    {
                        responseFromServer();
 
-                   }else {*/
+                   }else {*//*
                        Intent i=new Intent(MainActivity.this,FeedBack.class);
                        startActivity(i);
 
@@ -83,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+*/
+
+        if(codeSnippet.hasNetworkConnection())
+        {
+
+        }else {
+            Snackbar();
+        }
     }
 
 
@@ -130,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 global.pos=new POS(ID,POSID);
                             }
+
+                            switvhtonextscreen();
                         }
 
                     } catch (JSONException e) {
@@ -347,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
                 SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
                 viewpager.setAdapter(adapter);
-                loadimageswithsec(5000);
+                loadimageswithsec(10000);
 
             }
         } new loadimage().execute();;
@@ -358,6 +369,20 @@ public class MainActivity extends AppCompatActivity {
         if ( dialog!=null && dialog.isShowing() ){
             dialog.cancel();
         }
+    }
+
+    public void switvhtonextscreen() {
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            @Override
+            public void run(){
+
+                Intent i=new Intent(MainActivity.this,FeedBack.class);
+                startActivity(i);
+            }
+        }, 30000);
     }
 
 }
