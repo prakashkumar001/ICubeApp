@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.icubeapp.adapters.SliderAdapter;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.POS;
+import com.example.icubeapp.model.Slider;
 import com.example.icubeapp.utils.CodeSnippet;
 import com.example.icubeapp.utils.WSUtils;
 
@@ -39,7 +40,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Integer> data;
+    ArrayList<Slider> data;
     private ViewPager viewpager;
     int page = 0;
     GlobalClass global;
@@ -172,7 +173,9 @@ public class MainActivity extends AppCompatActivity {
         new ResultfromServer().execute();
     }
 
-    public void loadimageswithsec() {
+    public void loadimageswithsec(int sec) {
+
+
         final Handler handler = new Handler();
 
         final Runnable update = new Runnable() {
@@ -199,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 handler.post(update);
             }
-        }, 1000, 5000);
+        }, 1000, sec);
     }
 
     @Override
@@ -217,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
+       /* viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View view, float position) {
                 // do transformation here
@@ -238,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+*/
 
     }
 
@@ -324,9 +327,15 @@ public class MainActivity extends AppCompatActivity {
                 data.add(decodeSampledBitmapFromResource(getResources(),R.drawable.supermarket3,500,1000));
 */
 
-               data.add(R.drawable.car);
-                data.add(R.drawable.cat);
-                data.add(R.drawable.stone);
+               data.add(new Slider("image",R.drawable.car,0));
+                data.add(new Slider("image",R.drawable.cat,0));
+                data.add(new Slider("image",R.drawable.stone,0));
+
+
+                data.add(new Slider("video",0,R.raw.splashvideo));
+                data.add(new Slider("video",0,R.raw.splashvideo));
+
+
 
                 return null;
             }
@@ -338,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
                 SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
                 viewpager.setAdapter(adapter);
-                loadimageswithsec();
+                loadimageswithsec(5000);
 
             }
         } new loadimage().execute();;

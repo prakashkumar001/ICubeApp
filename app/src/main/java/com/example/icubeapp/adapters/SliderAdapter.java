@@ -1,9 +1,12 @@
 package com.example.icubeapp.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +14,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.VideoView;
 
 
+import com.example.icubeapp.MainActivity;
 import com.example.icubeapp.R;
+import com.example.icubeapp.model.Slider;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yqritc.scalablevideoview.ScalableVideoView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -26,10 +34,10 @@ import java.util.ArrayList;
 public class SliderAdapter extends PagerAdapter {
 
     private Context mContext;
-    ArrayList<Integer> data;
+    ArrayList<Slider> data;
     DisplayImageOptions options;
     ImageLoader loader;
-    public SliderAdapter(Context mContext, ArrayList<Integer> data) {
+    public SliderAdapter(Context mContext, ArrayList<Slider> data) {
         this.mContext = mContext;
         this.data = data;
         loader=ImageLoader.getInstance();
@@ -61,9 +69,53 @@ public class SliderAdapter extends PagerAdapter {
                 .build();*/
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
 
+        final ScalableVideoView videoView = (ScalableVideoView)itemView. findViewById(R.id.Videoview);
+
+        //MainActivity a=(MainActivity)mContext;
+        if(data.get(position).type.equals("image"))
+        {
+
+            imageView.setVisibility(View.VISIBLE);
+            videoView.setVisibility(View.GONE);
+            loader.displayImage("drawable://" +data.get(position).image,imageView,options);
+        }else
+        {
+
+            imageView.setVisibility(View.GONE);
+            videoView.setVisibility(View.VISIBLE);
 
 
-        loader.displayImage("drawable://" +data.get(position),imageView,options);
+
+
+            try {
+                videoView.setRawData(R.raw.splashvideo);
+                videoView.setVolume(0, 0);
+                videoView.setLooping(true);
+                videoView.prepare(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        videoView.start();
+                    }
+                });
+            } catch (IOException ioe) {
+                //ignore
+            }
+
+
+           /* String uriPath = "android.resource://com.example.icubeapp/"+data.get(position).videopath;  //update package name
+            Uri uri = Uri.parse(uriPath);
+            mVideoView.setVideoURI(uri);
+            mVideoView.requestFocus();
+            mVideoView.start();
+            mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mVideoView.start();
+                }
+            });*/
+        }
+
+
 
 
         container.addView(itemView);
