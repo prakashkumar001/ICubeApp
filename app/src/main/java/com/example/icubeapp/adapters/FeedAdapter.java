@@ -1,8 +1,10 @@
 package com.example.icubeapp.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.icubeapp.FeedBack;
 import com.example.icubeapp.R;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.FEEDBACK;
@@ -130,13 +133,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.smileone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int heights=  holder.smileone.getHeight();
+                int widths=  holder.smileone.getWidth();
                 if(data.get(position).status==0)
                 {
                     data.get(position).status=1;
-                    holder.smileone.requestLayout();
-                    holder.smileone.getLayoutParams().height = 110;
-                    holder.smileone.getLayoutParams().width = 110;
+
+                    resize(holder.smileone,heights,widths);
                     holder.smileone.setImageResource(R.drawable.terrible_select);
                     holder.terrible.setTextColor(Color.BLACK);
 
@@ -155,7 +158,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 {
                     data.get(position).status=0;
 
-                    resize(holder.smileone,90,90);
+                    resize(holder.smileone,heights,widths);
                     holder.smileone.setImageResource(R.drawable.terrible_unselect);
                     holder.terrible.setTextColor(Color.parseColor("#D5D8DA"));
 
@@ -188,13 +191,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.smiletwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(data.get(position).status==0)
                 {
                     data.get(position).status=1;
                     holder.smiletwo.setImageResource(R.drawable.bad_select);
-                    holder.smiletwo.requestLayout();
-                    holder.smiletwo.getLayoutParams().height = 110;
-                    holder.smiletwo.getLayoutParams().width = 110;
+                    resize(holder.smiletwo,90,90);
+
                     holder.bad.setTextColor(Color.BLACK);
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
@@ -241,9 +244,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 {
                     data.get(position).status=1;
                     holder.smilethree.setImageResource(R.drawable.okay_select);
-                    holder.smilethree.requestLayout();
-                    holder.smilethree.getLayoutParams().height = 110;
-                    holder.smilethree.getLayoutParams().width = 110;
+                    resize(holder.smilethree,90,90);
+
                     holder.okay.setTextColor(Color.BLACK);
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
@@ -290,9 +292,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
                     data.get(position).status=1;
                     holder.smilefour.setImageResource(R.drawable.good_select);
-                    holder.smilefour.requestLayout();
-                    holder.smilefour.getLayoutParams().height = 110;
-                    holder.smilefour.getLayoutParams().width = 110;
+                    resize(holder.smilefour,90,90);
+
                     holder.good.setTextColor(Color.BLACK);
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
@@ -341,9 +342,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 {
                     data.get(position).status=1;
                     holder.smilefive.setImageResource(R.drawable.great_select);
-                    holder.smilefive.requestLayout();
-                    holder.smilefive.getLayoutParams().height = 110;
-                    holder.smilefive.getLayoutParams().width = 110;
+                    resize(holder.smilefive,90,90);
+
                     holder.great.setTextColor(Color.BLACK);
 
                     if(containsData(global.feedbackdata,data.get(position).id))
@@ -503,9 +503,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     public  void resize(ImageView imageView,int height,int width)
     {
         imageView.requestLayout();
-        imageView.getLayoutParams().height = 90;
-        imageView.getLayoutParams().width = 90;
+        imageView.getLayoutParams().height = imageView.getHeight();
+        imageView.getLayoutParams().width = imageView.getWidth();
 
     }
+
+
 
 }

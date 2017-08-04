@@ -189,6 +189,8 @@ public class FeedBack extends AppCompatActivity {
 
                 try {
                     JSONArray array = new JSONArray(s);
+
+
                     if(array.length()==0)
                     {
                         Intent i=new Intent(FeedBack.this,ThankyouPage.class);

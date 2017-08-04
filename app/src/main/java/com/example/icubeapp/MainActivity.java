@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     GlobalClass global;
     Button submit;
     CodeSnippet codeSnippet;
-
+    JSONArray array;
     ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
                if(codeSnippet.hasNetworkConnection())
                {
-                   Intent i=new Intent(MainActivity.this,FeedBack.class);
-                   startActivity(i);
+                  /* if(array.length()==0)
+                   {
+                       responseFromServer();
+
+                   }else {*/
+                       Intent i=new Intent(MainActivity.this,FeedBack.class);
+                       startActivity(i);
+
+                  // }
 
                }else
                {
@@ -106,20 +113,24 @@ public class MainActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 dialog.dismiss();
 
-                if(s.equals("null"))
-                {
 
-                }else {
                     try {
-                        JSONArray array=new JSONArray(s);
-                        for(int i=0;i<array.length();i++)
+                         array=new JSONArray(s);
+                        if(array.length()==0)
                         {
-                            JSONObject object=array.getJSONObject(i);
-                            String ID=object.getString("ID");
-                            String POSID=object.getString("POSID");
+                            Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
+                        }else
+                        {
+                            for(int i=0;i<array.length();i++)
+                            {
+                                JSONObject object=array.getJSONObject(i);
+                                String ID=object.getString("ID");
+                                String POSID=object.getString("POSID");
 
-                            global.pos=new POS(ID,POSID);
+                                global.pos=new POS(ID,POSID);
+                            }
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -156,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 */
 
-            }
+
         }
         new ResultfromServer().execute();
     }
