@@ -417,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i=new Intent(MainActivity.this,FeedBack.class);
                 startActivity(i);
             }
-        }, 12000);
+        }, 30000);
     }
     protected void onStop() {
         super.onStop();

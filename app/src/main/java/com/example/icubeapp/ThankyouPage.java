@@ -3,6 +3,7 @@ package com.example.icubeapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,21 +15,27 @@ import android.widget.Button;
  */
 
 public class ThankyouPage extends AppCompatActivity {
-    Button submit;
+    //Button submit;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thankyou);
-        submit=(Button)findViewById(R.id.submit);
+        //submit=(Button)findViewById(R.id.submit);
 
-        submit.setOnClickListener(new View.OnClickListener() {
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable(){
             @Override
-            public void onClick(View v) {
-                ThankyouPage.this.finish();
+            public void run(){
 
+                Intent i=new Intent(ThankyouPage.this,Splash.class);
+                startActivity(i);
+                ActivityCompat.finishAffinity(ThankyouPage.this);
 
             }
-        });
+        }, 15000);
+
+
     }
 
     @Override
