@@ -68,7 +68,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected String doInBackground(String... strings) {
 
-                String response = new WSUtils().getResultFromHttpRequest("http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=1&ExtraString2=1234&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
+                String response = new WSUtils().getResultFromHttpRequest("http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=2&ExtraString2=1234&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
 
                 Log.i("RESPONSE", "RESPOSE" + response);
                 return response;
@@ -143,13 +143,17 @@ public class FeedBack extends AppCompatActivity {
                 String fbcomment="";
 
 
+
                 for (int i = 0; i < global.feedbackdata.size(); i++) {
+
+
+
                     detid=detid+(global.feedbackdata.get(i).id)+"^";
                     // detid=detid+"^";
                     fbmid=fbmid+(global.feedbackdata.get(i).id)+"^";
                     fbvalue=fbvalue+(global.feedbackdata.get(i).rating)+"^";
                     fbcomment=fbcomment+(global.feedbackdata.get(i).comment)+"^";
-                    Log.i("DDDDDDDDd", "DDDDDDDdd" + global.feedbackdata.get(i).rating);
+
 
 
                 }
@@ -159,6 +163,7 @@ public class FeedBack extends AppCompatActivity {
                 datas.add(detid);
                 datas.add(fbmid);
                 datas.add(fbvalue);
+                datas.add(fbcomment);
 
                 for(int i=0;i<datas.size();i++)
                 {
@@ -169,7 +174,7 @@ public class FeedBack extends AppCompatActivity {
 
 
 
-                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.id+"&DetID=0^0&FBMID=" + values.get(1) + "&FBValue=" + values.get(2) + "&FBComment=test^test" + "&User=emp0001";
+                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID=0^0&FBMID=" + values.get(1) + "&FBValue=" + values.get(2) + "&FBComment="+values.get(3) + "&User=emp0001";
 
                 Log.i("URL", "URL" + url);
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());

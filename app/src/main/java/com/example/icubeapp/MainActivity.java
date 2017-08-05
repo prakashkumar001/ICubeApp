@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     CodeSnippet codeSnippet;
     JSONArray array;
     ProgressDialog dialog;
+    Handler handler;
+    Runnable runnable;
+    int sec=3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                          array=new JSONArray(s);
                         if(array.length()==0)
                         {
+                            responseFromServer();
                             Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
                         }else
                         {
@@ -184,12 +188,12 @@ public class MainActivity extends AppCompatActivity {
         new ResultfromServer().execute();
     }
 
-    public void loadimageswithsec(int sec) {
+    public void loadimageswithsec() {
 
 
-        final Handler handler = new Handler();
+          handler = new Handler();
 
-        final Runnable update = new Runnable() {
+         runnable = new Runnable() {
             public void run() {
                                   /*  if (getItem() == 2 - 1) {
                                         page = 0;
@@ -211,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                handler.post(update);
+                handler.post(runnable);
             }
         }, 1000, sec);
     }
@@ -231,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       /* viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
+        viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View view, float position) {
                 // do transformation here
@@ -252,7 +256,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-*/
+        viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.i("SCREOLL","SCROLL"+viewpager.getCurrentItem());
+                page=position;
+                if(data.get(position).type.equals("video"))
+                {
+                    sec=Integer.parseInt(data.get(position).videosec);
+
+
+                }else {
+                    sec=Integer.parseInt(data.get(position).imgsec);
+
+                }
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+
+                //loadimageswithsec(3000);
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
     }
 
@@ -338,13 +373,13 @@ public class MainActivity extends AppCompatActivity {
                 data.add(decodeSampledBitmapFromResource(getResources(),R.drawable.supermarket3,500,1000));
 */
 
-               data.add(new Slider("image",R.drawable.car,0));
-                data.add(new Slider("image",R.drawable.cat,0));
-                data.add(new Slider("image",R.drawable.stone,0));
+               data.add(new Slider("image",R.drawable.car,0,"","5000"));
+                data.add(new Slider("image",R.drawable.cat,0,"","5000"));
+                data.add(new Slider("image",R.drawable.stone,0,"","5000"));
 
 
-                data.add(new Slider("video",0,R.raw.splashvideo));
-                data.add(new Slider("video",0,R.raw.splashvideo));
+                data.add(new Slider("video",0,R.raw.splashvideo,"10000",""));
+                data.add(new Slider("video",0,R.raw.splashvideo,"10000",""));
 
 
 
@@ -358,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
                 SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
                 viewpager.setAdapter(adapter);
-                loadimageswithsec(10000);
+                loadimageswithsec();
 
             }
         } new loadimage().execute();;
@@ -382,7 +417,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent i=new Intent(MainActivity.this,FeedBack.class);
                 startActivity(i);
             }
-        }, 30000);
+        }, 12000);
     }
-
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacks(runnable);
+    }
 }

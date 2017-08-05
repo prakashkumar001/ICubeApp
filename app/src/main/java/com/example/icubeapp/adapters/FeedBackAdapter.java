@@ -88,11 +88,17 @@ public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.MyView
             holder.smileRating.setVisibility(View.VISIBLE);
             holder.ratingstar.setVisibility(View.GONE);
 
+
+
         }else {
             holder.ratingstar.setVisibility(View.VISIBLE);
             holder.smileRating.setVisibility(View.GONE);
 
+
+
         }
+
+        Log.i("DDDDDDDDd", "DDDDDDDdd" + global.feedbackdata);
        // holder.smileRating.setVisibility(View.VISIBLE);
 
         holder.smileRating.setOnSmileySelectionListener(new SmileRating.OnSmileySelectionListener() {

@@ -123,10 +123,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         {
             holder.smileRating.setVisibility(View.VISIBLE);
             holder.ratingstar.setVisibility(View.GONE);
+            global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,"0",""));
+
 
         }else {
             holder.ratingstar.setVisibility(View.VISIBLE);
             holder.smileRating.setVisibility(View.GONE);
+            global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,"0",""));
 
         }
 
