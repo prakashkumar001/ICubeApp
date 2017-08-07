@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     TimerTask timerTask=null;
     Timer timer=null;
     CountDownTimer countDownTimer;
+    boolean doubleBackToExitPressedOnce=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -281,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
     public void switvhtonextscreen() {
 
 
-        Handler handler = new Handler();
+         handler = new Handler();
         handler.postDelayed(new Runnable(){
             @Override
             public void run(){
@@ -329,5 +330,36 @@ public class MainActivity extends AppCompatActivity {
         loadFragments(global.position);
     }
 
+    @Override
+    public void onBackPressed() {
 
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            if(countDownTimer!=null)
+            {
+                countDownTimer.cancel();
+            }
+            if(handler!=null)
+            {
+                handler.removeCallbacksAndMessages(null);
+            }
+
+
+            finish();
+
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+
+    }
 }
