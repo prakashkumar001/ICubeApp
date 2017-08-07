@@ -8,14 +8,12 @@ public class Slider {
     public String type;
     public Integer image;
     public Integer videopath;
-    public String videosec;
-    public String imgsec;
+    public String sec;
 
-    public Slider(String type, Integer image, Integer videopath,String videosec,String imgsec) {
+    public Slider(String type, Integer image, Integer videopath,String sec) {
         this.type = type;
         this.image = image;
         this.videopath = videopath;
-        this.videosec=videosec;
-        this.imgsec=imgsec;
+        this.sec=sec;
     }
 }

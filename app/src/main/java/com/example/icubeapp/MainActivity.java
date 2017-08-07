@@ -1,29 +1,27 @@
 package com.example.icubeapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.icubeapp.adapters.SliderAdapter;
 import com.example.icubeapp.common.GlobalClass;
+import com.example.icubeapp.fragments.HomeSlider;
 import com.example.icubeapp.model.POS;
 import com.example.icubeapp.model.Slider;
 import com.example.icubeapp.utils.CodeSnippet;
@@ -39,59 +37,34 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-
+    public int secs;
     ArrayList<Slider> data;
-    private ViewPager viewpager;
     int page = 0;
     GlobalClass global;
    // Button submit;
     CodeSnippet codeSnippet;
     JSONArray array;
     ProgressDialog dialog;
-    Handler handler;
+    Handler handler=new Handler();
     Runnable runnable;
     int sec=3000;
+    TimerTask timerTask=null;
+    Timer timer=null;
+    CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewpager = (ViewPager) findViewById(R.id.pager_introduction);
-       // submit=(Button)findViewById(R.id.submit);
         codeSnippet=new CodeSnippet(getApplicationContext());
         global=(GlobalClass)getApplicationContext();
 
 
 
-        /*submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-               if(codeSnippet.hasNetworkConnection())
-               {
-                  *//* if(array.length()==0)
-                   {
-                       responseFromServer();
-
-                   }else {*//*
-                       Intent i=new Intent(MainActivity.this,FeedBack.class);
-                       startActivity(i);
-
-                  // }
-
-               }else
-               {
-                   Snackbar();
-               }
-
-            }
-        });
-
-
-*/
 
         if(codeSnippet.hasNetworkConnection())
         {
-
+            responseFromServer();
+            loadimagefromresource();
         }else {
             Snackbar();
         }
@@ -155,108 +128,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-               /* data = new ArrayList<>();
-
-                JSONObject object = null;
-                try {
-                    object = new JSONObject(s);
-                    JSONArray array = object.getJSONArray("slider");
-                    Log.i("CCCCCCCCCCC", "CCCCCCCCCCCCCCCC" + array);
-
-                    for (int i = 0; i < array.length(); i++) {
-
-                        JSONObject ob = array.getJSONObject(i);
-                        String img = ob.getString("slider_img");
-
-                        //data.add("http://bbaministries.org/uploads/sliders/" + img);
-
-
-                    }
-
-                    SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
-                    viewpager.setAdapter(adapter);
-                    loadimageswithsec();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-*/
-
 
         }
         new ResultfromServer().execute();
     }
 
-    public void loadimageswithsec() {
-
-
-          handler = new Handler();
-
-         runnable = new Runnable() {
-            public void run() {
-                                  /*  if (getItem() == 2 - 1) {
-                                        page = 0;
-                                    }*/
-                if (data.size() == page) {
-                    page = 0;
-                    viewpager.setCurrentItem(page);
-                } else {
-                    viewpager.setCurrentItem(page++);
-
-                }
-
-
-            }
-        };
-
-
-        new Timer().schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                handler.post(runnable);
-            }
-        }, 1000, sec);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(codeSnippet.hasNetworkConnection())
-        {
-            responseFromServer();
-        }else
-        {
-           Snackbar();
-        }
-
-        loadimagefromresource();
 
 
 
-        viewpager.setPageTransformer(false, new ViewPager.PageTransformer() {
-            @Override
-            public void transformPage(View view, float position) {
-                // do transformation here
-                //page.animate()==null;
-                final Animation animationFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
-                view.startAnimation(animationFadeIn);
 
-                view.setTranslationX(view.getWidth() * -position);
-
-                if(position <= -1.0F || position >= 1.0F) {
-                    view.setAlpha(0.0F);
-                } else if( position == 0.0F ) {
-                    view.setAlpha(1.0F);
-                } else {
-                    // position is between -1.0F & 0.0F OR 0.0F & 1.0F
-                    view.setAlpha(1.0F - Math.abs(position));
-                }
-            }
-        });
-
-        viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      /*  viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Log.i("SCREOLL","SCROLL"+viewpager.getCurrentItem());
@@ -286,10 +167,10 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
 
 
-    }
+
 
     public void Snackbar()
     {
@@ -367,20 +248,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(Void... params) {
-                data = new ArrayList<>();
-               /* data.add(decodeSampledBitmapFromResource(getResources(),R.drawable.supermarket,500,1000));
-                data.add(decodeSampledBitmapFromResource(getResources(),R.drawable.supermarket2,500,1000));
-                data.add(decodeSampledBitmapFromResource(getResources(),R.drawable.supermarket3,500,1000));
-*/
-
-               data.add(new Slider("image",R.drawable.car,0,"","5000"));
-                data.add(new Slider("image",R.drawable.cat,0,"","5000"));
-                data.add(new Slider("image",R.drawable.stone,0,"","5000"));
-
-
-                data.add(new Slider("video",0,R.raw.splashvideo,"10000",""));
-                data.add(new Slider("video",0,R.raw.splashvideo,"10000",""));
-
+                global.data = new ArrayList<>();
+                global.data.add(new Slider("image",R.drawable.car,0,"5000"));
+                global.data.add(new Slider("image",R.drawable.cat,0,"5000"));
+                global.data.add(new Slider("video",0,R.raw.video,"10000"));
+                global.data.add(new Slider("image",R.drawable.stone,0,"5000"));
 
 
                 return null;
@@ -391,9 +263,9 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 dialog.dismiss();
-                SliderAdapter adapter = new SliderAdapter(MainActivity.this, data);
-                viewpager.setAdapter(adapter);
-                loadimageswithsec();
+                secs= Integer.parseInt(global.data.get(global.position).sec);
+                //loadimageswithsec(secs);
+                countdown();
 
             }
         } new loadimage().execute();;
@@ -414,13 +286,48 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run(){
 
+                countDownTimer.cancel();
                 Intent i=new Intent(MainActivity.this,FeedBack.class);
                 startActivity(i);
+                finish();
+
             }
         }, 30000);
     }
-    protected void onStop() {
-        super.onStop();
-        handler.removeCallbacks(runnable);
+
+    private void loadFragments( int position) {
+        HomeSlider newFragment = new HomeSlider();
+        Bundle b=new Bundle();
+        b.putString("position", String.valueOf(position));
+
+        newFragment.setArguments(b);
+        FragmentTransaction transcation=getSupportFragmentManager().beginTransaction();
+        transcation.setCustomAnimations(R.anim.fadein,R.anim.fadeout);
+        transcation.replace(R.id.container,newFragment,newFragment.getClass().getSimpleName()).commit();
+
+// Commit the transaction
     }
+
+
+    public void countdown()
+    {
+        long secs=Long.parseLong(global.data.get(global.position).sec);
+         countDownTimer = new CountDownTimer(secs, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+            }
+
+            public void onFinish() {
+
+              Log.i("POSTIOM","POSITION"+global.position+"pppp"+global.data.size());
+
+                    countdown();
+
+
+            }
+        }.start();
+        loadFragments(global.position);
+    }
+
+
 }

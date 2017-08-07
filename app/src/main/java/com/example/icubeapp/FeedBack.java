@@ -1,15 +1,12 @@
 package com.example.icubeapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.icubeapp.adapters.FeedAdapter;
-import com.example.icubeapp.adapters.FeedBackAdapter;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.FEEDBACK;
-import com.example.icubeapp.model.POS;
 import com.example.icubeapp.utils.CodeSnippet;
 import com.example.icubeapp.utils.WSUtils;
 
@@ -158,7 +153,7 @@ public class FeedBack extends AppCompatActivity {
 
                 }
 
-                ArrayList<String> datas=new ArrayList<>();
+               /* ArrayList<String> datas=new ArrayList<>();
                 ArrayList<String> values=new ArrayList<>();
                 datas.add(detid);
                 datas.add(fbmid);
@@ -170,11 +165,11 @@ public class FeedBack extends AppCompatActivity {
                     String value=removeLastChar(datas.get(i));
                     values.add(value);
                 }
+*/
 
 
 
-
-                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID=0^0&FBMID=" + values.get(1) + "&FBValue=" + values.get(2) + "&FBComment="+values.get(3) + "&User=emp0001";
+                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID=0^0^&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User=emp0001";
 
                 Log.i("URL", "URL" + url);
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
@@ -290,6 +285,11 @@ public class FeedBack extends AppCompatActivity {
         return s.substring(0, s.length()-1);
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(FeedBack.this,MainActivity.class);
+        startActivity(i);
+        finish();
+    }
 }

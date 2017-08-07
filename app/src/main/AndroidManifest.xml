@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Splash"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"
 
             >
             <intent-filter>
@@ -26,15 +26,15 @@
         </activity>
         <activity android:name=".FeedBack"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"
             />
         <activity android:name=".ThankyouPage"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"
             />
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"
             />
     </application>
 

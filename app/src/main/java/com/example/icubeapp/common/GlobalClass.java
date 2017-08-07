@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import com.example.icubeapp.model.FEEDBACK;
 import com.example.icubeapp.model.FeedBackSelection;
 import com.example.icubeapp.model.POS;
+import com.example.icubeapp.model.Slider;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -25,9 +26,8 @@ public class GlobalClass extends Application {
     public static POS pos;
     public static ArrayList<FEEDBACK> feedback=new ArrayList<>();
     public static ArrayList<FeedBackSelection> feedbackdata=new ArrayList<>();
-    public static ArrayList<FeedBackSelection> feedbackdata2=new ArrayList<>();
-
-
+    public static ArrayList<Slider> data=new ArrayList<>();
+    public static int position=0;
     public void onCreate() {
 
 
