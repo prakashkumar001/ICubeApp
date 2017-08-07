@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.fragments.HomeSlider;
+import com.example.icubeapp.interfaces.loadfragment;
 import com.example.icubeapp.model.POS;
 import com.example.icubeapp.model.Slider;
 import com.example.icubeapp.utils.CodeSnippet;
@@ -36,7 +38,7 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements loadfragment {
     public int secs;
     ArrayList<Slider> data;
     int page = 0;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     int sec=3000;
     TimerTask timerTask=null;
     Timer timer=null;
-    CountDownTimer countDownTimer;
+    public static CountDownTimer countDownTimer;
     boolean doubleBackToExitPressedOnce=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(codeSnippet.hasNetworkConnection())
-        {
-            responseFromServer();
-            loadimagefromresource();
-        }else {
-            Snackbar();
-        }
+
     }
 
 
@@ -134,11 +130,20 @@ public class MainActivity extends AppCompatActivity {
         new ResultfromServer().execute();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(codeSnippet.hasNetworkConnection())
+        {
+            responseFromServer();
+            loadimagefromresource();
+        }else {
+            Snackbar();
+        }
+    }
 
 
-
-
-      /*  viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+/*  viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Log.i("SCREOLL","SCROLL"+viewpager.getCurrentItem());
@@ -296,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         }, 30000);
     }
 
-    private void loadFragments( int position) {
+   /* private void loadFragments( int position) {
         HomeSlider newFragment = new HomeSlider();
         Bundle b=new Bundle();
         b.putString("position", String.valueOf(position));
@@ -307,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         transcation.replace(R.id.container,newFragment,newFragment.getClass().getSimpleName()).commit();
 
 // Commit the transaction
-    }
+    }*/
 
 
     public void countdown()
@@ -327,7 +332,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }.start();
-        loadFragments(global.position);
+        HomeSlider slider=new HomeSlider();
+        loadFragment(slider,global.position);
     }
 
     @Override
@@ -360,6 +366,19 @@ public class MainActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
+
+    }
+
+    @Override
+    public void loadFragment(Fragment fragment,int position) {
+        HomeSlider newFragment = new HomeSlider();
+        Bundle b=new Bundle();
+        b.putString("position", String.valueOf(position));
+
+        newFragment.setArguments(b);
+        FragmentTransaction transcation=getSupportFragmentManager().beginTransaction();
+        transcation.setCustomAnimations(R.anim.fadeinact,R.anim.fadeoutact);
+        transcation.replace(R.id.container,newFragment,newFragment.getClass().getSimpleName()).commit();
 
     }
 }

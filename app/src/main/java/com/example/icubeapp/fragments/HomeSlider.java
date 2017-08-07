@@ -2,16 +2,21 @@ package com.example.icubeapp.fragments;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.icubeapp.MainActivity;
 import com.example.icubeapp.R;
 import com.example.icubeapp.common.GlobalClass;
+import com.example.icubeapp.interfaces.loadfragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yqritc.scalablevideoview.ScalableVideoView;
 
@@ -27,6 +32,7 @@ public class HomeSlider extends Fragment {
     ScalableVideoView videoView;
     GlobalClass globalClass;
     String page;
+    loadfragment interfaces;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class HomeSlider extends Fragment {
         globalClass=new GlobalClass();
 
         loader=ImageLoader.getInstance();
+        interfaces=(loadfragment)getActivity();
 
         Bundle b=getArguments();
         page=b.getString("position");
@@ -44,6 +51,22 @@ public class HomeSlider extends Fragment {
 
 
         fetchData();
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                if(MainActivity.countDownTimer!=null)
+                {
+                    MainActivity.countDownTimer.cancel();
+                    countdown();
+
+                }
+
+                return false;
+            }
+        });
 
 
         return  view;
@@ -91,4 +114,37 @@ public class HomeSlider extends Fragment {
             globalClass.position=Integer.parseInt(page)+1;
         }
     }
+
+   /* private void loadFragments( int position) {
+        HomeSlider newFragment = new HomeSlider();
+        Bundle b=new Bundle();
+        b.putString("position", String.valueOf(position));
+
+        newFragment.setArguments(b);
+        FragmentTransaction transcation=getActivity().getSupportFragmentManager().beginTransaction();
+        transcation.setCustomAnimations(R.anim.fadein,R.anim.fadeout);
+        transcation.replace(R.id.container,newFragment,newFragment.getClass().getSimpleName()).commit();
+
+// Commit the transaction
+    }*/
+    public void countdown()
+    {
+        long secs=Long.parseLong(globalClass.data.get(globalClass.position).sec);
+        MainActivity.countDownTimer = new CountDownTimer(secs, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+            }
+
+            public void onFinish() {
+
+
+                countdown();
+
+
+            }
+        }.start();
+        HomeSlider slider=new HomeSlider();
+        interfaces.loadFragment(slider,globalClass.position);
+    }
+
 }
