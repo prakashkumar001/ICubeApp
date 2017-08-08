@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,6 +17,7 @@ import android.widget.Button;
 
 public class ThankyouPage extends AppCompatActivity {
     //Button submit;
+    Handler handler;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +25,7 @@ public class ThankyouPage extends AppCompatActivity {
         //submit=(Button)findViewById(R.id.submit);
 
 
-        Handler handler = new Handler();
+         handler = new Handler();
         handler.postDelayed(new Runnable(){
             @Override
             public void run(){
@@ -40,6 +42,21 @@ public class ThankyouPage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        Log.d("Test", "Home button pressed!");
+
+        if(handler!=null)
+        {
+            handler.removeCallbacksAndMessages(null);
+        }
+
+            ActivityCompat.finishAffinity(ThankyouPage.this);
 
     }
 }
