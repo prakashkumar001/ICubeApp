@@ -1,7 +1,10 @@
 package com.example.icubeapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -16,10 +19,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.icubeapp.adapters.FeedAdapter;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.FEEDBACK;
+import com.example.icubeapp.model.POS;
 import com.example.icubeapp.utils.CodeSnippet;
 import com.example.icubeapp.utils.WSUtils;
 
@@ -27,8 +32,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Prakash on 7/23/2017.
@@ -39,7 +47,8 @@ public class FeedBack extends AppCompatActivity {
     RecyclerView list;
     Button submit;
     CodeSnippet codeSnippet;
-
+    JSONArray array;
+    String macaddress;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +72,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected String doInBackground(String... strings) {
 
-                String response = new WSUtils().getResultFromHttpRequest("http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=2&ExtraString2=1234&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
+                String response = new WSUtils().getResultFromHttpRequest("http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=1&ExtraString2="+"1234"+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
 
                 Log.i("RESPONSE", "RESPOSE" + response);
                 return response;
@@ -88,7 +97,7 @@ public class FeedBack extends AppCompatActivity {
                         String RatingType = object.getString("RatingType");
                         String OutOf = object.getString("OutOf");
 
-                        FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,0);
+                        FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,0,"");
                         global.feedback.add(feedback);
                     }
 
@@ -119,6 +128,7 @@ public class FeedBack extends AppCompatActivity {
                 dialog = new ProgressDialog(FeedBack.this);
                 dialog.setMessage("Loading....");
                 dialog.show();
+
             }
 
             @Override
@@ -171,7 +181,7 @@ public class FeedBack extends AppCompatActivity {
 
                 String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID=0^0^&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User=emp0001";
 
-                Log.i("URL", "URL" + url);
+
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
 
                 Log.i("RESPONSE", "RESPOSE" + response);
@@ -255,7 +265,7 @@ public class FeedBack extends AppCompatActivity {
 
         if(codeSnippet.hasNetworkConnection())
         {
-            responseFromServer();
+           getPOSId();
         }else
         {
             Snackbar();
@@ -288,8 +298,95 @@ public class FeedBack extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i=new Intent(FeedBack.this,MainActivity.class);
+        Intent i=new Intent(FeedBack.this,Splash.class);
         startActivity(i);
         finish();
     }
+
+    public void getPOSId() {
+        class ResultfromServer extends AsyncTask<String, Void, String> {
+
+            ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                dialog = new ProgressDialog(FeedBack.this);
+                dialog.setMessage("Loading....");
+                dialog.show();
+                macaddress = getMacAddr();
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+
+                String url="http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1="+macaddress+"&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
+                String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
+
+
+                Log.i("RESPONSE","RESPOSE"+url +response);
+                return response;
+            }
+
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                dialog.dismiss();
+
+
+                try {
+                    array=new JSONArray(s);
+                    if(array.length()==0)
+                    {
+                        responseFromServer();
+                        Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
+                    }else
+                    {
+                        for(int i=0;i<array.length();i++)
+                        {
+                            JSONObject object=array.getJSONObject(i);
+                            String ID=object.getString("ID");
+                            String POSID=object.getString("POSID");
+
+                            global.pos=new POS(ID,POSID);
+                        }
+
+                        responseFromServer();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
+
+
+        }
+        new ResultfromServer().execute();
+    }
+
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;  //instead of wlan0 i used eth0
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(String.format("%02X:",b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+
+                return res1.toString();
+            }} catch (Exception ex) {
+        }return "02:00:00:00:00:00";}
 }

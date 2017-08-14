@@ -23,7 +23,7 @@ public class GlobalClass extends Application {
 
     private static GlobalClass mInstance;
 
-    public static POS pos;
+    public static POS pos=new POS();
     public static ArrayList<FEEDBACK> feedback=new ArrayList<>();
     public static ArrayList<FeedBackSelection> feedbackdata=new ArrayList<>();
     public static ArrayList<Slider> data=new ArrayList<>();

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,8 +43,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         public TextView question;
         LinearLayout smileRating;
         LinearLayout ratingstar;
+        LinearLayout commentbox;
         ImageView smileone, smiletwo, smilethree, smilefour, smilefive;
         TextView terrible, bad, okay, good, great;
+        TextView comments;
 
         ImageView starone, startwo, starthree, starfour;
 
@@ -51,6 +55,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             question = (TextView) view.findViewById(R.id.question);
             smileRating = (LinearLayout) view.findViewById(R.id.smile);
             ratingstar = (LinearLayout) view.findViewById(R.id.star);
+             commentbox = (LinearLayout) view.findViewById(R.id.commentbox);
+            comments=(TextView)view.findViewById(R.id.comments);
 
             //smiley
             smileone = (ImageView) view.findViewById(R.id.smileone);
@@ -123,15 +129,56 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         {
             holder.smileRating.setVisibility(View.VISIBLE);
             holder.ratingstar.setVisibility(View.GONE);
-            global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,"0",""));
+            holder.commentbox.setVisibility(View.GONE);
+            global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,"0",data.get(position).comment));
 
 
-        }else {
+        }else if(data.get(position).rating_type.equalsIgnoreCase("2")) {
             holder.ratingstar.setVisibility(View.VISIBLE);
             holder.smileRating.setVisibility(View.GONE);
-            global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,"0",""));
+            holder.commentbox.setVisibility(View.GONE);
+
+
+            global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,"0",data.get(position).comment));
+
+        }else
+        {
+            holder.ratingstar.setVisibility(View.GONE);
+            holder.smileRating.setVisibility(View.GONE);
+            holder.commentbox.setVisibility(View.VISIBLE);
+
+
+            global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,"0",data.get(position).comment));
 
         }
+
+        holder.comments.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String comment=s.toString();
+                if(containsData(global.feedbackdata,data.get(position).id))
+                {
+                    global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,comment,comment));
+                }else
+                {
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,comment,comment));
+
+                }
+            }
+        });
+
 
         holder.smileone.setOnClickListener(new View.OnClickListener() {
             @Override

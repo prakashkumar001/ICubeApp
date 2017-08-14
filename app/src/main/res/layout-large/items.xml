@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:textSize="20dp"
+                        android:textSize="25dp"
                         android:text=""
                         />
 
@@ -73,9 +73,9 @@
 
                         <ImageView
                             android:id="@+id/starone"
-                            android:layout_width="50dp"
+                            android:layout_width="80dp"
                             android:layout_margin="10dp"
-                            android:layout_height="50dp"
+                            android:layout_height="80dp"
                             android:tag="1"
                             android:src="@drawable/star_unselect"
                             />
@@ -84,8 +84,8 @@
                             android:tag="2"
                             android:layout_margin="10dp"
 
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:src="@drawable/star_unselect"
                             />
                         <ImageView
@@ -93,8 +93,8 @@
                             android:tag="3"
                             android:layout_margin="10dp"
 
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:src="@drawable/star_unselect"
                             />
                         <ImageView
@@ -102,8 +102,8 @@
                             android:tag="4"
                             android:layout_margin="10dp"
 
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:src="@drawable/star_unselect"
                             />
 
@@ -126,8 +126,8 @@
                             >
                         <ImageView
                             android:id="@+id/smileone"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:tag="1"
                             android:src="@drawable/terrible_unselect"
                             />
@@ -136,7 +136,7 @@
                                 android:id="@+id/terrible"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12dp"
+                                android:textSize="16dp"
                                 android:textColor="#D5D8DA"
 
                                 android:text="Terrible"
@@ -154,8 +154,8 @@
                         <ImageView
                             android:id="@+id/smiletwo"
                             android:tag="2"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:src="@drawable/bad_unselect"
 
                             />
@@ -164,7 +164,7 @@
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12dp"
+                                android:textSize="16dp"
                                 android:textColor="#D5D8DA"
 
                                 android:text="Bad"
@@ -182,8 +182,8 @@
                         <ImageView
                             android:id="@+id/smilethree"
                             android:tag="3"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:src="@drawable/ok_unselect"
                             />
                             <TextView
@@ -191,7 +191,7 @@
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12dp"
+                                android:textSize="16dp"
                                 android:textColor="#D5D8DA"
 
                                 android:text="Okay"
@@ -210,8 +210,8 @@
                             android:id="@+id/smilefour"
                             android:tag="4"
 
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:src="@drawable/good_unselect"
                             />
                             <TextView
@@ -219,7 +219,7 @@
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12dp"
+                                android:textSize="16dp"
                                 android:textColor="#D5D8DA"
 
                                 android:text="Good"
@@ -237,8 +237,8 @@
                         <ImageView
                             android:id="@+id/smilefive"
                             android:tag="4"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:src="@drawable/great_unselect"
                             />
                             <TextView
@@ -246,12 +246,32 @@
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12dp"
+                                android:textSize="16dp"
                                 android:textColor="#D5D8DA"
                                 android:text="Great"
                                 />
                         </LinearLayout>
                     </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/commentbox"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+
+                    <EditText
+                        android:id="@+id/comments"
+                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:text=""
+                        android:background="@android:color/white"
+                        android:layout_height="50dp" />
+
                 </LinearLayout>
 
 

@@ -40,7 +40,7 @@ public class Splash extends AwesomeSplash {
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         finish();
 */
-        Intent i=new Intent(Splash.this,MainActivity.class);
+        Intent i=new Intent(Splash.this,FeedBack.class);
         startActivity(i);
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         finish();

@@ -113,6 +113,7 @@
                         android:id="@+id/smile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:gravity="center"
                         android:orientation="horizontal"
                         >
@@ -254,6 +255,27 @@
                     </LinearLayout>
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:id="@+id/commentbox"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+
+                    <EditText
+                        android:id="@+id/comments"
+                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:text=""
+                        android:background="@android:color/white"
+                        android:layout_height="50dp" />
+
+                    </LinearLayout>
 
             </LinearLayout>
 
