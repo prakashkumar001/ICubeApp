@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +50,8 @@ public class FeedBack extends AppCompatActivity {
     CodeSnippet codeSnippet;
     JSONArray array;
     String macaddress;
+    boolean doubleBackToExitPressedOnce=false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -297,10 +300,16 @@ public class FeedBack extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent i=new Intent(FeedBack.this,Splash.class);
-        startActivity(i);
-        finish();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+
+            ActivityCompat.finishAffinity(FeedBack.this);
+
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
     }
 
     public void getPOSId() {

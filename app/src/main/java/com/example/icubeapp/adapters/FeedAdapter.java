@@ -190,7 +190,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     data.get(position).status=1;
 
                     resize(holder.smileone,heights,widths);
-                    holder.smileone.setImageResource(R.drawable.terrible_select);
+                    holder.smileone.setImageResource(R.mipmap.terrible_select);
                     holder.terrible.setTextColor(Color.BLACK);
 
                     if(containsData(global.feedbackdata,data.get(position).id))
@@ -209,7 +209,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     data.get(position).status=0;
 
                     resize(holder.smileone,heights,widths);
-                    holder.smileone.setImageResource(R.drawable.terrible_unselect);
+                    holder.smileone.setImageResource(R.mipmap.terrible_unselect);
                     holder.terrible.setTextColor(Color.parseColor("#D5D8DA"));
 
                     if(containsData(global.feedbackdata,data.get(position).id))
@@ -219,10 +219,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 }
 
 
-                holder.smiletwo.setImageResource(R.drawable.bad_unselect);
-                holder.smilethree.setImageResource(R.drawable.ok_unselect);
-                holder.smilefour.setImageResource(R.drawable.good_unselect);
-                holder.smilefive.setImageResource(R.drawable.great_unselect);
+                holder.smiletwo.setImageResource(R.mipmap.bad_unselect);
+                holder.smilethree.setImageResource(R.mipmap.ok_unselect);
+                holder.smilefour.setImageResource(R.mipmap.good_unselect);
+                holder.smilefive.setImageResource(R.mipmap.great_unselect);
 
                 holder.bad.setTextColor(Color.parseColor("#D5D8DA"));
                 holder.okay.setTextColor(Color.parseColor("#D5D8DA"));
@@ -245,7 +245,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 if(data.get(position).status==0)
                 {
                     data.get(position).status=1;
-                    holder.smiletwo.setImageResource(R.drawable.bad_select);
+                    holder.smiletwo.setImageResource(R.mipmap.bad_select);
                     resize(holder.smiletwo,90,90);
 
                     holder.bad.setTextColor(Color.BLACK);
@@ -260,17 +260,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 {
                     data.get(position).status=0;
                     resize(holder.smiletwo,90,90);
-                    holder.smiletwo.setImageResource(R.drawable.bad_unselect);
+                    holder.smiletwo.setImageResource(R.mipmap.bad_unselect);
                     holder.bad.setTextColor(Color.parseColor("#D5D8DA"));
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
                         global.feedbackdata.remove(index);
                     }
                 }
-                holder.smileone.setImageResource(R.drawable.terrible_unselect);
-                holder.smilethree.setImageResource(R.drawable.ok_unselect);
-                holder.smilefour.setImageResource(R.drawable.good_unselect);
-                holder.smilefive.setImageResource(R.drawable.great_unselect);
+                holder.smileone.setImageResource(R.mipmap.terrible_unselect);
+                holder.smilethree.setImageResource(R.mipmap.ok_unselect);
+                holder.smilefour.setImageResource(R.mipmap.good_unselect);
+                holder.smilefive.setImageResource(R.mipmap.great_unselect);
 
                 holder.terrible.setTextColor(Color.parseColor("#D5D8DA"));
                 holder.okay.setTextColor(Color.parseColor("#D5D8DA"));
@@ -293,7 +293,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 if(data.get(position).status==0)
                 {
                     data.get(position).status=1;
-                    holder.smilethree.setImageResource(R.drawable.okay_select);
+                    holder.smilethree.setImageResource(R.mipmap.okay_select);
                     resize(holder.smilethree,90,90);
 
                     holder.okay.setTextColor(Color.BLACK);
@@ -308,17 +308,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 {
                     data.get(position).status=0;
                     resize(holder.smilethree,90,90);
-                    holder.smilethree.setImageResource(R.drawable.ok_unselect);
+                    holder.smilethree.setImageResource(R.mipmap.ok_unselect);
                     holder.okay.setTextColor(Color.parseColor("#D5D8DA"));
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
                         global.feedbackdata.remove(index);
                     }
                 }
-                holder.smileone.setImageResource(R.drawable.terrible_unselect);
-                holder.smiletwo.setImageResource(R.drawable.bad_unselect);
-                holder.smilefour.setImageResource(R.drawable.good_unselect);
-                holder.smilefive.setImageResource(R.drawable.great_unselect);
+                holder.smileone.setImageResource(R.mipmap.terrible_unselect);
+                holder.smiletwo.setImageResource(R.mipmap.bad_unselect);
+                holder.smilefour.setImageResource(R.mipmap.good_unselect);
+                holder.smilefive.setImageResource(R.mipmap.great_unselect);
 
                 holder.bad.setTextColor(Color.parseColor("#D5D8DA"));
                 holder.terrible.setTextColor(Color.parseColor("#D5D8DA"));
@@ -341,7 +341,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 {
 
                     data.get(position).status=1;
-                    holder.smilefour.setImageResource(R.drawable.good_select);
+                    holder.smilefour.setImageResource(R.mipmap.good_select);
                     resize(holder.smilefour,90,90);
 
                     holder.good.setTextColor(Color.BLACK);
@@ -359,17 +359,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     holder.smilefour.getLayoutParams().height = 90;
                     holder.smilefour.getLayoutParams().width = 90;*/
                     resize(holder.smilefour,90,90);
-                    holder.smilefour.setImageResource(R.drawable.good_unselect);
+                    holder.smilefour.setImageResource(R.mipmap.good_unselect);
                     holder.good.setTextColor(Color.parseColor("#D5D8DA"));
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
                         global.feedbackdata.remove(index);
                     }
                 }
-                holder.smileone.setImageResource(R.drawable.terrible_unselect);
-                holder.smiletwo.setImageResource(R.drawable.bad_unselect);
-                holder.smilethree.setImageResource(R.drawable.ok_unselect);
-                holder.smilefive.setImageResource(R.drawable.great_unselect);
+                holder.smileone.setImageResource(R.mipmap.terrible_unselect);
+                holder.smiletwo.setImageResource(R.mipmap.bad_unselect);
+                holder.smilethree.setImageResource(R.mipmap.ok_unselect);
+                holder.smilefive.setImageResource(R.mipmap.great_unselect);
 
                 holder.bad.setTextColor(Color.parseColor("#D5D8DA"));
                 holder.okay.setTextColor(Color.parseColor("#D5D8DA"));
@@ -391,7 +391,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 if(data.get(position).status==0)
                 {
                     data.get(position).status=1;
-                    holder.smilefive.setImageResource(R.drawable.great_select);
+                    holder.smilefive.setImageResource(R.mipmap.great_select);
                     resize(holder.smilefive,90,90);
 
                     holder.great.setTextColor(Color.BLACK);
@@ -406,17 +406,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 {
                     data.get(position).status=0;
                     resize(holder.smilefive,90,90);
-                    holder.smilefive.setImageResource(R.drawable.great_unselect);
+                    holder.smilefive.setImageResource(R.mipmap.great_unselect);
                     holder.great.setTextColor(Color.parseColor("#D5D8DA"));
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
                         global.feedbackdata.remove(index);
                     }
                 }
-                holder.smileone.setImageResource(R.drawable.terrible_unselect);
-                holder.smiletwo.setImageResource(R.drawable.bad_unselect);
-                holder.smilethree.setImageResource(R.drawable.ok_unselect);
-                holder.smilefour.setImageResource(R.drawable.good_unselect);
+                holder.smileone.setImageResource(R.mipmap.terrible_unselect);
+                holder.smiletwo.setImageResource(R.mipmap.bad_unselect);
+                holder.smilethree.setImageResource(R.mipmap.ok_unselect);
+                holder.smilefour.setImageResource(R.mipmap.good_unselect);
 
                 holder.bad.setTextColor(Color.parseColor("#D5D8DA"));
                 holder.okay.setTextColor(Color.parseColor("#D5D8DA"));
@@ -439,7 +439,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 if(data.get(position).status==0)
                 {
                     data.get(position).status=1;
-                    holder.starone.setImageResource(R.drawable.star_select);
+                    holder.starone.setImageResource(R.mipmap.star_select);
 
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
@@ -453,16 +453,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 }else
                 {
                     data.get(position).status=0;
-                    holder.starone.setImageResource(R.drawable.star_unselect);
+                    holder.starone.setImageResource(R.mipmap.star_unselect);
                     if(containsData(global.feedbackdata,data.get(position).id))
                     {
                         global.feedbackdata.remove(index);
                     }
                 }
-               // holder.starone.setImageResource(R.drawable.start_select);
-                holder.startwo.setImageResource(R.drawable.star_unselect);
-                holder.starthree.setImageResource(R.drawable.star_unselect);
-                holder.starfour.setImageResource(R.drawable.star_unselect);
+               // holder.starone.setImageResource(R.mipmap.start_select);
+                holder.startwo.setImageResource(R.mipmap.star_unselect);
+                holder.starthree.setImageResource(R.mipmap.star_unselect);
+                holder.starfour.setImageResource(R.mipmap.star_unselect);
             }
         });
         holder.startwo.setOnClickListener(new View.OnClickListener() {
@@ -479,10 +479,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
                 }
 
-                holder.starone.setImageResource(R.drawable.star_select);
-                holder.startwo.setImageResource(R.drawable.star_select);
-                holder.starthree.setImageResource(R.drawable.star_unselect);
-                holder.starfour.setImageResource(R.drawable.star_unselect);
+                holder.starone.setImageResource(R.mipmap.star_select);
+                holder.startwo.setImageResource(R.mipmap.star_select);
+                holder.starthree.setImageResource(R.mipmap.star_unselect);
+                holder.starfour.setImageResource(R.mipmap.star_unselect);
             }
         });
         holder.starthree.setOnClickListener(new View.OnClickListener() {
@@ -495,10 +495,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 }else {
                     global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), ""));
                 }
-                holder.starone.setImageResource(R.drawable.star_select);
-                holder.startwo.setImageResource(R.drawable.star_select);
-                holder.starthree.setImageResource(R.drawable.star_select);
-                holder.starfour.setImageResource(R.drawable.star_unselect);
+                holder.starone.setImageResource(R.mipmap.star_select);
+                holder.startwo.setImageResource(R.mipmap.star_select);
+                holder.starthree.setImageResource(R.mipmap.star_select);
+                holder.starfour.setImageResource(R.mipmap.star_unselect);
             }
         });
         holder.starfour.setOnClickListener(new View.OnClickListener() {
@@ -512,10 +512,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), ""));
 
                 }
-                holder.starone.setImageResource(R.drawable.star_select);
-                holder.startwo.setImageResource(R.drawable.star_select);
-                holder.starthree.setImageResource(R.drawable.star_select);
-                holder.starfour.setImageResource(R.drawable.star_select);
+                holder.starone.setImageResource(R.mipmap.star_select);
+                holder.startwo.setImageResource(R.mipmap.star_select);
+                holder.starthree.setImageResource(R.mipmap.star_select);
+                holder.starfour.setImageResource(R.mipmap.star_select);
             }
         });
 

@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#bddd"
+            android:background="@android:color/white"
             android:gravity="center"
             android:orientation="vertical"
 
@@ -77,7 +77,7 @@
                             android:layout_margin="10dp"
                             android:layout_height="80dp"
                             android:tag="1"
-                            android:src="@drawable/star_unselect"
+                            android:src="@mipmap/star_unselect"
                             />
                         <ImageView
                             android:id="@+id/startwo"
@@ -86,7 +86,7 @@
 
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/star_unselect"
+                            android:src="@mipmap/star_unselect"
                             />
                         <ImageView
                             android:id="@+id/starthree"
@@ -95,7 +95,7 @@
 
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/star_unselect"
+                            android:src="@mipmap/star_unselect"
                             />
                         <ImageView
                             android:id="@+id/starfour"
@@ -104,7 +104,7 @@
 
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/star_unselect"
+                            android:src="@mipmap/star_unselect"
                             />
 
                     </LinearLayout>
@@ -129,7 +129,7 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:tag="1"
-                            android:src="@drawable/terrible_unselect"
+                            android:src="@mipmap/terrible_unselect"
                             />
 
                             <TextView
@@ -156,7 +156,7 @@
                             android:tag="2"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/bad_unselect"
+                            android:src="@mipmap/bad_unselect"
 
                             />
                             <TextView
@@ -184,7 +184,7 @@
                             android:tag="3"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/ok_unselect"
+                            android:src="@mipmap/ok_unselect"
                             />
                             <TextView
                                 android:id="@+id/okay"
@@ -212,7 +212,7 @@
 
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/good_unselect"
+                            android:src="@mipmap/good_unselect"
                             />
                             <TextView
                                 android:id="@+id/good"
@@ -239,7 +239,7 @@
                             android:tag="4"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/great_unselect"
+                            android:src="@mipmap/great_unselect"
                             />
                             <TextView
                                 android:id="@+id/great"
@@ -269,7 +269,7 @@
                         android:layout_width="match_parent"
                         android:padding="10dp"
                         android:text=""
-                        android:background="@android:color/white"
+                        android:background="@android:color/darker_gray"
                         android:layout_height="50dp" />
 
                 </LinearLayout>

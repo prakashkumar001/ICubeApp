@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * Created by Creative IT Works on 25-Jul-17.
@@ -18,6 +19,8 @@ import android.widget.Button;
 public class ThankyouPage extends AppCompatActivity {
     //Button submit;
     Handler handler;
+    boolean doubleBackToExitPressedOnce=false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,19 @@ public class ThankyouPage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            if(handler!=null)
+            {
+                handler.removeCallbacksAndMessages(null);
+            }
+            ActivityCompat.finishAffinity(ThankyouPage.this);
+
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
 
     }
 
