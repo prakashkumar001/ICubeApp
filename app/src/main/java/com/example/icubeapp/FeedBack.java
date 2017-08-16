@@ -51,7 +51,7 @@ public class FeedBack extends AppCompatActivity {
     JSONArray array;
     String macaddress;
     boolean doubleBackToExitPressedOnce=false;
-
+    ProgressDialog dialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,20 +62,18 @@ public class FeedBack extends AppCompatActivity {
     public void responseFromServer() {
         class ResultfromServer extends AsyncTask<String, Void, String> {
 
-            ProgressDialog dialog;
+
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                dialog = new ProgressDialog(FeedBack.this);
-                dialog.setMessage("Loading....");
-                dialog.show();
+
             }
 
             @Override
             protected String doInBackground(String... strings) {
 
-                String response = new WSUtils().getResultFromHttpRequest("http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=1&ExtraString2="+"1234"+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
+                String response = new WSUtils().getResultFromHttpRequest(global.globalurl+"GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=1&ExtraString2="+"1234"+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
 
                 Log.i("RESPONSE", "RESPOSE" + response);
                 return response;
@@ -86,34 +84,44 @@ public class FeedBack extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 dialog.dismiss();
-                global.feedback=new ArrayList<>();
 
 
-                try {
-                    JSONArray array = new JSONArray(s);
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject object = array.getJSONObject(i);
-                        String ID = object.getString("ID");
-                        String GroupID = object.getString("GroupID");
-                        String LanguageID = object.getString("LanguageID");
-                        String Question = object.getString("Question");
-                        String RatingType = object.getString("RatingType");
-                        String OutOf = object.getString("OutOf");
+                if(s==null)
+                {
+                  //  Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
+                    responseFromServer();
 
-                        FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,0,"");
-                        global.feedback.add(feedback);
+                }else
+                {
+                    try {
+                        global.feedback=new ArrayList<>();
+                        JSONArray array = new JSONArray(s);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            String ID = object.getString("ID");
+                            String GroupID = object.getString("GroupID");
+                            String LanguageID = object.getString("LanguageID");
+                            String Question = object.getString("Question");
+                            String RatingType = object.getString("RatingType");
+                            String OutOf = object.getString("OutOf");
+
+                            FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,0,"");
+                            global.feedback.add(feedback);
+                        }
+
+                        FeedAdapter adapter = new FeedAdapter(FeedBack.this, global.feedback);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FeedBack.this);
+                        list.setLayoutManager(mLayoutManager);
+                        list.setItemAnimator(new DefaultItemAnimator());
+                        list.setAdapter(adapter);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                    FeedAdapter adapter = new FeedAdapter(FeedBack.this, global.feedback);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FeedBack.this);
-                    list.setLayoutManager(mLayoutManager);
-                    list.setItemAnimator(new DefaultItemAnimator());
-                    list.setAdapter(adapter);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+
+
             }
         }
         new ResultfromServer().execute();
@@ -123,14 +131,11 @@ public class FeedBack extends AppCompatActivity {
     public void uploadToServer() {
         class UploadtoServer extends AsyncTask<String, Void, String> {
 
-            ProgressDialog dialog;
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                dialog = new ProgressDialog(FeedBack.this);
-                dialog.setMessage("Loading....");
-                dialog.show();
+
 
             }
 
@@ -182,7 +187,7 @@ public class FeedBack extends AppCompatActivity {
 
 
 
-                String url = "http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID=0^0^&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User=emp0001";
+                String url = global.globalurl+"spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID=0^0^&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User=emp0001";
 
 
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
@@ -268,7 +273,10 @@ public class FeedBack extends AppCompatActivity {
 
         if(codeSnippet.hasNetworkConnection())
         {
-           getPOSId();
+            dialog = new ProgressDialog(FeedBack.this);
+            dialog.setMessage("Loading....");
+            dialog.show();
+          responseFromServer();
         }else
         {
             Snackbar();
@@ -281,6 +289,9 @@ public class FeedBack extends AppCompatActivity {
 
                 if(codeSnippet.hasNetworkConnection())
                 {
+                    dialog = new ProgressDialog(FeedBack.this);
+                    dialog.setMessage("Loading....");
+                    dialog.show();
                     uploadToServer();
 
                 }else {
@@ -329,7 +340,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected String doInBackground(String... strings) {
 
-                String url="http://icube.cloudapp.net:8080/iCubeIOS/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1="+macaddress+"&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
+                String url=global.globalurl+"GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1="+macaddress+"&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
 
 
@@ -348,8 +359,9 @@ public class FeedBack extends AppCompatActivity {
                     array=new JSONArray(s);
                     if(array.length()==0)
                     {
-                        responseFromServer();
-                        Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
+                       // dialog.dismiss();
+                        getPOSId();
+                       // Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
                     }else
                     {
                         for(int i=0;i<array.length();i++)

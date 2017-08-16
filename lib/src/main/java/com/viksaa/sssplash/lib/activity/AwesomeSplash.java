@@ -141,6 +141,8 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
             @Override
             public void onAnimationCancel() {
+                animationsStop();
+
             }
 
             @Override
@@ -179,6 +181,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
             @Override
             public void onAnimationCancel(Animator animation) {
+                animationsStop();
 
             }
 
@@ -216,7 +219,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                animationsStop();
             }
 
             @Override
@@ -235,4 +238,6 @@ abstract public class AwesomeSplash extends AppCompatActivity {
     public abstract void initSplash(ConfigSplash configSplash);
 
     public abstract void animationsFinished();
+
+    public abstract void animationsStop();
 }

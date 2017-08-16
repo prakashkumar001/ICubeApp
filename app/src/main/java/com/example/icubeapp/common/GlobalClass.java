@@ -28,6 +28,7 @@ public class GlobalClass extends Application {
     public static ArrayList<FeedBackSelection> feedbackdata=new ArrayList<>();
     public static ArrayList<Slider> data=new ArrayList<>();
     public static int position=0;
+    public static String globalurl="http://192.168.10.13:81/api/Feedback/";
     public void onCreate() {
 
 
