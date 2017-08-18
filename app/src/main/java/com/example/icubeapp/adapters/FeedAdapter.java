@@ -48,7 +48,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         TextView terrible, bad, okay, good, great;
         TextView comments;
 
-        ImageView starone, startwo, starthree, starfour;
+        ImageView starone, startwo, starthree, starfour,starfive;
 
         public MyViewHolder(View view) {
             super(view);
@@ -80,6 +80,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             startwo = (ImageView) view.findViewById(R.id.startwo);
             starthree = (ImageView) view.findViewById(R.id.starthree);
             starfour = (ImageView) view.findViewById(R.id.starfour);
+            starfive = (ImageView) view.findViewById(R.id.starfive);
+
 
        /* starone.setOnClickListener(this);
         startwo.setOnClickListener(this);
@@ -102,6 +104,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         this.data=data;
         this.context=context;
         global=new GlobalClass();
+        global.feedbackdata.clear();
 
 
     }
@@ -463,6 +466,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.startwo.setImageResource(R.mipmap.star_unselect);
                 holder.starthree.setImageResource(R.mipmap.star_unselect);
                 holder.starfour.setImageResource(R.mipmap.star_unselect);
+                holder.starfive.setImageResource(R.mipmap.star_unselect);
+
             }
         });
         holder.startwo.setOnClickListener(new View.OnClickListener() {
@@ -483,6 +488,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.startwo.setImageResource(R.mipmap.star_select);
                 holder.starthree.setImageResource(R.mipmap.star_unselect);
                 holder.starfour.setImageResource(R.mipmap.star_unselect);
+                holder.starfive.setImageResource(R.mipmap.star_unselect);
+
             }
         });
         holder.starthree.setOnClickListener(new View.OnClickListener() {
@@ -499,6 +506,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.startwo.setImageResource(R.mipmap.star_select);
                 holder.starthree.setImageResource(R.mipmap.star_select);
                 holder.starfour.setImageResource(R.mipmap.star_unselect);
+                holder.starfive.setImageResource(R.mipmap.star_unselect);
+
             }
         });
         holder.starfour.setOnClickListener(new View.OnClickListener() {
@@ -516,9 +525,29 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.startwo.setImageResource(R.mipmap.star_select);
                 holder.starthree.setImageResource(R.mipmap.star_select);
                 holder.starfour.setImageResource(R.mipmap.star_select);
+                holder.starfive.setImageResource(R.mipmap.star_unselect);
+
             }
         });
 
+        holder.starfive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(containsData(global.feedbackdata,data.get(position).id))
+                {
+                    global.feedbackdata.set(index,new FeedBackSelection(data.get(position).id,data.get(position).group_id,data.get(position).language_id,data.get(position).question,data.get(position).rating_type,data.get(position).outof,String.valueOf(5),""));
+                }else {
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), ""));
+
+                }
+                holder.starone.setImageResource(R.mipmap.star_select);
+                holder.startwo.setImageResource(R.mipmap.star_select);
+                holder.starthree.setImageResource(R.mipmap.star_select);
+                holder.starfour.setImageResource(R.mipmap.star_select);
+                holder.starfive.setImageResource(R.mipmap.star_select);
+            }
+        });
 
 
 
