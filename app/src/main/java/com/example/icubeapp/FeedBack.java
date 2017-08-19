@@ -73,7 +73,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected String doInBackground(String... strings) {
 
-                String response = new WSUtils().getResultFromHttpRequest(global.globalurl+"/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=2&ExtraString2="+"1234"+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
+                String response = new WSUtils().getResultFromHttpRequest(global.globalurl+"/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=2&ExtraString2="+getMacAddr()+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
 
                 Log.i("RESPONSE", "RESPOSE" + response);
                 return response;
@@ -161,7 +161,7 @@ public class FeedBack extends AppCompatActivity {
 
 
 
-                    detid=detid+(global.feedbackdata.get(i).id)+"^";
+                    detid=detid+"0"+"^";
                     // detid=detid+"^";
                     fbmid=fbmid+(global.feedbackdata.get(i).id)+"^";
                     fbvalue=fbvalue+(global.feedbackdata.get(i).rating)+"^";
@@ -187,7 +187,7 @@ public class FeedBack extends AppCompatActivity {
 
 
 
-                String url = global.globalurl+"/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID=0^0^&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User=emp0001";
+                String url = global.globalurl+"/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID="+detid+"&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User=emp0001";
 
                 Log.i("RESPONSE", "RESPOSE" + url);
 
