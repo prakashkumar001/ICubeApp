@@ -3,6 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_margin="10dp"
     android:layout_height="wrap_content">
 
@@ -20,25 +21,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:gravity="center"
             android:orientation="vertical"
 
             >
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    >
-                    <TextView
-                        android:id="@+id/question"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textSize="25dp"
-                        android:text=""
-                        />
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:text=""
+                    />
 
 
 
@@ -107,12 +107,23 @@
                             android:src="@mipmap/star_unselect"
                             />
 
+                        <ImageView
+                            android:id="@+id/starfive"
+                            android:tag="4"
+                            android:layout_margin="10dp"
+
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@mipmap/star_unselect"
+                            />
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/smile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:gravity="center"
                         android:orientation="horizontal"
                         >
@@ -124,13 +135,13 @@
                             android:gravity="center"
                             android:orientation="vertical"
                             >
-                        <ImageView
-                            android:id="@+id/smileone"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:tag="1"
-                            android:src="@mipmap/terrible_unselect"
-                            />
+                            <ImageView
+                                android:id="@+id/smileone"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:tag="1"
+                                android:src="@mipmap/terrible_unselect"
+                                />
 
                             <TextView
                                 android:id="@+id/terrible"
@@ -151,14 +162,14 @@
 
                             android:orientation="vertical"
                             >
-                        <ImageView
-                            android:id="@+id/smiletwo"
-                            android:tag="2"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@mipmap/bad_unselect"
+                            <ImageView
+                                android:id="@+id/smiletwo"
+                                android:tag="2"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@mipmap/bad_unselect"
 
-                            />
+                                />
                             <TextView
                                 android:id="@+id/bad"
 
@@ -169,23 +180,23 @@
 
                                 android:text="Bad"
                                 />
-                            </LinearLayout>
+                        </LinearLayout>
 
                         <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
                             android:gravity="center"
 
                             android:orientation="vertical"
-                        >
-                        <ImageView
-                            android:id="@+id/smilethree"
-                            android:tag="3"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@mipmap/ok_unselect"
-                            />
+                            >
+                            <ImageView
+                                android:id="@+id/smilethree"
+                                android:tag="3"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@mipmap/ok_unselect"
+                                />
                             <TextView
                                 android:id="@+id/okay"
 
@@ -206,14 +217,14 @@
 
                             android:orientation="vertical"
                             >
-                        <ImageView
-                            android:id="@+id/smilefour"
-                            android:tag="4"
+                            <ImageView
+                                android:id="@+id/smilefour"
+                                android:tag="4"
 
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@mipmap/good_unselect"
-                            />
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@mipmap/good_unselect"
+                                />
                             <TextView
                                 android:id="@+id/good"
 
@@ -224,7 +235,7 @@
 
                                 android:text="Good"
                                 />
-                            </LinearLayout>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -234,13 +245,13 @@
 
                             android:orientation="vertical"
                             >
-                        <ImageView
-                            android:id="@+id/smilefive"
-                            android:tag="4"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@mipmap/great_unselect"
-                            />
+                            <ImageView
+                                android:id="@+id/smilefive"
+                                android:tag="4"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@mipmap/great_unselect"
+                                />
                             <TextView
                                 android:id="@+id/great"
 
@@ -253,6 +264,8 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
+
                 <LinearLayout
                     android:id="@+id/commentbox"
                     android:layout_width="match_parent"
@@ -273,7 +286,6 @@
                         android:layout_height="50dp" />
 
                 </LinearLayout>
-
 
             </LinearLayout>
 
