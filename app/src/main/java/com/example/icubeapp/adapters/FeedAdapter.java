@@ -83,7 +83,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             holder.smileRating.setVisibility(View.GONE);
             holder.commentbox.setVisibility(View.VISIBLE);
 
-
             global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", data.get(position).comment));
 
         }
@@ -180,8 +179,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             public void onClick(View v) {
                 int heights = holder.smileone.getHeight();
                 int widths = holder.smileone.getWidth();
-                if (data.get(position).status == 0) {
-                    data.get(position).status = 1;
+                if (data.get(position).status.get(0) == 0) {
+                    data.get(position).status.set(0,1);
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(3,0);
+                    data.get(position).status.set(4,0);
 
                     resize(holder.smileone, heights, widths);
                     holder.smileone.setImageResource(R.mipmap.terrible_select);
@@ -196,7 +199,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
 
                 } else {
-                    data.get(position).status = 0;
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(3,0);
+                    data.get(position).status.set(4,0);
 
                     resize(holder.smileone, heights, widths);
                     holder.smileone.setImageResource(R.mipmap.terrible_unselect);
@@ -230,8 +237,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
 
-                if (data.get(position).status == 0) {
-                    data.get(position).status = 1;
+                if (data.get(position).status.get(1) == 0) {
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(1,1);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(3,0);
+                    data.get(position).status.set(4,0);
+
                     holder.smiletwo.setImageResource(R.mipmap.bad_select);
                     resize(holder.smiletwo, 90, 90);
 
@@ -243,7 +255,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
                     }
                 } else {
-                    data.get(position).status = 0;
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(3,0);
+                    data.get(position).status.set(4,0);
                     resize(holder.smiletwo, 90, 90);
                     holder.smiletwo.setImageResource(R.mipmap.bad_unselect);
                     holder.bad.setTextColor(Color.parseColor("#D5D8DA"));
@@ -273,8 +289,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.smilethree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data.get(position).status == 0) {
-                    data.get(position).status = 1;
+                if (data.get(position).status.get(2) == 0) {
+                    data.get(position).status.set(2,1);
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(3,0);
+                    data.get(position).status.set(4,0);
                     holder.smilethree.setImageResource(R.mipmap.okay_select);
                     resize(holder.smilethree, 90, 90);
 
@@ -286,7 +306,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     }
 
                 } else {
-                    data.get(position).status = 0;
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(3,0);
+                    data.get(position).status.set(4,0);
                     resize(holder.smilethree, 90, 90);
                     holder.smilethree.setImageResource(R.mipmap.ok_unselect);
                     holder.okay.setTextColor(Color.parseColor("#D5D8DA"));
@@ -316,9 +340,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.smilefour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data.get(position).status == 0) {
+                if (data.get(position).status.get(3) == 0) {
 
-                    data.get(position).status = 1;
+                    data.get(position).status.set(3,1);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(4,0);
                     holder.smilefour.setImageResource(R.mipmap.good_select);
                     resize(holder.smilefour, 90, 90);
 
@@ -330,7 +358,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     }
 
                 } else {
-                    data.get(position).status = 0;
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(3,0);
+                    data.get(position).status.set(4,0);
                   /*  holder.smilefour.requestLayout();
                     holder.smilefour.getLayoutParams().height = 90;
                     holder.smilefour.getLayoutParams().width = 90;*/
@@ -362,8 +394,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         holder.smilefive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data.get(position).status == 0) {
-                    data.get(position).status = 1;
+                if (data.get(position).status.get(4) == 0) {
+                    data.get(position).status.set(4,1);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(3,0);
+
                     holder.smilefive.setImageResource(R.mipmap.great_select);
                     resize(holder.smilefive, 90, 90);
 
@@ -375,7 +412,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                         global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), ""));
                     }
                 } else {
-                    data.get(position).status = 0;
+                    data.get(position).status.set(1,0);
+                    data.get(position).status.set(0,0);
+                    data.get(position).status.set(2,0);
+                    data.get(position).status.set(3,0);
+                    data.get(position).status.set(4,0);
                     resize(holder.smilefive, 90, 90);
                     holder.smilefive.setImageResource(R.mipmap.great_unselect);
                     holder.great.setTextColor(Color.parseColor("#D5D8DA"));
@@ -405,8 +446,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
 
-                if (data.get(position).status == 0) {
-                    data.get(position).status = 1;
+                if (data.get(position).status.get(0) == 0) {
+                    data.get(position).status.set(0,1);
                     holder.starone.setImageResource(R.mipmap.star_select);
 
                     if (containsData(global.feedbackdata, data.get(position).id)) {
@@ -417,7 +458,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
 
                 } else {
-                    data.get(position).status = 0;
+                    data.get(position).status.set(0,0);
                     holder.starone.setImageResource(R.mipmap.star_unselect);
                     if (containsData(global.feedbackdata, data.get(position).id)) {
                         global.feedbackdata.remove(index);

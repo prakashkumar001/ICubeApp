@@ -95,6 +95,14 @@ public class FeedBack extends AppCompatActivity {
                 {
                     try {
                         global.feedback=new ArrayList<>();
+                        ArrayList<Integer> status=new ArrayList<>();
+
+                       for(int i=0;i<5;i++)
+                       {
+                           status.add(0);
+                       }
+
+
                         JSONArray array = new JSONArray(s);
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject object = array.getJSONObject(i);
@@ -104,8 +112,7 @@ public class FeedBack extends AppCompatActivity {
                             String Question = object.getString("Question");
                             String RatingType = object.getString("RatingType");
                             String OutOf = object.getString("OutOf");
-
-                            FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,0,"");
+                            FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,status,"");
                             global.feedback.add(feedback);
                         }
 

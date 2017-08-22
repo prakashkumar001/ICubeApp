@@ -17,7 +17,9 @@
         <activity android:name=".Login"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|screenSize"
-          >
+            android:windowSoftInputMode="stateHidden"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -39,6 +41,7 @@
 
         <activity android:name=".FeedBack"
             android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation|screenSize"
             />
 
