@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     EditText user,password,hostname;
-    Button signin,exit;
+    Button signin;
     public String names,pass;
     InternetPermissions internetPermissions;
     private static final int NETPERMISSION = 1888;
@@ -78,22 +78,22 @@ public class Login extends AppCompatActivity {
 
 
         signin=(Button)findViewById(R.id.signup);
-        exit=(Button)findViewById(R.id.exit);
+        //exit=(Button)findViewById(R.id.exit);
         global=(GlobalClass)getApplicationContext();
-        hostname.setText("http://192.168.10.13:81");
+        hostname.setText(global.globalurl);
 
-        exit.setOnClickListener(new View.OnClickListener() {
+       /* exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                finish();
             }
-        });
+        });*/
 
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //global.globalurl=hostname.getText().toString();
+                global.globalurl=hostname.getText().toString();
                 names = user.getText().toString();
                 pass = password.getText().toString();
 
@@ -104,7 +104,7 @@ public class Login extends AppCompatActivity {
                     internetPermissions=new InternetPermissions(Login.this);
                     if(internetPermissions.isInternetOn())
                     {
-                        loginService(user.getText().toString(),password.getText().toString(),getMacAddr());
+                        loginService(user.getText().toString(),password.getText().toString(),"1234");
                     }else
                     {
 
@@ -216,7 +216,7 @@ public class Login extends AppCompatActivity {
                         JSONArray array=new JSONArray(o);
                         String result="";
                         String RoleID;
-                        String EmpID;
+                        String EmpID="";
                         String SessionID="";
                         for(int i=0;i<array.length();i++)
                         {
@@ -230,6 +230,7 @@ public class Login extends AppCompatActivity {
 
                         if(result.equalsIgnoreCase("Valid User"))
                         {
+                            global.empId=EmpID;
                             Intent i=new Intent(Login.this,FeedBack.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);

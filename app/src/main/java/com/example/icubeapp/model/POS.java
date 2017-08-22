@@ -5,8 +5,8 @@ package com.example.icubeapp.model;
  */
 
 public class POS {
-    public String id="1";
-    public String pos_id="1234";
+    public String id="";
+    public String pos_id="";
     public POS(String id,String pos_id)
     {
         this.id=id;

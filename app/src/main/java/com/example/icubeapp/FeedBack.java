@@ -187,7 +187,7 @@ public class FeedBack extends AppCompatActivity {
 
 
 
-                String url = global.globalurl+"/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID="+detid+"&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User=emp0001";
+                String url = global.globalurl+"/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID="+detid+"&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User="+global.empId;
 
                 Log.i("RESPONSE", "RESPOSE" + url);
 

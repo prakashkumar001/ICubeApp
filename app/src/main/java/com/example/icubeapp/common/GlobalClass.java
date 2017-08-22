@@ -30,6 +30,7 @@ public class GlobalClass extends Application {
     public static int position=0;
     //public static String globalurl="http://192.168.10.13:81";
     public static String globalurl="http://icube.cloudapp.net:8080/iCubeIOS";
+    public static String empId;
     public void onCreate() {
 
 
