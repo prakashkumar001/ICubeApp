@@ -129,6 +129,7 @@
                         >
 
                         <LinearLayout
+                            android:id="@+id/smile_one_lay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="12dp"
@@ -155,6 +156,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/smile_two_lay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="12dp"
@@ -183,6 +185,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/smile_three_lay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="12dp"
@@ -210,6 +213,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/smile_four_lay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="12dp"
@@ -238,6 +242,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/smile_five_lay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="12dp"
@@ -282,6 +287,7 @@
                         android:layout_width="match_parent"
                         android:padding="10dp"
                         android:text=""
+                        android:textSize="25dp"
                         android:background="@android:color/darker_gray"
                         android:layout_height="50dp" />
 

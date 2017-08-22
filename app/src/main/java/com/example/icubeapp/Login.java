@@ -26,9 +26,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.net.NetworkInterface;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +64,7 @@ public class Login extends AppCompatActivity {
     InternetPermissions internetPermissions;
     private static final int NETPERMISSION = 1888;
     GlobalClass global;
+    Spinner spinner;
 
     //Toolbar toolbar;
     @Override
@@ -69,6 +74,7 @@ public class Login extends AppCompatActivity {
         user=(EditText)findViewById(R.id.user);
         password=(EditText)findViewById(R.id.password);
         hostname=(EditText)findViewById(R.id.hostname);
+        spinner=(Spinner)findViewById(R.id.spinner);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog()
@@ -89,6 +95,25 @@ public class Login extends AppCompatActivity {
             }
         });*/
 
+        ArrayList<String> list=new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(Login.this,android.R.layout.simple_list_item_1,list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                global.languageId=parent.getSelectedItem().toString();
+               // Toast.makeText(getApplicationContext(),global.languageId,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,14 +256,16 @@ public class Login extends AppCompatActivity {
                         if(result.equalsIgnoreCase("Valid User"))
                         {
                             global.empId=EmpID;
-                            Intent i=new Intent(Login.this,FeedBack.class);
+                            Intent i=new Intent(Login.this,Splash.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                             finish();
 
                         }else
                         {
-                            Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
+                            user.setError("Username is incorrect");
+                            password.setError("Password is incorrect");
+                           // Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
                            /* Intent i=new Intent(Login.this,FeedBack.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
