@@ -73,7 +73,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected String doInBackground(String... strings) {
 
-                String response = new WSUtils().getResultFromHttpRequest(global.globalurl+"/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1="+global.languageId+"&ExtraString2="+"1234"+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
+                String response = new WSUtils().getResultFromHttpRequest(global.globalurl+"/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1="+global.languageId+"&ExtraString2="+getMacAddr()+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
 
                 Log.i("RESPONSE", "RESPOSE" + response);
                 return response;
@@ -348,7 +348,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected String doInBackground(String... strings) {
 
-                String url=global.globalurl+"/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1="+macaddress+"&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
+                String url=global.globalurl+"/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1="+getMacAddr()+"&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
 
 

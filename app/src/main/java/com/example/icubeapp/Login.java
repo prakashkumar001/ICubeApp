@@ -129,7 +129,7 @@ public class Login extends AppCompatActivity {
                     internetPermissions=new InternetPermissions(Login.this);
                     if(internetPermissions.isInternetOn())
                     {
-                        loginService(user.getText().toString(),password.getText().toString(),"1234");
+                        loginService(user.getText().toString(),password.getText().toString(),getMacAddr());
                     }else
                     {
 

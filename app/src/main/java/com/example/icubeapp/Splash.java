@@ -137,7 +137,7 @@ public class Splash extends AwesomeSplash {
             protected String doInBackground(String... strings) {
 
                 //String url="http://192.168.1.16/imageupload/api.php";
-                String url = globalClass.globalurl + "/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1=" + "1234" + "&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
+                String url = globalClass.globalurl + "/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1=" + getMacAddr() + "&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
                 String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
 
 
