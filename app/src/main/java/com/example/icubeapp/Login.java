@@ -70,6 +70,21 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        global=(GlobalClass)getApplicationContext();
+        SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
+        final boolean loginStatus = preferences.getBoolean("loginstatus", false);
+         String empID = preferences.getString("EmpID", "");
+        String langid = preferences.getString("language", "");
+        if(loginStatus){
+            global.empId=empID;
+            global.languageId=langid;
+            Intent obj = new Intent(getBaseContext(), Splash.class);
+            startActivity(obj);
+            finish();
+        } else {
+
+        }
+
         setContentView(R.layout.login);
         user=(EditText)findViewById(R.id.user);
         password=(EditText)findViewById(R.id.password);
@@ -85,7 +100,7 @@ public class Login extends AppCompatActivity {
 
         signin=(Button)findViewById(R.id.signup);
         //exit=(Button)findViewById(R.id.exit);
-        global=(GlobalClass)getApplicationContext();
+
         hostname.setText(global.globalurl);
 
        /* exit.setOnClickListener(new View.OnClickListener() {
@@ -256,6 +271,14 @@ public class Login extends AppCompatActivity {
                         if(result.equalsIgnoreCase("Valid User"))
                         {
                             global.empId=EmpID;
+                            SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                            editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                            editor.putBoolean("loginstatus", true);
+                            editor.putString("EmpID", global.empId);
+                            editor.putString("language", global.languageId);
+                            editor.commit();
+
+
                             Intent i=new Intent(Login.this,Splash.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);

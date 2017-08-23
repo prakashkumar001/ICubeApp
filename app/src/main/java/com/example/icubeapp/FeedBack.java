@@ -73,6 +73,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected String doInBackground(String... strings) {
 
+                //"00:ef:ef:11:13:3d"
                 String response = new WSUtils().getResultFromHttpRequest(global.globalurl+"/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1="+global.languageId+"&ExtraString2="+getMacAddr()+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
 
                 Log.i("RESPONSE", "RESPOSE" + response);
@@ -331,72 +332,6 @@ public class FeedBack extends AppCompatActivity {
         Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
     }
 
-    public void getPOSId() {
-        class ResultfromServer extends AsyncTask<String, Void, String> {
-
-            ProgressDialog dialog;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                dialog = new ProgressDialog(FeedBack.this);
-                dialog.setMessage("Loading....");
-                dialog.show();
-                macaddress = getMacAddr();
-            }
-
-            @Override
-            protected String doInBackground(String... strings) {
-
-                String url=global.globalurl+"/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1="+getMacAddr()+"&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
-                String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
-
-
-                Log.i("RESPONSE","RESPOSE"+url +response);
-                return response;
-            }
-
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                dialog.dismiss();
-
-
-                try {
-                    array=new JSONArray(s);
-                    if(array.length()==0)
-                    {
-                       // dialog.dismiss();
-                       // getPOSId();
-                        responseFromServer();
-                       // Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
-                    }else
-                    {
-                        for(int i=0;i<array.length();i++)
-                        {
-                            JSONObject object=array.getJSONObject(i);
-                            String ID=object.getString("ID");
-                            String POSID=object.getString("POSID");
-
-                            global.pos=new POS(ID,POSID);
-                        }
-
-                        responseFromServer();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-
-
-
-        }
-        new ResultfromServer().execute();
-    }
 
     public static String getMacAddr() {
         try {

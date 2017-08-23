@@ -172,6 +172,7 @@ public class Splash extends AwesomeSplash {
 
                                 globalClass.pos = new POS(ID, POSID);
                             }
+
                             Intent i = new Intent(Splash.this, FeedBack.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);

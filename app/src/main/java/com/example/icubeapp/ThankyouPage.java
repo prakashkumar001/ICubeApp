@@ -2,6 +2,7 @@ package com.example.icubeapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -17,7 +18,7 @@ import android.widget.Toast;
  */
 
 public class ThankyouPage extends AppCompatActivity {
-    //Button submit;
+    Button logout;
     Handler handler;
     boolean doubleBackToExitPressedOnce=false;
 
@@ -25,7 +26,7 @@ public class ThankyouPage extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thankyou);
-        //submit=(Button)findViewById(R.id.submit);
+        logout=(Button)findViewById(R.id.log_out);
 
 
          handler = new Handler();
@@ -41,6 +42,19 @@ public class ThankyouPage extends AppCompatActivity {
         }, 15000);
 
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                editor.putBoolean("loginstatus", false);
+                editor.putString("EmpID", "");
+                editor.putString("language", "");
+                editor.commit();
+                startActivity(new Intent(getBaseContext(), Login.class));
+                finish();
+            }
+        });
     }
 
     @Override
