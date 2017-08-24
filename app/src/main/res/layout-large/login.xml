@@ -112,6 +112,17 @@
                 android:textColor="@android:color/white"
                 android:text="Log in"/>
 
+            <Button
+                android:id="@+id/exit"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:ems="5"
+                android:textColor="@android:color/white"
+                android:text="Exit"/>
 
 
 

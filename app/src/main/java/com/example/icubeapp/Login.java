@@ -39,6 +39,8 @@ import android.widget.Toast;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.utils.InternetPermissions;
 import com.example.icubeapp.utils.WSUtils;
+import com.wroclawstudio.kioskmode.RootKioskActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,12 +56,12 @@ import java.util.List;
  * Created by v-62 on 10/11/2016.
  */
 
-public class Login extends AppCompatActivity {
+public class Login extends RootKioskActivity {
   //  private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     EditText user,password,hostname;
-    Button signin;
+    Button signin,exit;
     public String names,pass;
     InternetPermissions internetPermissions;
     private static final int NETPERMISSION = 1888;
@@ -99,16 +101,16 @@ public class Login extends AppCompatActivity {
 
 
         signin=(Button)findViewById(R.id.signup);
-        //exit=(Button)findViewById(R.id.exit);
+        exit=(Button)findViewById(R.id.exit);
 
         hostname.setText(global.globalurl);
 
-       /* exit.setOnClickListener(new View.OnClickListener() {
+        exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                finish();
             }
-        });*/
+        });
 
         ArrayList<String> list=new ArrayList<>();
         list.add("1");

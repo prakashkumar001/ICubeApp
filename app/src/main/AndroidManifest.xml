@@ -19,10 +19,13 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden"
 
+
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".Splash"
@@ -47,5 +50,7 @@
 
 
     </application>
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
 </manifest>
