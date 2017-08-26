@@ -278,6 +278,8 @@ public class Login extends AppCompatActivity {
                             editor.putBoolean("loginstatus", true);
                             editor.putString("EmpID", global.empId);
                             editor.putString("language", global.languageId);
+                            editor.putString("user", user.getText().toString());
+                            editor.putString("pass", password.getText().toString());
                             editor.commit();
 
 
