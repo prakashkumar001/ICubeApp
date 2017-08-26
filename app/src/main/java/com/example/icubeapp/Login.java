@@ -56,7 +56,7 @@ import java.util.List;
  * Created by v-62 on 10/11/2016.
  */
 
-public class Login extends RootKioskActivity {
+public class Login extends AppCompatActivity {
   //  private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
@@ -288,9 +288,9 @@ public class Login extends RootKioskActivity {
 
                         }else
                         {
-                            user.setError("Username is incorrect");
-                            password.setError("Password is incorrect");
-                           // Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
+                           // user.setError("Username is incorrect");
+                            //password.setError("Password is incorrect");
+                           Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
                            /* Intent i=new Intent(Login.this,FeedBack.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);

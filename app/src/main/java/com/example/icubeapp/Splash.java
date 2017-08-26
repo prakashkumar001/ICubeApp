@@ -161,7 +161,13 @@ public class Splash extends AwesomeSplash {
                         if (array.length() == 0) {
                             // Toast.makeText(getApplicationContext(),"empty array",Toast.LENGTH_SHORT).show();
                             // dialog.dismiss();
-                            getPOSId();
+                           // getPOSId();
+
+                            Intent i = new Intent(Splash.this, FeedBack.class);
+                            startActivity(i);
+                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                            finish();
+
                             // Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
                         } else {
                             dialog.dismiss();

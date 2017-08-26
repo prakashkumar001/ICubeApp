@@ -7,6 +7,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,7 @@ import com.example.icubeapp.model.FEEDBACK;
 import com.example.icubeapp.model.POS;
 import com.example.icubeapp.utils.CodeSnippet;
 import com.example.icubeapp.utils.WSUtils;
+import com.wroclawstudio.kioskmode.RootKioskActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,10 +54,12 @@ public class FeedBack extends AppCompatActivity {
     String macaddress;
     boolean doubleBackToExitPressedOnce=false;
     ProgressDialog dialog;
+    Handler handler;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedback);
+
 
     }
 
@@ -87,41 +91,52 @@ public class FeedBack extends AppCompatActivity {
                 dialog.dismiss();
 
 
-                if(s==null)
+                if(s==null )
                 {
                   //  Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
-                    responseFromServer();
+                   // responseFromServer();
 
                 }else
                 {
                     try {
-                        global.feedback=new ArrayList<>();
-                        ArrayList<Integer> status=new ArrayList<>();
 
-                       for(int i=0;i<5;i++)
-                       {
-                           status.add(0);
-                       }
 
 
                         JSONArray array = new JSONArray(s);
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject object = array.getJSONObject(i);
-                            String ID = object.getString("ID");
-                            String GroupID = object.getString("GroupID");
-                            String LanguageID = object.getString("LanguageID");
-                            String Question = object.getString("Question");
-                            String RatingType = object.getString("RatingType");
-                            String OutOf = object.getString("OutOf");
-                            FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,status,"");
-                            global.feedback.add(feedback);
+
+                        if(array.length()==0)
+                        {
+                            Toast.makeText(getApplicationContext(),"Novalue",Toast.LENGTH_SHORT).show();
+                        }else
+                        {
+                            global.feedback=new ArrayList<>();
+                            ArrayList<Integer> status=new ArrayList<>();
+
+                            for(int i=0;i<5;i++)
+                            {
+                                status.add(0);
+                            }
+
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                String ID = object.getString("ID");
+                                String GroupID = object.getString("GroupID");
+                                String LanguageID = object.getString("LanguageID");
+                                String Question = object.getString("Question");
+                                String RatingType = object.getString("RatingType");
+                                String OutOf = object.getString("OutOf");
+                                FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,status,"");
+                                global.feedback.add(feedback);
+                            }
+
+                            FeedAdapter adapter = new FeedAdapter(FeedBack.this, global.feedback);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FeedBack.this);
+                            list.setLayoutManager(mLayoutManager);
+                            list.setItemAnimator(new DefaultItemAnimator());
+                            list.setAdapter(adapter);
+
                         }
 
-                        FeedAdapter adapter = new FeedAdapter(FeedBack.this, global.feedback);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FeedBack.this);
-                        list.setLayoutManager(mLayoutManager);
-                        list.setItemAnimator(new DefaultItemAnimator());
-                        list.setAdapter(adapter);
 
 
                     } catch (JSONException e) {
@@ -285,7 +300,7 @@ public class FeedBack extends AppCompatActivity {
             dialog = new ProgressDialog(FeedBack.this);
             dialog.setMessage("Loading....");
             dialog.show();
-          responseFromServer();
+          getPOSId();
         }else
         {
             Snackbar();
@@ -354,4 +369,82 @@ public class FeedBack extends AppCompatActivity {
                 return res1.toString();
             }} catch (Exception ex) {
         }return "02:00:00:00:00:00";}
+
+
+    public void getPOSId() {
+        class ResultfromServer extends AsyncTask<String, Void, String> {
+
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                macaddress = getMacAddr();
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+
+                //String url="http://192.168.1.16/imageupload/api.php";
+                String url = global.globalurl + "/api/Feedback/GetspSelectFeedback?type=CheckPendingFeedback&ExtraString1=" + getMacAddr() + "&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
+                String response = new WSUtils().getResultFromHttpRequest(url, "GET", new HashMap<String, String>());
+
+
+                Log.i("RESPONSE", "RESPOSE" + response);
+                return response;
+            }
+
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                if (s == null) {
+
+                   // getPOSId();
+                    //Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
+
+                } else {
+                    try {
+                        array = new JSONArray(s);
+                        if (array.length() == 0) {
+                            // Toast.makeText(getApplicationContext(),"empty array",Toast.LENGTH_SHORT).show();
+                            // dialog.dismiss();
+                           // getPOSId();
+                            // Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
+                        } else {
+                            dialog.dismiss();
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                String ID = object.getString("ID");
+                                String POSID = object.getString("POSID");
+
+                                global.pos = new POS(ID, POSID);
+                            }
+
+
+                           /* if(handler!=null)
+                            {
+                                handler.removeCallbacksAndMessages(null);
+                            }
+*/
+
+
+
+                        }
+
+                        responseFromServer();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+
+        }
+        new ResultfromServer().execute();
+    }
 }
