@@ -1,5 +1,6 @@
 package com.example.icubeapp;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,7 +21,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -56,7 +59,7 @@ public class FeedBack extends AppCompatActivity {
     CodeSnippet codeSnippet;
     JSONArray array;
     String macaddress;
-    boolean doubleBackToExitPressedOnce=false;
+    boolean doubleBackToExitPressedOnce = false;
     ProgressDialog dialog;
     Dialog dialogs;
     Handler handler;
@@ -74,7 +77,6 @@ public class FeedBack extends AppCompatActivity {
         class ResultfromServer extends AsyncTask<String, Void, String> {
 
 
-
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -85,7 +87,7 @@ public class FeedBack extends AppCompatActivity {
             protected String doInBackground(String... strings) {
 
                 //"00:ef:ef:11:13:3d"
-                String response = new WSUtils().getResultFromHttpRequest(global.globalurl+"/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1="+global.languageId+"&ExtraString2="+getMacAddr()+"&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
+                String response = new WSUtils().getResultFromHttpRequest(global.globalurl + "/api/Feedback/GetspSelectFeedback?type=GetFeedbackMasterList&ExtraString1=" + global.languageId + "&ExtraString2=" + getMacAddr() + "&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10", "GET", new HashMap<String, String>());
 
                 Log.i("RESPONSE", "RESPOSE" + response);
                 return response;
@@ -98,29 +100,23 @@ public class FeedBack extends AppCompatActivity {
                 dialog.dismiss();
 
 
-                if(s==null )
-                {
-                  //  Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
-                   // responseFromServer();
+                if (s == null) {
+                    //  Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
+                    // responseFromServer();
 
-                }else
-                {
+                } else {
                     try {
-
 
 
                         JSONArray array = new JSONArray(s);
 
-                        if(array.length()==0)
-                        {
-                            Toast.makeText(getApplicationContext(),"Novalue",Toast.LENGTH_SHORT).show();
-                        }else
-                        {
-                            global.feedback=new ArrayList<>();
-                            ArrayList<Integer> status=new ArrayList<>();
+                        if (array.length() == 0) {
+                            Toast.makeText(getApplicationContext(), "Novalue", Toast.LENGTH_SHORT).show();
+                        } else {
+                            global.feedback = new ArrayList<>();
+                            ArrayList<Integer> status = new ArrayList<>();
 
-                            for(int i=0;i<5;i++)
-                            {
+                            for (int i = 0; i < 5; i++) {
                                 status.add(0);
                             }
 
@@ -132,7 +128,7 @@ public class FeedBack extends AppCompatActivity {
                                 String Question = object.getString("Question");
                                 String RatingType = object.getString("RatingType");
                                 String OutOf = object.getString("OutOf");
-                                FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf,status,"");
+                                FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf, status, "");
                                 global.feedback.add(feedback);
                             }
 
@@ -143,7 +139,6 @@ public class FeedBack extends AppCompatActivity {
                             list.setAdapter(adapter);
 
                         }
-
 
 
                     } catch (JSONException e) {
@@ -177,26 +172,23 @@ public class FeedBack extends AppCompatActivity {
                 data.put("POSID", global.pos.pos_id);
 
 
-                String detid="";
-                String fbmid="";
+                String detid = "";
+                String fbmid = "";
 
-                String fbvalue="";
+                String fbvalue = "";
 
 
-                String fbcomment="";
-
+                String fbcomment = "";
 
 
                 for (int i = 0; i < global.feedbackdata.size(); i++) {
 
 
-
-                    detid=detid+"0"+"^";
+                    detid = detid + "0" + "^";
                     // detid=detid+"^";
-                    fbmid=fbmid+(global.feedbackdata.get(i).id)+"^";
-                    fbvalue=fbvalue+(global.feedbackdata.get(i).rating)+"^";
-                    fbcomment=fbcomment+(global.feedbackdata.get(i).comment)+"^";
-
+                    fbmid = fbmid + (global.feedbackdata.get(i).id) + "^";
+                    fbvalue = fbvalue + (global.feedbackdata.get(i).rating) + "^";
+                    fbcomment = fbcomment + (global.feedbackdata.get(i).comment) + "^";
 
 
                 }
@@ -216,8 +208,7 @@ public class FeedBack extends AppCompatActivity {
 */
 
 
-
-                String url = global.globalurl+"/api/Feedback/spSaveFeedback?POSReqID="+global.pos.id+"&POSID="+global.pos.pos_id+"&DetID="+detid+"&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment="+fbcomment + "&User="+global.empId;
+                String url = global.globalurl + "/api/Feedback/spSaveFeedback?POSReqID=" + global.pos.id + "&POSID=" + global.pos.pos_id + "&DetID=" + detid + "&FBMID=" + fbmid + "&FBValue=" + fbvalue + "&FBComment=" + fbcomment + "&User=" + global.empId;
 
                 Log.i("RESPONSE", "RESPOSE" + url);
 
@@ -240,12 +231,11 @@ public class FeedBack extends AppCompatActivity {
                     JSONArray array = new JSONArray(s);
 
 
-                    if(array.length()==0)
-                    {
-                        Intent i=new Intent(FeedBack.this,ThankyouPage.class);
+                    if (array.length() == 0) {
+                        Intent i = new Intent(FeedBack.this, ThankyouPage.class);
                         startActivity(i);
                         finish();
-                    }else {
+                    } else {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject object = array.getJSONObject(i);
                             result = object.getString("RESULT");
@@ -255,7 +245,7 @@ public class FeedBack extends AppCompatActivity {
 
                         if (result.equalsIgnoreCase("Saved")) {
 
-                            Intent i=new Intent(FeedBack.this,ThankyouPage.class);
+                            Intent i = new Intent(FeedBack.this, ThankyouPage.class);
                             startActivity(i);
                             finish();
                         }
@@ -270,23 +260,19 @@ public class FeedBack extends AppCompatActivity {
     }
 
 
-
-    public void Snackbar()
-    {
-        Snackbar snack= Snackbar.make(findViewById(android.R.id.content), "No Internet Connection",Snackbar.LENGTH_LONG);
-        View vv=snack.getView();
-        TextView textView=(TextView)vv.findViewById(android.support.design.R.id.snackbar_text);
+    public void Snackbar() {
+        Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "No Internet Connection", Snackbar.LENGTH_LONG);
+        View vv = snack.getView();
+        TextView textView = (TextView) vv.findViewById(android.support.design.R.id.snackbar_text);
         textView.setGravity(Gravity.CENTER);
         snack.show();
         snack.setAction("Enable", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(codeSnippet.hasNetworkConnection())
-                {
+                if (codeSnippet.hasNetworkConnection()) {
                     responseFromServer();
-                }else
-                {
-                    startActivityForResult(new Intent(Settings.ACTION_SETTINGS),1);
+                } else {
+                    startActivityForResult(new Intent(Settings.ACTION_SETTINGS), 1);
                 }
             }
         });
@@ -296,20 +282,18 @@ public class FeedBack extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        codeSnippet=new CodeSnippet(getApplicationContext());
+        codeSnippet = new CodeSnippet(getApplicationContext());
         global = (GlobalClass) getApplicationContext();
         list = (RecyclerView) findViewById(R.id.recyclerlist);
         submit = (Button) findViewById(R.id.submit);
-        logout=(Button)findViewById(R.id.log_out);
+        logout = (Button) findViewById(R.id.log_out);
 
-        if(codeSnippet.hasNetworkConnection())
-        {
+        if (codeSnippet.hasNetworkConnection()) {
             dialog = new ProgressDialog(FeedBack.this);
             dialog.setMessage("Loading....");
             dialog.show();
-          getPOSId();
-        }else
-        {
+            getPOSId();
+        } else {
             Snackbar();
         }
 
@@ -318,14 +302,13 @@ public class FeedBack extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(codeSnippet.hasNetworkConnection())
-                {
+                if (codeSnippet.hasNetworkConnection()) {
                     dialog = new ProgressDialog(FeedBack.this);
                     dialog.setMessage("Loading....");
                     dialog.show();
                     uploadToServer();
 
-                }else {
+                } else {
                     Snackbar();
                 }
 
@@ -341,11 +324,12 @@ public class FeedBack extends AppCompatActivity {
         });
 
     }
+
     public String removeLastChar(String s) {
         if (s == null || s.length() == 0) {
             return s;
         }
-        return s.substring(0, s.length()-1);
+        return s.substring(0, s.length() - 1);
     }
 
     @Override
@@ -367,14 +351,15 @@ public class FeedBack extends AppCompatActivity {
         try {
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface nif : all) {
-                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;  //instead of wlan0 i used eth0
+                if (!nif.getName().equalsIgnoreCase("wlan0"))
+                    continue;  //instead of wlan0 i used eth0
                 byte[] macBytes = nif.getHardwareAddress();
                 if (macBytes == null) {
                     return "";
                 }
                 StringBuilder res1 = new StringBuilder();
                 for (byte b : macBytes) {
-                    res1.append(String.format("%02X:",b));
+                    res1.append(String.format("%02X:", b));
                 }
 
                 if (res1.length() > 0) {
@@ -382,8 +367,11 @@ public class FeedBack extends AppCompatActivity {
                 }
 
                 return res1.toString();
-            }} catch (Exception ex) {
-        }return "02:00:00:00:00:00";}
+            }
+        } catch (Exception ex) {
+        }
+        return "02:00:00:00:00:00";
+    }
 
 
     public void getPOSId() {
@@ -416,7 +404,7 @@ public class FeedBack extends AppCompatActivity {
 
                 if (s == null) {
 
-                   // getPOSId();
+                    // getPOSId();
                     //Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -425,7 +413,7 @@ public class FeedBack extends AppCompatActivity {
                         if (array.length() == 0) {
                             // Toast.makeText(getApplicationContext(),"empty array",Toast.LENGTH_SHORT).show();
                             // dialog.dismiss();
-                           // getPOSId();
+                            // getPOSId();
                             // Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
                         } else {
                             dialog.dismiss();
@@ -443,7 +431,6 @@ public class FeedBack extends AppCompatActivity {
                                 handler.removeCallbacksAndMessages(null);
                             }
 */
-
 
 
                         }
@@ -464,14 +451,13 @@ public class FeedBack extends AppCompatActivity {
     }
 
 
-    void showDialog()
-    {
+    void showDialog() {
         dialogs = new Dialog(FeedBack.this, R.style.ThemeDialogCustom);
         dialogs.setContentView(R.layout.show_dialog);
         dialogs.setCancelable(false);
 
-        final EditText username=(EditText)dialogs.findViewById(R.id.user);
-        final EditText password=(EditText)dialogs.findViewById(R.id.password);
+        final EditText username = (EditText) dialogs.findViewById(R.id.user);
+        final EditText password = (EditText) dialogs.findViewById(R.id.password);
         ImageView close = (ImageView) dialogs.findViewById(R.id.iv_close);
         Button logouts = (Button) dialogs.findViewById(R.id.btn_logout);
 
@@ -484,8 +470,7 @@ public class FeedBack extends AppCompatActivity {
                 String user = preferences.getString("user", "");
                 String pass = preferences.getString("pass", "");
 
-                if(username.getText().toString().equalsIgnoreCase(user) && password.getText().toString().equalsIgnoreCase("pass"))
-                {
+                if (username.getText().toString().equalsIgnoreCase(user) && password.getText().toString().equalsIgnoreCase("pass")) {
 
                     SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
                     editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
@@ -499,9 +484,8 @@ public class FeedBack extends AppCompatActivity {
                     startActivity(new Intent(getBaseContext(), Login.class));
                     ActivityCompat.finishAffinity(FeedBack.this);
 
-                }else
-                {
-                    Toast.makeText(getApplicationContext(),"Username or Password is Invalid",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Username or Password is Invalid", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -518,5 +502,39 @@ public class FeedBack extends AppCompatActivity {
 
         dialogs.show();
     }
+
+   /* @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//Do Code Here
+// If want to block just return false
+            return false;
+        }
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+//Do Code Here
+// If want to block just return false
+            return false;
+        }
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+//Do Code Here
+// If want to block just return false
+            return false;
+        }
+
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+    }
+*/
 
 }
