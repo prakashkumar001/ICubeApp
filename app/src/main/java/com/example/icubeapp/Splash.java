@@ -175,8 +175,10 @@ public class Splash extends AwesomeSplash {
                                 JSONObject object = array.getJSONObject(i);
                                 String ID = object.getString("ID");
                                 String POSID = object.getString("POSID");
+                                String MemoNo = object.getString("MemoNo");
+                                String NetAmount = object.getString("NetAmount");
 
-                                globalClass.pos = new POS(ID, POSID);
+                                globalClass.pos = new POS(ID, POSID,MemoNo,NetAmount);
                             }
 
                             Intent i = new Intent(Splash.this, FeedBack.class);
