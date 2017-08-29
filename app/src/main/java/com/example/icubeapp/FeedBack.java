@@ -100,12 +100,15 @@ public class FeedBack extends AppCompatActivity {
                 super.onPostExecute(s);
                 dialog.dismiss();
 
+                global.feedback = new ArrayList<>();
+                global.feedbackdata=new ArrayList<>();
 
                 if (s == null) {
                     //  Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
                     // responseFromServer();
-                    global.feedback=new ArrayList<>();
-                    global.feedbackdata=new ArrayList<>();
+
+
+
                 } else {
                     try {
 
@@ -116,8 +119,7 @@ public class FeedBack extends AppCompatActivity {
                         JSONArray array = new JSONArray(s);
 
                         if (array.length() == 0) {
-                            global.feedback=new ArrayList<>();
-                            global.feedbackdata=new ArrayList<>();
+
                             Toast.makeText(getApplicationContext(), "Novalue", Toast.LENGTH_SHORT).show();
                         } else {
                             global.feedback = new ArrayList<>();
@@ -411,6 +413,12 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+
+                global.pos=new POS();
+                global.feedback=new ArrayList<>();
+                global.feedbackdata=new ArrayList<>();
+
+
 
                 if (s == null) {
 

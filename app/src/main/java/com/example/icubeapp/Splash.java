@@ -149,7 +149,7 @@ public class Splash extends AwesomeSplash {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-
+                globalClass.pos=new POS();
                 if (s == null) {
 
                     getPOSId();
@@ -163,10 +163,12 @@ public class Splash extends AwesomeSplash {
                             // dialog.dismiss();
                            // getPOSId();
 
-                            Intent i = new Intent(Splash.this, FeedBack.class);
+
+
+                          /*  Intent i = new Intent(Splash.this, FeedBack.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                            finish();
+                            finish();*/
 
                             // Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
                         } else {
