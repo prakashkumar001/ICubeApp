@@ -111,8 +111,10 @@ public class MainActivity extends AppCompatActivity implements loadfragment {
                                 JSONObject object=array.getJSONObject(i);
                                 String ID=object.getString("ID");
                                 String POSID=object.getString("POSID");
+                                String MemoNo = object.getString("MemoNo");
+                                String NetAmount = object.getString("NetAmount");
 
-                                global.pos=new POS(ID,POSID);
+                                global.pos = new POS(ID, POSID,MemoNo,NetAmount);
                             }
 
                             switvhtonextscreen();

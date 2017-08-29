@@ -64,6 +64,7 @@ public class FeedBack extends AppCompatActivity {
     Dialog dialogs;
     Handler handler;
     Button logout;
+    TextView billno,netamount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,18 +100,26 @@ public class FeedBack extends AppCompatActivity {
                 super.onPostExecute(s);
                 dialog.dismiss();
 
+                global.feedback = new ArrayList<>();
+                global.feedbackdata=new ArrayList<>();
 
                 if (s == null) {
                     //  Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
                     // responseFromServer();
 
+
+
                 } else {
                     try {
 
 
+                        billno.setText(global.pos.memo_no);
+                        netamount.setText(global.pos.netamount);
+
                         JSONArray array = new JSONArray(s);
 
                         if (array.length() == 0) {
+
                             Toast.makeText(getApplicationContext(), "Novalue", Toast.LENGTH_SHORT).show();
                         } else {
                             global.feedback = new ArrayList<>();
@@ -287,6 +296,9 @@ public class FeedBack extends AppCompatActivity {
         list = (RecyclerView) findViewById(R.id.recyclerlist);
         submit = (Button) findViewById(R.id.submit);
         logout = (Button) findViewById(R.id.log_out);
+        billno=(TextView) findViewById(R.id.billno);
+        netamount=(TextView) findViewById(R.id.amount);
+
 
         if (codeSnippet.hasNetworkConnection()) {
             dialog = new ProgressDialog(FeedBack.this);
@@ -402,6 +414,12 @@ public class FeedBack extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
+                global.pos=new POS();
+                global.feedback=new ArrayList<>();
+                global.feedbackdata=new ArrayList<>();
+
+
+
                 if (s == null) {
 
                     // getPOSId();
@@ -421,8 +439,11 @@ public class FeedBack extends AppCompatActivity {
                                 JSONObject object = array.getJSONObject(i);
                                 String ID = object.getString("ID");
                                 String POSID = object.getString("POSID");
+                                String MemoNo = object.getString("MemoNo");
+                                String NetAmount = object.getString("NetAmount");
 
-                                global.pos = new POS(ID, POSID);
+                                global.pos = new POS(ID, POSID,MemoNo,NetAmount);
+
                             }
 
 
