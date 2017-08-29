@@ -172,6 +172,11 @@ public class Splash extends AwesomeSplash {
                 globalClass.pos=new POS();
                 if (s == null) {
 
+                    Intent i = new Intent(Splash.this, FeedBack.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                    finish();
+
                     //getPOSId();
                     //Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
 
@@ -185,7 +190,7 @@ public class Splash extends AwesomeSplash {
 
 
 
-                            Intent i = new Intent(Splash.this, FeedBack.class);
+                            Intent i = new Intent(Splash.this, Splash.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                             finish();

@@ -98,8 +98,8 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                dialog.dismiss();
-
+               // dialog.dismiss();
+                submit.setVisibility(View.GONE);
                 global.feedback = new ArrayList<>();
                 global.feedbackdata=new ArrayList<>();
 
@@ -107,7 +107,13 @@ public class FeedBack extends AppCompatActivity {
                     //  Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
                     // responseFromServer();
 
-
+                    if(handler!=null)
+                    {
+                        handler.removeCallbacksAndMessages(null);
+                    }
+                    Intent i = new Intent(FeedBack.this, Splash.class);
+                    startActivity(i);
+                    finish();
 
                 } else {
                     try {
@@ -119,6 +125,12 @@ public class FeedBack extends AppCompatActivity {
                         JSONArray array = new JSONArray(s);
 
                         if (array.length() == 0) {
+                            submit.setVisibility(View.GONE);
+
+                            if(handler!=null)
+                            {
+                                handler.removeCallbacksAndMessages(null);
+                            }
                             Intent i = new Intent(FeedBack.this, Splash.class);
                             startActivity(i);
                             finish();
@@ -148,6 +160,9 @@ public class FeedBack extends AppCompatActivity {
                             list.setLayoutManager(mLayoutManager);
                             list.setItemAnimator(new DefaultItemAnimator());
                             list.setAdapter(adapter);
+
+
+                            submit.setVisibility(View.VISIBLE);
 
                         }
 
@@ -233,7 +248,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                dialog.dismiss();
+               // dialog.dismiss();
                 String result = "";
                 global.feedback = new ArrayList<>();
                 global.feedbackdata = new ArrayList<>();
@@ -255,6 +270,13 @@ public class FeedBack extends AppCompatActivity {
                         }
 
                         if (result.equalsIgnoreCase("Saved")) {
+
+
+                            if(handler!=null)
+                            {
+                                handler.removeCallbacksAndMessages(null);
+                            }
+
 
                             Intent i = new Intent(FeedBack.this, ThankyouPage.class);
                             startActivity(i);
@@ -281,7 +303,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (codeSnippet.hasNetworkConnection()) {
-                    responseFromServer();
+                    getPOSId();
                 } else {
                     startActivityForResult(new Intent(Settings.ACTION_SETTINGS), 1);
                 }
@@ -302,11 +324,23 @@ public class FeedBack extends AppCompatActivity {
         netamount=(TextView) findViewById(R.id.amount);
 
 
+        submit.setVisibility(View.GONE);
         if (codeSnippet.hasNetworkConnection()) {
-            dialog = new ProgressDialog(FeedBack.this);
+           /* dialog = new ProgressDialog(FeedBack.this);
             dialog.setMessage("Loading....");
             dialog.show();
-            getPOSId();
+*/
+            handler=new Handler();
+            handler.postDelayed(new Runnable(){
+                @Override
+                public void run(){
+
+                   getPOSId();
+                    handler.postDelayed(this, 15000);
+
+                }
+            }, 1000);
+
         } else {
             Snackbar();
         }
@@ -354,6 +388,11 @@ public class FeedBack extends AppCompatActivity {
             if(dialog!=null)
             {
                 dialog.dismiss();
+            }
+
+            if(handler!=null)
+            {
+                handler.removeCallbacksAndMessages(null);
             }
 
             done=true;
@@ -421,7 +460,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                dialog.dismiss();
+               // dialog.dismiss();
                 global.pos=new POS();
                 global.feedback=new ArrayList<>();
                 global.feedbackdata=new ArrayList<>();
@@ -429,6 +468,7 @@ public class FeedBack extends AppCompatActivity {
 
 
                 if (s == null) {
+
 
                     // getPOSId();
                     //Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
@@ -444,6 +484,11 @@ public class FeedBack extends AppCompatActivity {
                          /*   if(!done) {
                                 getPOSId();
                             }*/
+
+                            if(handler!=null)
+                            {
+                                handler.removeCallbacksAndMessages(null);
+                            }
 
                             Intent i = new Intent(FeedBack.this, Splash.class);
                             startActivity(i);
@@ -571,6 +616,7 @@ public class FeedBack extends AppCompatActivity {
         activityManager.moveTaskToFront(getTaskId(), 0);
     }
 */
+
 
 
 }
