@@ -1,10 +1,19 @@
 package com.example.icubeapp;
 
+import android.app.ActivityManager;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.example.icubeapp.common.GlobalClass;
@@ -31,7 +40,9 @@ public class Splash extends AwesomeSplash {
     JSONArray array;
     String macaddress = "";
     GlobalClass globalClass;
-    ProgressDialog dialog;
+    //ProgressDialog dialog;
+    Dialog dialogs;
+    public boolean done = false;
 
     public static String getMacAddr() {
         try {
@@ -65,15 +76,15 @@ public class Splash extends AwesomeSplash {
         configSplash.setAnimCircularRevealDuration(2000);
         configSplash.setRevealFlagX(4);
         configSplash.setRevealFlagY(2);
-        configSplash.setLogoSplash(R.drawable.welcome);
-        configSplash.setAnimLogoSplashDuration(2000);
+        configSplash.setLogoSplash(R.mipmap.splash);
+        configSplash.setAnimLogoSplashDuration(3000);
         configSplash.setOriginalHeight(2000);
         configSplash.setOriginalWidth(2000);
         configSplash.setAnimLogoSplashTechnique(Techniques.Landing);
         configSplash.setTitleSplash("");
         //configSplash.setTitleTextColor(R.color.colorPrimary);
         //configSplash.setTitleTextSize(25.0f);
-        configSplash.setAnimTitleDuration(1000);
+        configSplash.setAnimTitleDuration(3000);
         configSplash.setAnimTitleTechnique(Techniques.SlideInUp);
         //configSplash.setTitleFont("fonts/Comfortaa_Bold.ttf");
 
@@ -89,11 +100,15 @@ public class Splash extends AwesomeSplash {
         startActivity(i);
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         finish();*/
-        dialog = new ProgressDialog(Splash.this);
+      /*  dialog = new ProgressDialog(Splash.this);
         dialog.setMessage("Loading....");
         dialog.setCancelable(false);
-        dialog.show();
-        getPOSId();
+        dialog.show();*/
+      if(!done)
+      {
+          getPOSId();
+      }
+
     }
 
     /*@Override
@@ -112,6 +127,11 @@ public class Splash extends AwesomeSplash {
     @Override
     public void animationsStop() {
         ActivityCompat.finishAffinity(Splash.this);
+    }
+
+    @Override
+    public void logout(View view) {
+        showDialog(view);
     }
 
     @Override
@@ -152,7 +172,7 @@ public class Splash extends AwesomeSplash {
                 globalClass.pos=new POS();
                 if (s == null) {
 
-                    getPOSId();
+                    //getPOSId();
                     //Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -165,14 +185,14 @@ public class Splash extends AwesomeSplash {
 
 
 
-                          /*  Intent i = new Intent(Splash.this, FeedBack.class);
+                            Intent i = new Intent(Splash.this, FeedBack.class);
                             startActivity(i);
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                            finish();*/
+                            finish();
 
                             // Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
                         } else {
-                            dialog.dismiss();
+                          //  dialog.dismiss();
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 String ID = object.getString("ID");
@@ -212,4 +232,58 @@ public class Splash extends AwesomeSplash {
         animationsStop();
 
     }
+
+    void showDialog(View view) {
+        dialogs = new Dialog(Splash.this, R.style.ThemeDialogCustom);
+        dialogs.setContentView(R.layout.show_dialog);
+        dialogs.setCancelable(false);
+
+        final EditText password = (EditText) dialogs.findViewById(R.id.password);
+        ImageView close = (ImageView) dialogs.findViewById(R.id.iv_close);
+        Button logouts = (Button) dialogs.findViewById(R.id.btn_logout);
+
+
+        logouts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
+                String pass = preferences.getString("pass", "");
+
+                if (password.getText().toString().equalsIgnoreCase(pass)) {
+
+                    done=true;
+                    SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                    editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                    editor.putBoolean("loginstatus", false);
+                    editor.putString("EmpID", "");
+                    editor.putString("language", "");
+                    editor.putString("user", "");
+                    editor.putString("pass", "");
+                    editor.commit();
+                    dialogs.dismiss();
+                    startActivity(new Intent(getBaseContext(), Login.class));
+                    ActivityCompat.finishAffinity(Splash.this);
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Username or Password is Invalid", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialogs.dismiss();
+            }
+        });
+
+
+        dialogs.show();
+    }
+
+
+
 }

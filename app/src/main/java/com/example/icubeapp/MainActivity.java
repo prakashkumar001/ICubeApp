@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements loadfragment {
                 global.data = new ArrayList<>();
                 global.data.add(new Slider("image",R.drawable.car,0,"5000"));
                 global.data.add(new Slider("image",R.drawable.cat,0,"5000"));
-                global.data.add(new Slider("video",0,R.raw.video,"10000"));
+                global.data.add(new Slider("video",0,R.drawable.cat,"10000"));
                 global.data.add(new Slider("image",R.drawable.stone,0,"5000"));
 
 

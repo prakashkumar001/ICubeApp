@@ -21,7 +21,7 @@
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:src="@drawable/logo"
+                android:src="@mipmap/logo"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 />
@@ -120,7 +120,7 @@
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
-                android:ems="5"
+                android:ems="10"
                 android:textColor="@android:color/white"
                 android:text="Exit"/>
 

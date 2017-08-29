@@ -63,9 +63,9 @@ public class FeedBack extends AppCompatActivity {
     ProgressDialog dialog;
     Dialog dialogs;
     Handler handler;
-    Button logout;
+    ImageView logout;
     TextView billno,netamount;
-
+    public boolean done = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +119,9 @@ public class FeedBack extends AppCompatActivity {
                         JSONArray array = new JSONArray(s);
 
                         if (array.length() == 0) {
-
+                            Intent i = new Intent(FeedBack.this, Splash.class);
+                            startActivity(i);
+                            finish();
                             Toast.makeText(getApplicationContext(), "Novalue", Toast.LENGTH_SHORT).show();
                         } else {
                             global.feedback = new ArrayList<>();
@@ -295,7 +297,7 @@ public class FeedBack extends AppCompatActivity {
         global = (GlobalClass) getApplicationContext();
         list = (RecyclerView) findViewById(R.id.recyclerlist);
         submit = (Button) findViewById(R.id.submit);
-        logout = (Button) findViewById(R.id.log_out);
+        logout = (ImageView) findViewById(R.id.log_out);
         billno=(TextView) findViewById(R.id.billno);
         netamount=(TextView) findViewById(R.id.amount);
 
@@ -349,8 +351,13 @@ public class FeedBack extends AppCompatActivity {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
 
-            ActivityCompat.finishAffinity(FeedBack.this);
+            if(dialog!=null)
+            {
+                dialog.dismiss();
+            }
 
+            done=true;
+            ActivityCompat.finishAffinity(FeedBack.this);
             return;
         }
 
@@ -397,6 +404,7 @@ public class FeedBack extends AppCompatActivity {
                 macaddress = getMacAddr();
             }
 
+
             @Override
             protected String doInBackground(String... strings) {
 
@@ -413,7 +421,7 @@ public class FeedBack extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-
+                dialog.dismiss();
                 global.pos=new POS();
                 global.feedback=new ArrayList<>();
                 global.feedbackdata=new ArrayList<>();
@@ -433,8 +441,15 @@ public class FeedBack extends AppCompatActivity {
                             // dialog.dismiss();
                             // getPOSId();
                             // Toast.makeText(getApplicationContext(),"Please Try again",Toast.LENGTH_SHORT).show();
+                         /*   if(!done) {
+                                getPOSId();
+                            }*/
+
+                            Intent i = new Intent(FeedBack.this, Splash.class);
+                            startActivity(i);
+                            finish();
                         } else {
-                            dialog.dismiss();
+
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 String ID = object.getString("ID");
@@ -452,11 +467,11 @@ public class FeedBack extends AppCompatActivity {
                                 handler.removeCallbacksAndMessages(null);
                             }
 */
-
+                            responseFromServer();
 
                         }
 
-                        responseFromServer();
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -477,7 +492,6 @@ public class FeedBack extends AppCompatActivity {
         dialogs.setContentView(R.layout.show_dialog);
         dialogs.setCancelable(false);
 
-        final EditText username = (EditText) dialogs.findViewById(R.id.user);
         final EditText password = (EditText) dialogs.findViewById(R.id.password);
         ImageView close = (ImageView) dialogs.findViewById(R.id.iv_close);
         Button logouts = (Button) dialogs.findViewById(R.id.btn_logout);
@@ -491,7 +505,7 @@ public class FeedBack extends AppCompatActivity {
                 String user = preferences.getString("user", "");
                 String pass = preferences.getString("pass", "");
 
-                if (username.getText().toString().equalsIgnoreCase(user) && password.getText().toString().equalsIgnoreCase("pass")) {
+                if (password.getText().toString().equalsIgnoreCase(pass)) {
 
                     SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
                     editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
@@ -557,5 +571,6 @@ public class FeedBack extends AppCompatActivity {
         activityManager.moveTaskToFront(getTaskId(), 0);
     }
 */
+
 
 }

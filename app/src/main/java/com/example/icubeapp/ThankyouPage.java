@@ -21,16 +21,13 @@ import android.widget.Toast;
  */
 
 public class ThankyouPage extends AppCompatActivity {
-    Button logout;
     Handler handler;
     boolean doubleBackToExitPressedOnce=false;
-    Dialog dialogs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thankyou);
-        logout=(Button)findViewById(R.id.log_out);
 
 
          handler = new Handler();
@@ -43,15 +40,9 @@ public class ThankyouPage extends AppCompatActivity {
                 ActivityCompat.finishAffinity(ThankyouPage.this);
 
             }
-        }, 15000);
+        }, 5000);
 
 
-       /* logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
-        });*/
     }
 
     @Override
@@ -85,59 +76,6 @@ public class ThankyouPage extends AppCompatActivity {
 
     }
 
-    void showDialog()
-    {
-        dialogs = new Dialog(ThankyouPage.this, R.style.ThemeDialogCustom);
-        dialogs.setContentView(R.layout.show_dialog);
-        dialogs.setCancelable(false);
 
-        final EditText username=(EditText)dialogs.findViewById(R.id.user);
-        final EditText password=(EditText)dialogs.findViewById(R.id.password);
-        ImageView close = (ImageView) dialogs.findViewById(R.id.iv_close);
-        Button logouts = (Button) dialogs.findViewById(R.id.btn_logout);
-
-
-        logouts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
-                String user = preferences.getString("user", "");
-                String pass = preferences.getString("pass", "");
-
-                if(username.getText().toString().equalsIgnoreCase(user) && password.getText().toString().equalsIgnoreCase("pass"))
-                {
-
-                    SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
-                    editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
-                    editor.putBoolean("loginstatus", false);
-                    editor.putString("EmpID", "");
-                    editor.putString("language", "");
-                    editor.putString("user", "");
-                    editor.putString("pass", "");
-                    editor.commit();
-                    dialogs.dismiss();
-                    startActivity(new Intent(getBaseContext(), Login.class));
-                    ActivityCompat.finishAffinity(ThankyouPage.this);
-
-                }else
-                {
-                    Toast.makeText(getApplicationContext(),"Username or Password is Invalid",Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        });
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialogs.dismiss();
-            }
-        });
-
-
-        dialogs.show();
-    }
 
 }

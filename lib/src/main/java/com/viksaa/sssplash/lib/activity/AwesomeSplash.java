@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,6 +35,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
     private RelativeLayout mRlReveal;
     private ImageView mImgLogo;
+    private ImageView logout;
     private AppCompatTextView mTxtTitle;
     private FillableLoader mPathLogo;
     private FrameLayout mFl;
@@ -63,7 +65,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
         mRlReveal = (RelativeLayout) findViewById(R.id.rlColor);
         mTxtTitle = (AppCompatTextView) findViewById(R.id.txtTitle);
-
+        logout=(ImageView) findViewById(R.id.log_out);
 
         switch (flag) {
             case Flags.WITH_PATH:
@@ -152,6 +154,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
             @Override
             public void onAnimationEnd() {
 
+
                 if (pathOrLogo == Flags.WITH_PATH) {
                     mPathLogo.start();
                 } else {
@@ -166,6 +169,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
     public void startLogoAnimation() {
         mImgLogo.setVisibility(View.VISIBLE);
+
         mImgLogo.setImageResource(mConfigSplash.getLogoSplash());
 
         YoYo.with(mConfigSplash.getAnimLogoSplashTechnique()).withListener(new Animator.AnimatorListener() {
@@ -194,7 +198,6 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
 
     public void startTextAnimation() {
-
         mTxtTitle.setText(mConfigSplash.getTitleSplash());
         mTxtTitle.setTextSize(mConfigSplash.getTitleTextSize());
         mTxtTitle.setTextColor(getResources().getColor(mConfigSplash.getTitleTextColor()));
@@ -240,4 +243,6 @@ abstract public class AwesomeSplash extends AppCompatActivity {
     public abstract void animationsFinished();
 
     public abstract void animationsStop();
+
+    public abstract void logout(View view);
 }
