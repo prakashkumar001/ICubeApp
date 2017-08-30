@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -24,15 +25,19 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.icubeapp.adapters.FeedAdapter;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.FEEDBACK;
+import com.example.icubeapp.model.Language;
 import com.example.icubeapp.model.POS;
 import com.example.icubeapp.utils.CodeSnippet;
 import com.example.icubeapp.utils.WSUtils;
@@ -63,14 +68,62 @@ public class FeedBack extends AppCompatActivity {
     ProgressDialog dialog;
     Dialog dialogs;
     Handler handler;
-    ImageView logout;
+   // ImageView logout;
     TextView billno,netamount;
     public boolean done = false;
+    ArrayList<Language> languages;
+    ArrayList<String> language;
+    Spinner spinner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedback);
+        spinner=(Spinner)findViewById(R.id.spinner);
 
+        languages=new ArrayList<>();
+        language=new ArrayList<>();
+        languages.add(new Language("1","English"));
+        languages.add(new Language("2","العَرَبِيَّة"));
+        languages.add(new Language("3","தமிழ்"));//
+        languages.add(new Language("4","हिन्दी"));
+
+        language.add("English");
+        language.add("العَرَبِيَّة");
+        language.add("தமிழ்");
+        language.add("हिन्दी");
+
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(FeedBack.this,android.R.layout.simple_list_item_1,language);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                global.languageId=languages.get(position).id;
+                SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
+                editor.putString("language", global.languageId);
+                editor.commit();
+                // Toast.makeText(getApplicationContext(),global.languageId,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
+        String langid = preferences.getString("language", "");
+
+        for (int i=0;i<languages.size();i++)
+        {
+            if(langid.equalsIgnoreCase(languages.get(i).id))
+            {
+                spinner.setSelection(i);
+            }
+        }
 
     }
 
@@ -319,7 +372,7 @@ public class FeedBack extends AppCompatActivity {
         global = (GlobalClass) getApplicationContext();
         list = (RecyclerView) findViewById(R.id.recyclerlist);
         submit = (Button) findViewById(R.id.submit);
-        logout = (ImageView) findViewById(R.id.log_out);
+     //   logout = (ImageView) findViewById(R.id.log_out);
         billno=(TextView) findViewById(R.id.billno);
         netamount=(TextView) findViewById(R.id.amount);
 
@@ -330,6 +383,25 @@ public class FeedBack extends AppCompatActivity {
             dialog.setMessage("Loading....");
             dialog.show();
 */
+
+           if(handler!=null)
+           {
+               handler.removeCallbacksAndMessages(null);
+           }
+
+           global.feedback=new ArrayList<>();
+            global.feedbackdata=new ArrayList<>();
+            billno.setText("");
+            netamount.setText("");
+
+            FeedAdapter adapter = new FeedAdapter(FeedBack.this, global.feedback);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FeedBack.this);
+            list.setLayoutManager(mLayoutManager);
+            list.setItemAnimator(new DefaultItemAnimator());
+            list.setAdapter(adapter);
+
+
+
             handler=new Handler();
             handler.postDelayed(new Runnable(){
                 @Override
@@ -364,12 +436,12 @@ public class FeedBack extends AppCompatActivity {
         });
 
 
-        logout.setOnClickListener(new View.OnClickListener() {
+       /* logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
             }
-        });
+        });*/
 
     }
 
@@ -583,7 +655,7 @@ public class FeedBack extends AppCompatActivity {
         dialogs.show();
     }
 
-   /* @Override
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -615,8 +687,16 @@ public class FeedBack extends AppCompatActivity {
 
         activityManager.moveTaskToFront(getTaskId(), 0);
     }
-*/
 
 
-
+   /* @Override
+    protected void onStop() {
+        onStop();
+        PackageManager localPackageManager = getPackageManager();
+        Intent intent = new Intent("android.intent.action.MAIN");
+        intent.addCategory("android.intent.category.HOME");
+        String str = localPackageManager.resolveActivity(intent,
+                PackageManager.MATCH_DEFAULT_ONLY).activityInfo.packageName;
+        Log.e("Current launcher Package Name:",str);
+    }*/
 }

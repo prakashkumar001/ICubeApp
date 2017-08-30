@@ -265,6 +265,7 @@ public class Splash extends AwesomeSplash {
                     editor.putString("language", "");
                     editor.putString("user", "");
                     editor.putString("pass", "");
+                    editor.putString("url", "");
                     editor.commit();
                     dialogs.dismiss();
                     startActivity(new Intent(getBaseContext(), Login.class));

@@ -1,7 +1,9 @@
 package com.example.icubeapp;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -66,7 +68,7 @@ public class Login extends AppCompatActivity {
     InternetPermissions internetPermissions;
     private static final int NETPERMISSION = 1888;
     GlobalClass global;
-    Spinner spinner;
+   // Spinner spinner;
 
     //Toolbar toolbar;
     @Override
@@ -77,9 +79,11 @@ public class Login extends AppCompatActivity {
         final boolean loginStatus = preferences.getBoolean("loginstatus", false);
          String empID = preferences.getString("EmpID", "");
         String langid = preferences.getString("language", "");
+        String url = preferences.getString("url", "");
         if(loginStatus){
             global.empId=empID;
             global.languageId=langid;
+            global.globalurl=url;
             Intent obj = new Intent(getBaseContext(), Splash.class);
             startActivity(obj);
             finish();
@@ -91,7 +95,7 @@ public class Login extends AppCompatActivity {
         user=(EditText)findViewById(R.id.user);
         password=(EditText)findViewById(R.id.password);
         hostname=(EditText)findViewById(R.id.hostname);
-        spinner=(Spinner)findViewById(R.id.spinner);
+       // spinner=(Spinner)findViewById(R.id.spinner);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog()
@@ -112,7 +116,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        ArrayList<String> list=new ArrayList<>();
+       /* ArrayList<String> list=new ArrayList<>();
         list.add("1");
         list.add("2");
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(Login.this,android.R.layout.simple_list_item_1,list);
@@ -131,7 +135,7 @@ public class Login extends AppCompatActivity {
 
             }
         });
-
+*/
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -252,8 +256,11 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
 
 
-                }else
-                {
+                }else if(o.equalsIgnoreCase("Invalid connection")){
+                    Toast.makeText(getApplicationContext(),"Invalid connection",Toast.LENGTH_SHORT).show();
+
+                }
+                 else{
                     try {
                         JSONArray array=new JSONArray(o);
                         String result="";
@@ -280,6 +287,7 @@ public class Login extends AppCompatActivity {
                             editor.putString("language", global.languageId);
                             editor.putString("user", user.getText().toString());
                             editor.putString("pass", password.getText().toString());
+                            editor.putString("url", global.globalurl);
                             editor.commit();
 
 
@@ -342,5 +350,15 @@ public class Login extends AppCompatActivity {
             }} catch (Exception ex) {
         }return "02:00:00:00:00:00";
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+    }
+
 
 }

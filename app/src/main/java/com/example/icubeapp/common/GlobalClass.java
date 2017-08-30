@@ -28,10 +28,11 @@ public class GlobalClass extends Application {
     public static ArrayList<FeedBackSelection> feedbackdata=new ArrayList<>();
     public static ArrayList<Slider> data=new ArrayList<>();
     public static int position=0;
-    //public static String globalurl="http://192.168.10.13:81";
-    public static String globalurl="http://117.218.77.219:81";
+    //http://icube.cloudapp.net:8080/iCubeIOS/
+    //public static String globalurl="http://192.168.10.13:81";//117.218.77.219:81
+    public static String globalurl="";
     public static String empId;
-    public static String languageId;
+    public static String languageId="1";
     public void onCreate() {
 
 

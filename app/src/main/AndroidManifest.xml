@@ -18,12 +18,17 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleInstance"
+
 
 
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.HOME" />
 
             </intent-filter>
         </activity>
@@ -44,16 +49,12 @@
         <activity android:name=".FeedBack"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation|screenSize" >
+            android:configChanges="orientation|screenSize"
+            >
           <!--  android:launchMode="singleInstance"-->
 
 
-          <!--  <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.HOME" />
 
-            </intent-filter>-->
 
         </activity>
 
@@ -61,7 +62,7 @@
 
 
     </application>
-  <!--  <uses-permission android:name="android.permission.REORDER_TASKS" />-->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
 
 
 </manifest>
