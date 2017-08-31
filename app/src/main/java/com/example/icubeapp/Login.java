@@ -256,7 +256,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
 
 
-                }else if(o.equalsIgnoreCase("Invalid connection")){
+                }else if(o.equalsIgnoreCase("Invalid host name")){
                     Toast.makeText(getApplicationContext(),"Invalid connection",Toast.LENGTH_SHORT).show();
 
                 }
@@ -285,8 +285,8 @@ public class Login extends AppCompatActivity {
                             editor.putBoolean("loginstatus", true);
                             editor.putString("EmpID", global.empId);
                             editor.putString("language", global.languageId);
-                            editor.putString("user", user.getText().toString());
-                            editor.putString("pass", password.getText().toString());
+                            editor.putString("user", names);
+                            editor.putString("pass", passwords);
                             editor.putString("url", global.globalurl);
                             editor.commit();
 

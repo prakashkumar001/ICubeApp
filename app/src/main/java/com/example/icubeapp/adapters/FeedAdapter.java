@@ -1,13 +1,16 @@
 package com.example.icubeapp.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,7 +70,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             holder.smileRating.setVisibility(View.GONE);
             holder.ratingstar.setVisibility(View.VISIBLE);
             holder.commentbox.setVisibility(View.GONE);
-            global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", data.get(position).comment));
+            global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", data.get(position).comment, data.get(position).IsMandatory));
 
 
         } else if (data.get(position).rating_type.equalsIgnoreCase("2")) {
@@ -76,14 +79,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             holder.commentbox.setVisibility(View.GONE);
 
 
-            global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", data.get(position).comment));
+            global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", data.get(position).comment,data.get(position).IsMandatory));
 
         } else {
             holder.ratingstar.setVisibility(View.GONE);
             holder.smileRating.setVisibility(View.GONE);
             holder.commentbox.setVisibility(View.VISIBLE);
 
-            global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", data.get(position).comment));
+            global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", data.get(position).comment,data.get(position).IsMandatory));
 
         }
 
@@ -147,6 +150,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             holder.smile_five_lay.setVisibility(View.GONE);
         }
 
+        holder.layer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                hideKeyboard(v);
+                return false;
+            }
+        });
 
         holder.comments.addTextChangedListener(new TextWatcher() {
             @Override
@@ -165,9 +176,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
                 String comment = s.toString();
                 if (containsData(global.feedbackdata, data.get(position).id)) {
-                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", comment));
+                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", comment,data.get(position).IsMandatory));
                 } else {
-                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", comment));
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, "0", comment,data.get(position).IsMandatory));
 
                 }
             }
@@ -191,9 +202,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     holder.terrible.setTextColor(Color.BLACK);
 
                     if (containsData(global.feedbackdata, data.get(position).id)) {
-                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(1), ""));
+                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(1), "",data.get(position).IsMandatory));
                     } else {
-                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(1), ""));
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(1), "",data.get(position).IsMandatory));
 
                     }
 
@@ -249,9 +260,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
                     holder.bad.setTextColor(Color.BLACK);
                     if (containsData(global.feedbackdata, data.get(position).id)) {
-                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), ""));
+                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), "",data.get(position).IsMandatory));
                     } else {
-                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), ""));
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), "",data.get(position).IsMandatory));
 
                     }
                 } else {
@@ -300,9 +311,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
                     holder.okay.setTextColor(Color.BLACK);
                     if (containsData(global.feedbackdata, data.get(position).id)) {
-                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), ""));
+                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), "",data.get(position).IsMandatory));
                     } else {
-                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), ""));
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), "",data.get(position).IsMandatory));
                     }
 
                 } else {
@@ -352,9 +363,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
                     holder.good.setTextColor(Color.BLACK);
                     if (containsData(global.feedbackdata, data.get(position).id)) {
-                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), ""));
+                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), "",data.get(position).IsMandatory));
                     } else {
-                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), ""));
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), "",data.get(position).IsMandatory));
                     }
 
                 } else {
@@ -407,9 +418,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     holder.great.setTextColor(Color.BLACK);
 
                     if (containsData(global.feedbackdata, data.get(position).id)) {
-                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), ""));
+                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), "",data.get(position).IsMandatory));
                     } else {
-                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), ""));
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), "",data.get(position).IsMandatory));
                     }
                 } else {
                     data.get(position).status.set(1,0);
@@ -451,9 +462,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                     holder.starone.setImageResource(R.mipmap.star_select);
 
                     if (containsData(global.feedbackdata, data.get(position).id)) {
-                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(1), ""));
+                        global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(1), "",data.get(position).IsMandatory));
                     } else {
-                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(1), ""));
+                        global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(1), "",data.get(position).IsMandatory));
                     }
 
 
@@ -478,9 +489,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
 
                 if (containsData(global.feedbackdata, data.get(position).id)) {
-                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), ""));
+                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), "",data.get(position).IsMandatory));
                 } else {
-                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), ""));
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(2), "",data.get(position).IsMandatory));
 
                 }
 
@@ -497,9 +508,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             public void onClick(View v) {
 
                 if (containsData(global.feedbackdata, data.get(position).id)) {
-                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), ""));
+                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), "",data.get(position).IsMandatory));
                 } else {
-                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), ""));
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(3), "",data.get(position).IsMandatory));
                 }
                 holder.starone.setImageResource(R.mipmap.star_select);
                 holder.startwo.setImageResource(R.mipmap.star_select);
@@ -514,9 +525,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             public void onClick(View v) {
 
                 if (containsData(global.feedbackdata, data.get(position).id)) {
-                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), ""));
+                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), "",data.get(position).IsMandatory));
                 } else {
-                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), ""));
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(4), "",data.get(position).IsMandatory));
 
                 }
                 holder.starone.setImageResource(R.mipmap.star_select);
@@ -533,9 +544,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             public void onClick(View v) {
 
                 if (containsData(global.feedbackdata, data.get(position).id)) {
-                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), ""));
+                    global.feedbackdata.set(index, new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), "",data.get(position).IsMandatory));
                 } else {
-                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), ""));
+                    global.feedbackdata.add(new FeedBackSelection(data.get(position).id, data.get(position).group_id, data.get(position).language_id, data.get(position).question, data.get(position).rating_type, data.get(position).outof, String.valueOf(5), "",data.get(position).IsMandatory));
 
                 }
                 holder.starone.setImageResource(R.mipmap.star_select);
@@ -587,6 +598,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         TextView terrible, bad, okay, good, great;
         TextView comments;
         LinearLayout smile_one_lay,smile_two_lay,smile_three_lay,smile_four_lay,smile_five_lay;
+        LinearLayout layer;
 
         ImageView starone, startwo, starthree, starfour, starfive;
 
@@ -629,6 +641,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             smile_three_lay = (LinearLayout) view.findViewById(R.id.smile_three_lay);
             smile_four_lay = (LinearLayout) view.findViewById(R.id.smile_four_lay);
             smile_five_lay = (LinearLayout) view.findViewById(R.id.smile_five_lay);
+            layer = (LinearLayout) view.findViewById(R.id.layer);
 
        /* starone.setOnClickListener(this);
         startwo.setOnClickListener(this);
@@ -646,5 +659,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
     }
 
-
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

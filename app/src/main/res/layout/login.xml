@@ -16,7 +16,6 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:gravity="center"
-        android:layout_gravity="center"
         android:orientation="vertical">
         <ImageView
             android:layout_width="200dp"
@@ -39,7 +38,7 @@
                 android:id="@+id/hostname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="http://arihant.com"
+                android:hint=""
                 android:padding="10dp"
                 android:gravity="center_vertical"
                 android:singleLine="true"
@@ -121,6 +120,7 @@
             android:background="@drawable/round_button"
             android:textSize="18dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
             android:layout_gravity="center"
             android:ems="10"
             android:textColor="@android:color/white"

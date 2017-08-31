@@ -204,7 +204,8 @@ public class FeedBack extends AppCompatActivity {
                                 String Question = object.getString("Question");
                                 String RatingType = object.getString("RatingType");
                                 String OutOf = object.getString("OutOf");
-                                FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf, status, "");
+                                String IsMandatory = object.getString("IsMandatory");
+                                FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf, status, "",IsMandatory);
                                 global.feedback.add(feedback);
                             }
 
@@ -421,6 +422,18 @@ public class FeedBack extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+               /* if(global.feedback.size()==global.feedbackdata.size())
+                {
+
+                }else if(global.feedback.size()>global.feedbackdata.size()) {
+
+                   for(int i=0;i<global.feedback.size();i++)
+                   {
+
+                   }
+                }
+*/
 
                 if (codeSnippet.hasNetworkConnection()) {
                     dialog = new ProgressDialog(FeedBack.this);

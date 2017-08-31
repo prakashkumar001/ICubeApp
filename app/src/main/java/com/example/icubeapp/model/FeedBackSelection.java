@@ -13,8 +13,9 @@ public class FeedBackSelection {
     public String outof;
     public String rating;
     public String comment;
+    public String ismandatory;
 
-    public FeedBackSelection( String id, String group_id, String language_id, String question, String rating_type,String outof,String rating,String comment) {
+    public FeedBackSelection( String id, String group_id, String language_id, String question, String rating_type,String outof,String rating,String comment,String ismandatory) {
 
         this.id = id;
         this.group_id = group_id;
@@ -24,5 +25,6 @@ public class FeedBackSelection {
         this.outof = outof;
         this.rating=rating;
         this.comment = comment;
+        this.ismandatory=ismandatory;
     }
 }

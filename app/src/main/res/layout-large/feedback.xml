@@ -4,35 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:gravity="center|right"
-        android:layout_height="wrap_content">
-        <Spinner
-
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            />
-    </LinearLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
 
-        <LinearLayout
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2.5"
-            android:gravity="center"
-            android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center|right"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+
 
             <TextView
                 android:id="@+id/billno"
@@ -48,6 +44,32 @@
                 android:text="hhahgahgh"
 
                 android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center|end"
+            android:layout_height="wrap_content">
+            <Spinner
+
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerlist"
@@ -72,7 +94,6 @@
 
 
         </LinearLayout>
-    </ScrollView>
     <!--<LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -94,4 +115,7 @@
 
 
         </LinearLayout>-->
+</LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

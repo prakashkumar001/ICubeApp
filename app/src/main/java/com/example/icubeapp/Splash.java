@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -239,21 +240,25 @@ public class Splash extends AwesomeSplash {
     }
 
     void showDialog(View view) {
+
+        done=true;
+
         dialogs = new Dialog(Splash.this, R.style.ThemeDialogCustom);
         dialogs.setContentView(R.layout.show_dialog);
         dialogs.setCancelable(false);
-
+        final TextView users = (TextView) dialogs.findViewById(R.id.user);
         final EditText password = (EditText) dialogs.findViewById(R.id.password);
         ImageView close = (ImageView) dialogs.findViewById(R.id.iv_close);
         Button logouts = (Button) dialogs.findViewById(R.id.btn_logout);
-
+        SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
+        final String pass = preferences.getString("pass", "");
+        final String user = preferences.getString("user", "");
+        users.setText(user);
 
         logouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
-                String pass = preferences.getString("pass", "");
 
                 if (password.getText().toString().equalsIgnoreCase(pass)) {
 
@@ -272,7 +277,7 @@ public class Splash extends AwesomeSplash {
                     ActivityCompat.finishAffinity(Splash.this);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Username or Password is Invalid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Password is Invalid", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -283,6 +288,9 @@ public class Splash extends AwesomeSplash {
             public void onClick(View v) {
 
                 dialogs.dismiss();
+                finish();
+                startActivity(new Intent(getBaseContext(), Splash.class));
+
             }
         });
 
