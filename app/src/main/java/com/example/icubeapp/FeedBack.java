@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.example.icubeapp.adapters.FeedAdapter;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.model.FEEDBACK;
+import com.example.icubeapp.model.FeedBackSelection;
 import com.example.icubeapp.model.Language;
 import com.example.icubeapp.model.POS;
 import com.example.icubeapp.utils.CodeSnippet;
@@ -423,17 +424,16 @@ public class FeedBack extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               /* if(global.feedback.size()==global.feedbackdata.size())
+
+
+               /* if(containsProduct(global.feedbackdata,"true"))
+                {
+                    Toast.makeText(getApplicationContext(),"Please select",Toast.LENGTH_SHORT).show();
+                }else
                 {
 
-                }else if(global.feedback.size()>global.feedbackdata.size()) {
+                }*/
 
-                   for(int i=0;i<global.feedback.size();i++)
-                   {
-
-                   }
-                }
-*/
 
                 if (codeSnippet.hasNetworkConnection()) {
                     dialog = new ProgressDialog(FeedBack.this);
@@ -712,4 +712,17 @@ public class FeedBack extends AppCompatActivity {
                 PackageManager.MATCH_DEFAULT_ONLY).activityInfo.packageName;
         Log.e("Current launcher Package Name:",str);
     }*/
+
+    boolean containsProduct(List<FeedBackSelection> list, String selection) {
+        for (FeedBackSelection item : list) {
+            if (item.ismandatory.contains(selection)) {
+
+                return true;
+
+            }
+            break;
+        }
+
+        return false;
+    }
 }
