@@ -207,7 +207,7 @@ public class FeedBack extends AppCompatActivity {
                                 String RatingType = object.getString("RatingType");
                                 String OutOf = object.getString("OutOf");
                                 String IsMandatory = object.getString("IsMandatory");
-                                FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf, status, "",IsMandatory);
+                                FEEDBACK feedback = new FEEDBACK(ID, GroupID, LanguageID, Question, RatingType, OutOf, status, "",IsMandatory,"false");
                                 global.feedback.add(feedback);
                             }
 
@@ -426,13 +426,20 @@ public class FeedBack extends AppCompatActivity {
 
 
 
-               /* if(containsProduct(global.feedbackdata,"true"))
-                {
-                    Toast.makeText(getApplicationContext(),"Please select",Toast.LENGTH_SHORT).show();
-                }else
-                {
 
-                }*/
+                  if(containsProduct(global.feedbackdata,"selected"))
+                  {
+                      for(int i=0;i<global.feedbackdata.size();i++)
+                      {
+                          Log.i("Values","Values"+global.feedbackdata.get(i).ismandatory +"===="+global.feedbackdata.get(i).status_select);
+
+                      }
+
+                  }else
+                  {
+                      Toast.makeText(getApplicationContext(),"Please select Rating",Toast.LENGTH_SHORT).show();
+
+                  }
 
 
                 if (codeSnippet.hasNetworkConnection()) {
@@ -715,14 +722,13 @@ public class FeedBack extends AppCompatActivity {
 
     boolean containsProduct(List<FeedBackSelection> list, String selection) {
         for (FeedBackSelection item : list) {
-            if (item.ismandatory.contains(selection)) {
-
-                return true;
+                if(item.ismandatory.equalsIgnoreCase("true")   && !item.status_select.contains(selection)){
+                return false;
 
             }
             break;
         }
 
-        return false;
+        return true;
     }
 }

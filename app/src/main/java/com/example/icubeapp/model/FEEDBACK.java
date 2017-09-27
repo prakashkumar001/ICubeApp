@@ -17,7 +17,7 @@ public class FEEDBACK {
     public ArrayList<Integer> status;
     public String comment;
     public String IsMandatory;
-
+public String status_select;
     public FEEDBACK( String id, String group_id, String language_id, String question, String rating_type,String outof) {
 
         this.id = id;
@@ -27,7 +27,7 @@ public class FEEDBACK {
         this.rating_type = rating_type;
         this.outof = outof;
     }
-    public FEEDBACK(String id, String group_id, String language_id, String question, String rating_type,String outof,ArrayList<Integer> status,String comment,String IsMandatory) {
+    public FEEDBACK(String id, String group_id, String language_id, String question, String rating_type,String outof,ArrayList<Integer> status,String comment,String IsMandatory,String status_select) {
 
         this.id = id;
         this.group_id = group_id;
@@ -38,5 +38,6 @@ public class FEEDBACK {
         this.status=status;
         this.comment=comment;
         this.IsMandatory=IsMandatory;
+        this.status_select=status_select;
     }
 }
