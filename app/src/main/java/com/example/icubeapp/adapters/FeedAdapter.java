@@ -97,26 +97,26 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             holder.startwo.setVisibility(View.VISIBLE);
             holder.starthree.setVisibility(View.VISIBLE);
             holder.starfour.setVisibility(View.VISIBLE);
-            holder.starfive.setVisibility(View.VISIBLE);
+           // holder.starfive.setVisibility(View.VISIBLE);
         } else if (data.get(position).outof.equalsIgnoreCase("4.0")&& data.get(position).rating_type.equalsIgnoreCase("1")) {
             holder.starone.setVisibility(View.VISIBLE);
             holder.startwo.setVisibility(View.VISIBLE);
             holder.starthree.setVisibility(View.VISIBLE);
             holder.starfour.setVisibility(View.VISIBLE);
-            holder.starfive.setVisibility(View.GONE);
+           // holder.starfive.setVisibility(View.GONE);
 
         } else if (data.get(position).outof.equalsIgnoreCase("3.0")&& data.get(position).rating_type.equalsIgnoreCase("1")) {
             holder.starone.setVisibility(View.VISIBLE);
             holder.startwo.setVisibility(View.VISIBLE);
             holder.starthree.setVisibility(View.VISIBLE);
             holder.starfour.setVisibility(View.GONE);
-            holder.starfive.setVisibility(View.GONE);
+           // holder.starfive.setVisibility(View.GONE);
         }else if (data.get(position).outof.equalsIgnoreCase("2.0")&& data.get(position).rating_type.equalsIgnoreCase("1")) {
             holder.starone.setVisibility(View.VISIBLE);
             holder.startwo.setVisibility(View.VISIBLE);
             holder.starthree.setVisibility(View.GONE);
             holder.starfour.setVisibility(View.GONE);
-            holder.starfive.setVisibility(View.GONE);
+           // holder.starfive.setVisibility(View.GONE);
         }
 
 
@@ -479,7 +479,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.startwo.setImageResource(R.mipmap.star_unselect);
                 holder.starthree.setImageResource(R.mipmap.star_unselect);
                 holder.starfour.setImageResource(R.mipmap.star_unselect);
-                holder.starfive.setImageResource(R.mipmap.star_unselect);
+                //holder.starfive.setImageResource(R.mipmap.star_unselect);
 
             }
         });
@@ -499,7 +499,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.startwo.setImageResource(R.mipmap.star_select);
                 holder.starthree.setImageResource(R.mipmap.star_unselect);
                 holder.starfour.setImageResource(R.mipmap.star_unselect);
-                holder.starfive.setImageResource(R.mipmap.star_unselect);
+               // holder.starfive.setImageResource(R.mipmap.star_unselect);
 
             }
         });
@@ -516,7 +516,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.startwo.setImageResource(R.mipmap.star_select);
                 holder.starthree.setImageResource(R.mipmap.star_select);
                 holder.starfour.setImageResource(R.mipmap.star_unselect);
-                holder.starfive.setImageResource(R.mipmap.star_unselect);
+               // holder.starfive.setImageResource(R.mipmap.star_unselect);
 
             }
         });
@@ -534,12 +534,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.startwo.setImageResource(R.mipmap.star_select);
                 holder.starthree.setImageResource(R.mipmap.star_select);
                 holder.starfour.setImageResource(R.mipmap.star_select);
-                holder.starfive.setImageResource(R.mipmap.star_unselect);
+                //holder.starfive.setImageResource(R.mipmap.star_unselect);
 
             }
         });
 
-        holder.starfive.setOnClickListener(new View.OnClickListener() {
+       /* holder.starfive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -555,7 +555,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 holder.starfour.setImageResource(R.mipmap.star_select);
                 holder.starfive.setImageResource(R.mipmap.star_select);
             }
-        });
+        });*/
 
 
     }
@@ -600,7 +600,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         LinearLayout smile_one_lay,smile_two_lay,smile_three_lay,smile_four_lay,smile_five_lay;
         LinearLayout layer;
 
-        ImageView starone, startwo, starthree, starfour, starfive;
+        ImageView starone, startwo, starthree, starfour;
 
         public MyViewHolder(View view) {
             super(view);
@@ -632,7 +632,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             startwo = (ImageView) view.findViewById(R.id.startwo);
             starthree = (ImageView) view.findViewById(R.id.starthree);
             starfour = (ImageView) view.findViewById(R.id.starfour);
-            starfive = (ImageView) view.findViewById(R.id.starfive);
+           // starfive = (ImageView) view.findViewById(R.id.starfive);
 
 
 

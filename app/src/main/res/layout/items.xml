@@ -110,7 +110,7 @@
                             android:src="@mipmap/star_unselect"
                             />
 
-                        <ImageView
+                       <!-- <ImageView
                             android:id="@+id/starfive"
                             android:tag="4"
                             android:layout_margin="10dp"
@@ -118,7 +118,7 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:src="@mipmap/star_unselect"
-                            />
+                            />-->
 
                     </LinearLayout>
 

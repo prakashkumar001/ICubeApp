@@ -435,6 +435,16 @@ public class FeedBack extends AppCompatActivity {
 
                       }
 
+                      if (codeSnippet.hasNetworkConnection()) {
+                          dialog = new ProgressDialog(FeedBack.this);
+                          dialog.setMessage("Loading....");
+                          dialog.show();
+                          uploadToServer();
+
+                      } else {
+                          Snackbar();
+                      }
+
                   }else
                   {
                       Toast.makeText(getApplicationContext(),"Please select Rating",Toast.LENGTH_SHORT).show();
@@ -442,15 +452,7 @@ public class FeedBack extends AppCompatActivity {
                   }
 
 
-                if (codeSnippet.hasNetworkConnection()) {
-                    dialog = new ProgressDialog(FeedBack.this);
-                    dialog.setMessage("Loading....");
-                    dialog.show();
-                    uploadToServer();
 
-                } else {
-                    Snackbar();
-                }
 
             }
         });
@@ -722,7 +724,7 @@ public class FeedBack extends AppCompatActivity {
 
     boolean containsProduct(List<FeedBackSelection> list, String selection) {
         for (FeedBackSelection item : list) {
-                if(item.ismandatory.equalsIgnoreCase("true")   && !item.status_select.contains(selection)){
+                if(item.ismandatory.equalsIgnoreCase("true")   && !item.status_select.equalsIgnoreCase(selection)){
                 return false;
 
             }
