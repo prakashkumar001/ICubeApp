@@ -3,12 +3,11 @@ package com.example.icubeapp;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +23,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,6 +39,7 @@ import com.example.icubeapp.model.FeedBackSelection;
 import com.example.icubeapp.model.Language;
 import com.example.icubeapp.model.POS;
 import com.example.icubeapp.utils.CodeSnippet;
+import com.example.icubeapp.utils.MyAdmin;
 import com.example.icubeapp.utils.WSUtils;
 import com.wroclawstudio.kioskmode.RootKioskActivity;
 
@@ -59,6 +58,14 @@ import java.util.List;
  */
 
 public class FeedBack extends AppCompatActivity {
+
+    /*final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;*/
+
     GlobalClass global;
     RecyclerView list;
     Button submit;
@@ -78,7 +85,21 @@ public class FeedBack extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /* Set the app into full screen mode */
+       // getWindow().getDecorView().setSystemUiVisibility(flags);
+
+        /* Following code allow the app packages to lock task in true kiosk mode */
+
         setContentView(R.layout.feedback);
+
+      /*  // get policy manager
+        DevicePolicyManager myDevicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        // get this app package name
+        ComponentName mDPM = new ComponentName(this, MyAdmin.class);
+         startLockTask();
+*/
+
+
         spinner=(Spinner)findViewById(R.id.spinner);
 
         languages=new ArrayList<>();
@@ -371,6 +392,14 @@ public class FeedBack extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
+
+
+
+
+
+
         codeSnippet = new CodeSnippet(getApplicationContext());
         global = (GlobalClass) getApplicationContext();
         list = (RecyclerView) findViewById(R.id.recyclerlist);
@@ -627,14 +656,24 @@ public class FeedBack extends AppCompatActivity {
 
 
     void showDialog() {
+
+        if(dialogs!=null)
+        {
+            dialog.dismiss();
+        }
         dialogs = new Dialog(FeedBack.this, R.style.ThemeDialogCustom);
         dialogs.setContentView(R.layout.show_dialog);
         dialogs.setCancelable(false);
 
         final EditText password = (EditText) dialogs.findViewById(R.id.password);
+        final TextView users = (TextView) dialogs.findViewById(R.id.user);
+
         ImageView close = (ImageView) dialogs.findViewById(R.id.iv_close);
         Button logouts = (Button) dialogs.findViewById(R.id.btn_logout);
-
+        SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
+        final String pass = preferences.getString("pass", "");
+        final String user = preferences.getString("user", "");
+        users.setText(user);
 
         logouts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -643,6 +682,8 @@ public class FeedBack extends AppCompatActivity {
                 SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
                 String user = preferences.getString("user", "");
                 String pass = preferences.getString("pass", "");
+
+
 
                 if (password.getText().toString().equalsIgnoreCase(pass)) {
 
@@ -693,7 +734,10 @@ public class FeedBack extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_HOME) {
 //Do Code Here
 // If want to block just return false
-            return false;
+
+
+            Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
+            return true;
         }
 
 
@@ -708,6 +752,8 @@ public class FeedBack extends AppCompatActivity {
                 .getSystemService(Context.ACTIVITY_SERVICE);
 
         activityManager.moveTaskToFront(getTaskId(), 0);
+
+        showDialog();
     }
 
 
@@ -733,4 +779,7 @@ public class FeedBack extends AppCompatActivity {
 
         return true;
     }
+
+
+
 }

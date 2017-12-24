@@ -2,6 +2,7 @@ package com.example.icubeapp;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,6 +42,7 @@ import android.widget.Toast;
 import com.example.icubeapp.common.GlobalClass;
 import com.example.icubeapp.utils.InternetPermissions;
 import com.example.icubeapp.utils.WSUtils;
+import com.wroclawstudio.kioskmode.KioskActivity;
 import com.wroclawstudio.kioskmode.RootKioskActivity;
 
 import org.json.JSONArray;
@@ -58,7 +60,7 @@ import java.util.List;
  * Created by v-62 on 10/11/2016.
  */
 
-public class Login extends AppCompatActivity {
+public class Login extends KioskActivity {
   //  private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
@@ -69,11 +71,15 @@ public class Login extends AppCompatActivity {
     private static final int NETPERMISSION = 1888;
     GlobalClass global;
    // Spinner spinner;
-
+   public boolean done = false;
+    Dialog dialogs;
     //Toolbar toolbar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         global=(GlobalClass)getApplicationContext();
         SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
         final boolean loginStatus = preferences.getBoolean("loginstatus", false);

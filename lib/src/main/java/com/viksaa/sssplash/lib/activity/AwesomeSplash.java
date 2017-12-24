@@ -35,7 +35,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
     private RelativeLayout mRlReveal;
     private ImageView mImgLogo;
-    private ImageView logout;
+    //private ImageView logout;
     private AppCompatTextView mTxtTitle;
     private FillableLoader mPathLogo;
     private FrameLayout mFl;
@@ -65,7 +65,7 @@ abstract public class AwesomeSplash extends AppCompatActivity {
 
         mRlReveal = (RelativeLayout) findViewById(R.id.rlColor);
         mTxtTitle = (AppCompatTextView) findViewById(R.id.txtTitle);
-        logout=(ImageView) findViewById(R.id.log_out);
+        //logout=(ImageView) findViewById(R.id.log_out);
 
         switch (flag) {
             case Flags.WITH_PATH:

@@ -19,14 +19,14 @@
             >
 
 
-            <ImageView
+           <!-- <ImageView
 
                 android:id="@+id/log_out"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:onClick="logout"
                 android:src="@drawable/logout"
-                />
+                />-->
         </LinearLayout>
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtTitle"

@@ -132,7 +132,6 @@ public class Splash extends AwesomeSplash {
 
     @Override
     public void logout(View view) {
-        showDialog(view);
     }
 
     @Override
@@ -140,6 +139,20 @@ public class Splash extends AwesomeSplash {
 
         // super.onBackPressed();
         // ActivityCompat.finishAffinity(Splash.this);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+        //ActivityCompat.finishAffinity(ThankyouPage.this);
+
+        showDialog();
+
 
     }
 
@@ -239,7 +252,7 @@ public class Splash extends AwesomeSplash {
 
     }
 
-    void showDialog(View view) {
+    void showDialog() {
 
         done=true;
 
