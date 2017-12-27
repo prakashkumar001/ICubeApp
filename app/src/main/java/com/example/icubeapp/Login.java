@@ -60,7 +60,7 @@ import java.util.List;
  * Created by v-62 on 10/11/2016.
  */
 
-public class Login extends KioskActivity {
+public class Login extends AppCompatActivity {
   //  private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
