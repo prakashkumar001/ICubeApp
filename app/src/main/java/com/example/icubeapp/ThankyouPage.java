@@ -51,7 +51,7 @@ public class ThankyouPage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+       /* if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             if(handler!=null)
             {
@@ -60,11 +60,15 @@ public class ThankyouPage extends AppCompatActivity {
             ActivityCompat.finishAffinity(ThankyouPage.this);
 
             return;
+        }*/
+        if(handler!=null)
+        {
+            handler.removeCallbacksAndMessages(null);
         }
-
-        this.doubleBackToExitPressedOnce = true;
+        showDialog();
+       /* this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
-
+*/
     }
 
     /*@Override
@@ -97,7 +101,7 @@ public class ThankyouPage extends AppCompatActivity {
         activityManager.moveTaskToFront(getTaskId(), 0);
         //ActivityCompat.finishAffinity(ThankyouPage.this);
 
-        showDialog();
+
 
 
 
@@ -170,5 +174,6 @@ public class ThankyouPage extends AppCompatActivity {
 
         dialogs.show();
     }
+
 
 }

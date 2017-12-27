@@ -505,7 +505,21 @@ public class FeedBack extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+
+
+        if(dialog!=null)
+        {
+            dialog.dismiss();
+        }
+
+        if(handler!=null)
+        {
+            handler.removeCallbacksAndMessages(null);
+        }
+
+
+        showDialog();
+      /*  if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
 
             if(dialog!=null)
@@ -523,8 +537,9 @@ public class FeedBack extends AppCompatActivity {
             return;
         }
 
+        showDialog();
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();*/
     }
 
 
@@ -659,7 +674,7 @@ public class FeedBack extends AppCompatActivity {
 
         if(dialogs!=null)
         {
-            dialog.dismiss();
+            dialogs.dismiss();
         }
         dialogs = new Dialog(FeedBack.this, R.style.ThemeDialogCustom);
         dialogs.setContentView(R.layout.show_dialog);
@@ -718,31 +733,7 @@ public class FeedBack extends AppCompatActivity {
         dialogs.show();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//Do Code Here
-// If want to block just return false
-            return false;
-        }
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
-//Do Code Here
-// If want to block just return false
-            return false;
-        }
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-//Do Code Here
-// If want to block just return false
-
-
-            Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     protected void onPause() {
@@ -753,7 +744,7 @@ public class FeedBack extends AppCompatActivity {
 
         activityManager.moveTaskToFront(getTaskId(), 0);
 
-        showDialog();
+
     }
 
 
@@ -779,6 +770,7 @@ public class FeedBack extends AppCompatActivity {
 
         return true;
     }
+
 
 
 

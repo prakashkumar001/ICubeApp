@@ -140,6 +140,8 @@ public class Splash extends AwesomeSplash {
         // super.onBackPressed();
         // ActivityCompat.finishAffinity(Splash.this);
 
+        showDialog();
+
     }
 
     @Override
@@ -151,7 +153,7 @@ public class Splash extends AwesomeSplash {
         activityManager.moveTaskToFront(getTaskId(), 0);
         //ActivityCompat.finishAffinity(ThankyouPage.this);
 
-        showDialog();
+        //showDialog();
 
 
     }
@@ -301,8 +303,8 @@ public class Splash extends AwesomeSplash {
             public void onClick(View v) {
 
                 dialogs.dismiss();
-                finish();
-                startActivity(new Intent(getBaseContext(), Splash.class));
+                //finish();
+                startActivity(new Intent(getBaseContext(), FeedBack.class));
 
             }
         });
