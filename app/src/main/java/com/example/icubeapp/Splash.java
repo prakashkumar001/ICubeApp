@@ -304,7 +304,7 @@ public class Splash extends AwesomeSplash {
 
                 dialogs.dismiss();
                 //finish();
-                startActivity(new Intent(getBaseContext(), FeedBack.class));
+               // startActivity(new Intent(getBaseContext(), FeedBack.class));
 
             }
         });
