@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 
 import com.example.icubeapp.common.GlobalClass;
+import com.example.icubeapp.database.Smiley;
 import com.example.icubeapp.utils.InternetPermissions;
 import com.example.icubeapp.utils.WSUtils;
 import com.wroclawstudio.kioskmode.KioskActivity;
@@ -55,6 +56,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.example.icubeapp.helper.Helper.getHelper;
 
 /**
  * Created by v-62 on 10/11/2016.
@@ -285,6 +288,8 @@ public class Login extends AppCompatActivity {
 
                         if(result.equalsIgnoreCase("Valid User"))
                         {
+
+
                             global.empId=EmpID;
                             SharedPreferences.Editor editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
                             editor = getSharedPreferences("Data", MODE_PRIVATE).edit();
@@ -296,11 +301,9 @@ public class Login extends AppCompatActivity {
                             editor.putString("url", global.globalurl);
                             editor.commit();
 
+                            getSmiley();
 
-                            Intent i=new Intent(Login.this,Splash.class);
-                            startActivity(i);
-                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                            finish();
+
 
                         }else
                         {
@@ -366,5 +369,85 @@ public class Login extends AppCompatActivity {
         activityManager.moveTaskToFront(getTaskId(), 0);
     }
 
+    public void getSmiley()
+    {
+        class smileyFromServer extends AsyncTask<String, String, String> {
+            ProgressDialog dialog;
+            String response="";
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                dialog=new ProgressDialog(Login.this);
+                dialog.setMessage("Loading..");
+                dialog.show();
+            }
+            @Override
+            protected String doInBackground(String[] params) {
+                try {
+
+                    String charset = "UTF-8";
+
+
+                    String requestURL = global.globalurl+"/api/Feedback/GetspSelectFeedback?type=GetFeedBackRatingTypeCollections&ExtraString1=&ExtraString2=&ExtraString3=&ExtraString4=&ExtraString5=&ExtraString6=&ExtraString7=&ExtraString8=&ExtraString9=&ExtraString10";
+                    WSUtils utils=new WSUtils();
+                    response= utils.getResultFromHttpRequest(requestURL,"GET",new HashMap<String, String>());
+
+                    System.out.println("SERVER REPLIED:"+response);
+
+
+
+
+                } catch (Exception ex) {
+                    System.err.println(ex);
+                }
+                return response;
+            }
+
+
+            @Override
+            protected void onPostExecute(String o) {
+
+                getHelper().getDaoSession().deleteAll(Smiley.class);
+
+                try
+                {
+                    JSONArray result=new JSONArray(o);
+                    for(int i=0;i<result.length();i++)
+                    {
+                        JSONObject data=result.getJSONObject(i);
+                        String FBRTID=data.getString("FBRTID");
+                        String RatingCount=data.getString("RatingCount");
+                        String Image=data.getString("Image");
+                        String AfterImage=data.getString("AfterImage");
+
+                        Smiley smiley=new Smiley();
+                        smiley.FBRateID=FBRTID;
+                        smiley.RatingCount=RatingCount;
+                        smiley.beforeImage=Image;
+                        smiley.AfterImage=AfterImage;
+                        getHelper().getDaoSession().insertOrReplace(smiley);
+
+                    }
+
+
+                }catch (Exception e)
+                {
+
+                }
+
+
+                Intent i=new Intent(Login.this,Splash.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
+
+                dialog.dismiss();
+            }
+        } new smileyFromServer().execute();
+
+
+    }
+
 
 }
+

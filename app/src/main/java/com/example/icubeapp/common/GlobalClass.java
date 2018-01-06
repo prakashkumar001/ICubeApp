@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+import com.example.icubeapp.database.DaoMaster;
+import com.example.icubeapp.database.DaoSession;
+import com.example.icubeapp.helper.Helper;
 import com.example.icubeapp.model.FEEDBACK;
 import com.example.icubeapp.model.FeedBackSelection;
 import com.example.icubeapp.model.POS;
@@ -12,6 +15,8 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
+import org.greenrobot.greendao.database.Database;
 
 import java.util.ArrayList;
 
@@ -33,11 +38,24 @@ public class GlobalClass extends Application {
     public static String globalurl="";
     public static String empId;
     public static String languageId="1";
+
+    Database db;
+    public DaoSession daoSession;
+
+
+
     public void onCreate() {
 
 
         super.onCreate();
         mInstance = this;
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "icube_db");
+
+        // db = helper.getWritableDb();
+        db = helper.getWritableDb();
+        daoSession = new DaoMaster(db).newSession();
+        new Helper(daoSession, this);
+
         initImageLoader(getApplicationContext());
 
     }
