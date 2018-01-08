@@ -330,6 +330,15 @@ public class FeedBack extends AppCompatActivity {
                 global.feedback = new ArrayList<>();
                 global.feedbackdata = new ArrayList<>();
 
+
+                if(s==null)
+                {
+
+                }else
+                {
+
+
+
                 try {
                     JSONArray array = new JSONArray(s);
 
@@ -364,6 +373,7 @@ public class FeedBack extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
             }
         }
         new UploadtoServer().execute();
